@@ -28,7 +28,8 @@ class Common(Configuration):
         'django.contrib.admin',
     )
     THIRD_PARTY_APPS = (
-        'south',  # Database migration helpers:
+        'south',  # Database migration helper
+        'reversion', # Rollback & recovery
     )
 
     # Apps specific for this project go here.
