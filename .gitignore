@@ -1,4 +1,15 @@
-*.log
-*.pot
+# Basics
+*.py[cod]
 *.pyc
+__pycache__
+
+# Logs
+*.log
+
+# PyCharm
 .idea
+
+*.pot
+
+# Development Database
+dev_db
