@@ -29,7 +29,8 @@ class Common(Configuration):
     )
     THIRD_PARTY_APPS = (
         'south',  # Database migration helper
-        'reversion', # Rollback & recovery
+        'reversion',  # Rollback & recovery
+        'django_extensions'
     )
 
     # Apps specific for this project go here.
