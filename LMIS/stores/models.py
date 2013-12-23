@@ -5,7 +5,7 @@ from django.db import models
 from mptt.models import TreeForeignKey, MPTTModel
 
 #import project app modules
-from core.models import BaseModel, Party
+from core.models import BaseModel, Company
 
 
 class FacilityType(MPTTModel, BaseModel):
@@ -33,7 +33,7 @@ class FacilityTypeApprovedProduct(BaseModel):
     max_months_of_stock = models.IntegerField()
 
 
-class Facility(MPTTModel, Party):
+class Facility(MPTTModel, Company):
     """
         This is used to model stores, health facilities, Satellite stores etc
     """
@@ -64,5 +64,6 @@ class Facility(MPTTModel, Party):
     comment = models.CharField(max_length=200, blank=True)
     enabled = models.BooleanField()
     virtual_facility = models.BooleanField(default=False, blank=True)
-    programs_supported = models.ManyToManyField('ProgramSupported',
-                                                related_name='%(app_label)s_%(class)s_programs_supported')
+    #TODO: uncomment when you complete implementation of ProgramSupported
+    #programs_supported = models.ForeignKey('ProgramSupported',
+    #                                           related_name='%(app_label)s_%(class)s_programs_supported')

@@ -1,6 +1,10 @@
+"""
+    CORE module holds core class and django models that is used throughout the LMIS project.
+"""
+
 #import django modules
 from django.db import models
-from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 #import external modules
 from mptt.models import MPTTModel, TreeForeignKey
@@ -52,7 +56,8 @@ class UnitOfMeasurement(BaseModel):
 
 
 class Rate(BaseModel):
-    """ This belongs to the currency class and is used to model different exchange rates for the currency.
+    """
+        This belongs to the currency class and is used to model different exchange rates for the currency.
         a currency should have at least one rate with value equals to 1, this is the rate of the currency against itself
         The date is the date from which the rate becomes effective.
     """
@@ -145,13 +150,73 @@ class Party(BaseModel):
     """
         This is the abstract base class of all entities such as Employee, Facility, Partners, Manufacturers
     """
-    name = models.CharField(max_length=35, unique=True)
-    code = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=55, unique=True)
+    code = models.CharField(max_length=35, unique=True)
     contact = models.ForeignKey(Contact, null=True, blank=True)
     address = models.ForeignKey(Address, null=True, blank=True)
 
     class Meta:
         abstract = True
+
+    class Meta:
+        app_label = 'core'
+
+
+class Company(Party):
+    """
+        Base class for Facilities, Partners,  etc,
+    """
+    header = models.CharField(max_length=100, blank=True, null=True)
+    footer = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+
+class CompanyCategory(MPTTModel, BaseModel):
+    """
+        Used to model company category, it can be Facility, Manufacturer, Partner, FacilityOperators etc.
+    """
+    name = models.CharField(max_length=35, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_company_categories')
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class MPTTMeta:
+        app_label = 'core'
+
+
+class EmployeeCategory(MPTTModel, BaseModel):
+    """
+        used to model employee categories
+    """
+    name = models.CharField(max_length=35, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_employee_categories')
+
+    def __unicode__(self):
+        return '{name}'.format(name=self.name)
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+        app_label = 'core'
+
+
+class Employee(Party):
+    """
+        This represents Employees and also users of the system.
+        Attributes:
+        current_company: The company field defines the current company of the user
+        main_company: The main company define which current company a user can choose: either the main company itself
+            or one of the children companies.
+    """
+    current_company = models.ForeignKey(Company, related_name="employees")
+    main_company = models.ForeignKey(Company, related_name="main_employees")
+    category = models.ForeignKey(EmployeeCategory)
+    user = models.OneToOneField(User)
 
     class Meta:
         app_label = 'core'
