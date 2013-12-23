@@ -30,7 +30,9 @@ class Common(Configuration):
     THIRD_PARTY_APPS = (
         'south',  # Database migration helper
         'reversion',  # Rollback & recovery
-        'django_extensions'
+        'django_extensions',
+        'rest_framework',  # API
+        'django_filters',  # API filter support
     )
 
     # Apps specific for this project go here.
