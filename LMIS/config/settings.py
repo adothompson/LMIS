@@ -33,6 +33,7 @@ class Common(Configuration):
         'django_extensions',
         'rest_framework',  # API
         'django_filters',  # API filter support
+        'mptt',
     )
 
     # Apps specific for this project go here.
