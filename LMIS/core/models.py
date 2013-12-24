@@ -284,10 +284,6 @@ class Facility(MPTTModel, Company):
     longitude = models.FloatField(blank=True, null=True)
     altitude = models.FloatField(blank=True, null=True)
     operated_by = models.ManyToManyField('FacilityOperator', blank=True, null=True)
-    cold_storage_gross_capacity = models.FloatField(blank=True, null=True)
-    cold_storage_net_capacity = models.FloatField(blank=True, null=True)
-    ambient_storage_gross_capacity = models.FloatField(blank=True, null=True)
-    ambient_storage_net_capacity = models.FloatField(blank=True, null=True)
     supplies_others = models.BooleanField(default=True)
     sdp = models.BooleanField(verbose_name="is service delivery point")
     has_electricity = models.NullBooleanField(blank=True)
@@ -312,7 +308,8 @@ class Facility(MPTTModel, Company):
 
 class WarehouseType(BaseModel):
     """
-        This is used to model different types of Warehouse or Storage Location. it can be Refrigerated Warehouse
+        This is used to model different types of Warehouse or Storage Location. it can be a Physical Warehouse,
+        In-Transit Warehouse(like products being transported)
     """
     code = models.ForeignKey(max_length=35, unique=True)
     name = models.ForeignKey(max_length=55, unique=True)
@@ -326,6 +323,13 @@ class Warehouse(BaseModel):
     """
     code = models.CharField(max_length=55, unique=True)
     facility = models.ForeignKey(Facility)
+    is_refrigerated = models.BooleanField(default=True, verbose_name='cold storage warehouse')
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
+    cold_storage_gross_capacity = models.FloatField(blank=True, null=True)
+    cold_storage_net_capacity = models.FloatField(blank=True, null=True)
+    ambient_storage_gross_capacity = models.FloatField(blank=True, null=True)
+    ambient_storage_net_capacity = models.FloatField(blank=True, null=True)
 
 
 class Program(BaseModel):

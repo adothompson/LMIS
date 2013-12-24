@@ -2,7 +2,7 @@
 from django.db import models
 
 #import project app modules
-from core.models import BaseModel, UnitOfMeasurement, Facility
+from core.models import BaseModel, UnitOfMeasurement, Facility, Warehouse
 
 
 class ColdChainEquipmentType(BaseModel):
