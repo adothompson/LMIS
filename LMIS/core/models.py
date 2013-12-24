@@ -349,18 +349,35 @@ class Program(BaseModel):
         app_label = 'core'
 
 
+class ProgramProductAllocationInfo(BaseModel):
+    """
+        This models information used to allocate a program product.
+    """
+    who_ratio = models.FloatField()#World Health Ratio
+    coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
+    wastage_rate = models.FloatField(verbose_name='wastage rate(%)')
+    buffer_percentage = models.FloatField()
+    target_population = models.IntegerField(verbose_name='target population(%)')
+    min_quantity = models.IntegerField()
+    max_quantity = models.IntegerField()
+    adjustment_value = models.IntegerField()
+
+
 class ProgramProduct(BaseModel):
     """
         ProgramProduct models set of products that can be used in a Program.
         it is recorded for each product used in a program
+
+        -base_uom_per_person is the number of base units of the product required per person(in the target population)
+         to complete treatment or immunization.
     """
     program = models.ForeignKey(Program)
     product = models.ForeignKey('Product')
-    doses_per_month = models.IntegerField()
+    product_base_uom_per_month = models.IntegerField()
+    current_price_per_base_uom = models.DecimalField(max_digits=21, decimal_places=2,
+                                                     verbose_name='price per product uom')
     is_active = models.BooleanField()
-    current_price = models.DecimalField(max_digits=21, decimal_places=2)
-    program_product_info = models.OneToOneField(ProgramProductOrderInfo)
-    program_product_price = models.ForeignKey(ProgramProductPrice)
+    program_product_price = models.ForeignKey(ProgramProductPriceHistory)
 
     def __str__(self):
         return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
@@ -369,7 +386,7 @@ class ProgramProduct(BaseModel):
         app_label = 'core'
 
 
-class ProgramProductPrice(BaseModel):
+class ProgramProductPriceHistory(BaseModel):
     """
         ProgramProductPrice is used to model the changes in price of each program product,
         start date and end date represents the period which the price was valid.
@@ -399,20 +416,15 @@ class FacilityProgramSupported(BaseModel):
         app_label = 'core'
 
 
-class ProgramProductOrderInfo(BaseModel):
+class FacilityProgramProductAllocation(BaseModel):
     """
-        ProgramProductOrderInfo is used for holding allocation and order point information for each program product.
+        This is used used to map ProgramProductAllocationInfo to Facility for each ProgramProduct for
+        programs that a facility support
     """
-    who_ratio = models.FloatField()
-    doses_per_year = models.IntegerField()
-    wastage_factor = models.FloatField()
-    buffer_percentage = models.FloatField()
-    minimum_value = models.IntegerField()
-    maximum_value = models.IntegerField()
-    adjustment_value = models.IntegerField()
-
-    class Meta:
-        app_label = 'core'
+    facility = models.ForeignKey(Facility)
+    program_product = models.ForeignKey(ProgramProduct)
+    allocation_info = models.OneToOneField(ProgramProductAllocationInfo)
+    active = models.BooleanField(default=True)
 
 
 class SupervisoryNode(MPTTModel, BaseModel):
