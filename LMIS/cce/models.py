@@ -34,6 +34,7 @@ class ColdChainEquipment(BaseModel):
     cce_type = models.ForeignKey(ColdChainEquipmentType)
     cce_status = models.IntegerField(default=0, choices=CCE_STATUS)
     facility = models.ForeignKey(Facility)
+    storage_location = models.ForeignKey(Warehouse, blank=True, null=True)
 
     def __str__(self):
         return '{code}'.format(code=self.code)
@@ -47,6 +48,9 @@ class CCETemperatureLog(BaseModel):
     temperature_uom = models.ForeignKey(UnitOfMeasurement)
     cce = models.ForeignKey(ColdChainEquipment)
     date_time_logged = models.DateTimeField()
+
+    def __str__(self):
+        return '{temp} {uom_symbol}'.format(temp=self.temperature, uom_symbol=self.temperature_uom.symbol)
 
 
 class CCEProblemLog(BaseModel):

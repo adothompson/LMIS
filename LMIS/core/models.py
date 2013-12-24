@@ -43,6 +43,7 @@ class UnitOfMeasurement(BaseModel):
         This represents the standard of unit of measurement of things like temp, volume, dosage etc etc.
     """
     name = models.CharField(max_length=25, unique=True)
+    symbol = models.CharField(max_length=10)
     uom_category = models.ForeignKey(UOMCategory)
     rate = models.FloatField(null=True, blank=True)
     factor = models.FloatField(null=True, blank=True)
@@ -205,7 +206,7 @@ class EmployeeCategory(MPTTModel, BaseModel):
     name = models.CharField(max_length=35, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_employee_categories')
 
-    def __unicode__(self):
+    def __str__(self):
         return '{name}'.format(name=self.name)
 
     class MPTTMeta:
@@ -215,16 +216,21 @@ class EmployeeCategory(MPTTModel, BaseModel):
 
 class Employee(Party):
     """
-        This represents Employees and also users of the system.
+        This represents Employees of company's and stores, an employee could also be users of the system, if it has
+        User attribute.
+
         Attributes:
         current_company: The company field defines the current company of the user
         main_company: The main company define which current company a user can choose: either the main company itself
             or one of the children companies.
     """
     current_company = models.ForeignKey(Company, related_name="employees")
-    main_company = models.ForeignKey(Company, related_name="main_employees")
+    main_company = models.ForeignKey(Company, related_name="main_company_employees", blank=True, null=True)
     category = models.ForeignKey(EmployeeCategory)
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, blank=True, null=True)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
     class Meta:
         app_label = 'core'
@@ -238,12 +244,17 @@ class FacilityType(MPTTModel, BaseModel):
     name = models.CharField(max_length=25, unique=True)
     description = models.CharField(max_length=200, blank=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_facility_types')
-    #level_id = models.IntegerField()
-    #TODO: i think we should model FacilityType level as as a separate Hierarchical Model using MPTT
-    #nominal_max_month = models.IntegerField()
     #TODO: find out what nominal max month means.
+    #level_id = models.IntegerField()
+    #nominal_max_month = models.IntegerField()
     #nominal_eop = models.FloatField(blank=True, null=True)
     active = models.BooleanField()
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
 
 
 class FacilityTypeApprovedProduct(BaseModel):
@@ -253,6 +264,9 @@ class FacilityTypeApprovedProduct(BaseModel):
     facility_type = models.ForeignKey(FacilityType)
     program_product = models.ForeignKey('ProgramProduct')
     max_months_of_stock = models.IntegerField()
+
+    class Meta:
+        app_label = 'core'
 
 
 class Facility(MPTTModel, Company):
@@ -288,9 +302,12 @@ class Facility(MPTTModel, Company):
     comment = models.CharField(max_length=200, blank=True)
     enabled = models.BooleanField()
     virtual_facility = models.BooleanField(default=False, blank=True)
-    #TODO: uncomment when you complete implementation of ProgramSupported
-    #programs_supported = models.ForeignKey('ProgramSupported',
-    #                                           related_name='%(app_label)s_%(class)s_programs_supported')
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
 
 
 class Program(BaseModel):
@@ -303,6 +320,30 @@ class Program(BaseModel):
     active = models.BooleanField()
     push = models.BooleanField()
 
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
+
+
+class ProgramProduct(BaseModel):
+    """
+        ProgramProduct models set of products that can be used in a Program.
+        it is recorded for each product used in a program
+    """
+    program = models.ForeignKey(Program)
+    product = models.ForeignKey(Product)
+    doses_per_month = models.IntegerField()
+    is_active = models.BooleanField()
+    current_price = models.DecimalField(max_digits=21, decimal_places=2)
+
+    def __str__(self):
+        return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
+
+    class Meta:
+        app_label = 'core'
+
 
 class FacilityProgramSupported(BaseModel):
     """
@@ -313,6 +354,57 @@ class FacilityProgramSupported(BaseModel):
     active = models.BooleanField()
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+
+
+class FacilityProgramProduct(BaseModel):
+    """
+        Every Facility has this and it is hold information used for stock allocation and
+        determining when to make requisition or order request based on inventory stock level.
+    """
+    facility = models.ForeignKey(Facility)
+    program_product = models.ForeignKey(ProgramProduct)
+    who_ratio = models.FloatField()
+    doses_per_year = models.IntegerField()
+    wastage_factor = models.FloatField()
+    buffer_percentage = models.FloatField()
+    minimum_value = models.IntegerField()
+    maximum_value = models.IntegerField()
+    adjustment_value = models.IntegerField()
+
+    def __str__(self):
+        return '{facility}-{program_product}'.format(facility=self.facility.name,
+                                                     program_product=self.program_product.name)
+
+
+class SupervisoryNode(MPTTModel, BaseModel):
+    """
+        SupervisoryNode is a facility that supervises and manages a OrderGroup, it has a hierarchical
+        structure. This can be used to know whom to escalate notification or alert to.
+    """
+    code = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=25, unique=True)
+    description = models.CharField(max_length=55, blank=True)
+    parent = TreeForeignKey('self', blank=True, null=True, related_name='parent_supervisory_node')
+    facility = models.ForeignKey(Facility)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+
+class OrderGroup(BaseModel):
+    """
+        OrderGroup is used to model facilities that has same supervisory node or
+         makes order from same supplying facility
+    """
+    code = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=35, unique=True)
+    description = models.CharField(max_length=55, blank=True)
+    supervisory_node = models.ForeignKey('SupervisoryNode')
+    facilities = models.ManyToManyField(Facility, blank=True, null=True, verbose_name='member facilities')
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
 
 
 
