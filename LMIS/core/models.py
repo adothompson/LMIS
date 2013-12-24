@@ -162,6 +162,14 @@ class Party(BaseModel):
         app_label = 'core'
 
 
+class Manufacturer(Party):
+    """
+        This models product manufacturers and each manufacturer can have 0 or more products that it supplies and
+        a product can have one or more manufacturers.
+    """
+    products = models.ManyToManyField('Product', blank=True, null=True)
+
+
 class Company(Party):
     """
         Base class for Facilities, Partners,  etc,
@@ -250,8 +258,10 @@ class FacilityTypeApprovedProduct(BaseModel):
 class Facility(MPTTModel, Company):
     """
         This is used to model stores, health facilities, Satellite stores etc
+        facility_operator is a set of organizations that
     """
     description = models.CharField(max_length=200, blank=True)
+    facility_operators = models.ForeignKey(Company, verbose_name='facility operators')
     global_location_no = models.CharField(max_length=55, blank=True)
     #TODO: this will be replaced by the location module. geo_zone = models.ForeignKey(GeographicZone)
     facility_type = models.ForeignKey(FacilityType)
@@ -281,4 +291,28 @@ class Facility(MPTTModel, Company):
     #TODO: uncomment when you complete implementation of ProgramSupported
     #programs_supported = models.ForeignKey('ProgramSupported',
     #                                           related_name='%(app_label)s_%(class)s_programs_supported')
+
+
+class Program(BaseModel):
+    """
+        Program is used to represent different types of health programs that facilities runs. ARV, HIV, KIck Polio
+    """
+    code = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=35, unique=True)
+    description = models.CharField(max_length=55, blank=True)
+    active = models.BooleanField()
+    push = models.BooleanField()
+
+
+class FacilityProgramSupported(BaseModel):
+    """
+        This is used to model programs that a facility supports. its is entered for each program a facility supports.
+    """
+    program = models.ForeignKey(Program)
+    facility = models.ForeignKey(Facility)
+    active = models.BooleanField()
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+
+
 
