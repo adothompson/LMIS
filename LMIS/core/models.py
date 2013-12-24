@@ -552,4 +552,5 @@ class StockKeepingUnit(BaseModel):
     manufacturer = models.ForeignKey(Company)
     mode_of_use = models.ForeignKey('ModeOfAdministration')
     description = models.CharField(max_length=100, blank=True)
-    #weight = models.
+    #weight_per_base_uom is the weight per product base unit of measurement.
+    weight_per_base_uom = models.FloatField(verbose_name='weight per product base uom')
