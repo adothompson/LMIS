@@ -355,7 +355,7 @@ class ProgramProduct(BaseModel):
         it is recorded for each product used in a program
     """
     program = models.ForeignKey(Program)
-    product = models.ForeignKey(Product)
+    product = models.ForeignKey('Product')
     doses_per_month = models.IntegerField()
     is_active = models.BooleanField()
     current_price = models.DecimalField(max_digits=21, decimal_places=2)
@@ -455,10 +455,101 @@ class ProcessingPeriod(BaseModel):
     """
         Used to model start and end date of processing or carrying out an action.
     """
+    name = models.CharField(max_length=35, unique=True)
     start_date = models.DateField()
     end_date = models.DateField()
-    name = models.CharField(max_length=35)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
 
 
+class ProductCategory(MPTTModel, BaseModel):
+    """
+       This is used group products, it is hierarchical. it can be device, vaccine, diluent, syringes etc
+    """
+    name = models.CharField(max_length=50, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_product_categories')
+
+    def __unicode__(self):
+        return '{name}'.format(name=self.name)
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+        app_label = 'core'
 
 
+class Product(BaseModel):
+    """
+        Product represents a particular item or object that can be distributed, e.g BCG, OPV, etc.
+
+        -active: can be used to disable a product if false.
+    """
+    code = models.CharField(max_length=35, unique=True)
+    name = models.CharField(max_length=55, unique=True)
+    category = models.ForeignKey(ProductCategory, verbose_name='product category')
+    base_uom = models.ForeignKey(UnitOfMeasurement, verbose_name='default unit of measurement')
+    description = models.CharField(max_length=100, blank=True)
+    active = models.BooleanField(default=True)
+
+
+class ProductPresentation(BaseModel):
+    """
+        This is used to model presentation of a product,
+        -it can be 20 uom where uom is doses per vial for vaccines,
+        -it can be 5 uom where uom is unit per box for syringes
+
+    """
+    code = models.CharField(max_length=35, unique=True)
+    name = models.CharField(max_length=55, unique=True)
+    value = models.IntegerField()
+    uom = models.ForeignKey(UnitOfMeasurement, verbose_name='presentation unit of measurement')
+    description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
+
+
+class ModeOfAdministration(models.Model):
+    """
+        This models how a product is used. it could be Oral, Subcutaneous, Intramuscular for Vaccine or
+        N/A (Not Applicable) for some device that doesnt have mode of administration.
+        for vaccines that can be delivered as SC or IM, Mode of Administration can be used to model that too.
+        e.g code for IM and SC mode of admin can be IM-SC
+    """
+    code = models.CharField(max_length=35)
+    name = models.CharField(max_length=55)
+    description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
+
+
+class StockKeepingUnit(BaseModel):
+    """
+        StockKeepingUnit used to describe a particular product in stock inventory listing. It is used to uniquely
+        identify collection of a given product that has same value for a given set of attributes that can vary for
+         another collection of same product.
+
+         for instance a collection of a product with same value for each of SKU attributes will have same SKU code.
+    """
+    code = models.CharField(max_length=35, unique=True)
+    name = models.CharField(max_length=55, unique=True)
+    presentation = models.ForeignKey('ProductPresentation')
+    price_per_product_base_uom = models.DecimalField(max_length=21, decimal_places=2)
+    #ppp_base_uom_currency = price per product base unit of measurement
+    ppp_base_uom_currency = models.ForeignKey(Currency)
+    batch_no = models.CharField(max_length=35)
+    expiration_date = models.DateField(blank=True, null=True)
+    manufacturer = models.ForeignKey(Company)
+    mode_of_use = models.ForeignKey('ModeOfAdministration')
+    description = models.CharField(max_length=100, blank=True)
+    #weight = models.
