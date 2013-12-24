@@ -310,6 +310,24 @@ class Facility(MPTTModel, Company):
         app_label = 'core'
 
 
+class WarehouseType(BaseModel):
+    """
+        This is used to model different types of Warehouse or Storage Location. it can be Refrigerated Warehouse
+    """
+    code = models.ForeignKey(max_length=35, unique=True)
+    name = models.ForeignKey(max_length=55, unique=True)
+    description = models.CharField(max_length=100, blank=True)
+
+
+class Warehouse(BaseModel):
+    """
+        This defines the storage locations at each Facility. a facility can have more than one warehouse i.e storage -
+        location.
+    """
+    code = models.CharField(max_length=55, unique=True)
+    facility = models.ForeignKey(Facility)
+
+
 class Program(BaseModel):
     """
         Program is used to represent different types of health programs that facilities runs. ARV, HIV, KIck Polio
@@ -337,6 +355,8 @@ class ProgramProduct(BaseModel):
     doses_per_month = models.IntegerField()
     is_active = models.BooleanField()
     current_price = models.DecimalField(max_digits=21, decimal_places=2)
+    program_product_info = models.OneToOneField(ProgramProductOrderInfo)
+    program_product_price = models.ForeignKey(ProgramProductPrice)
 
     def __str__(self):
         return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
@@ -345,9 +365,25 @@ class ProgramProduct(BaseModel):
         app_label = 'core'
 
 
+class ProgramProductPrice(BaseModel):
+    """
+        ProgramProductPrice is used to model the changes in price of each program product,
+        start date and end date represents the period which the price was valid.
+    """
+    price_per_dosage = models.DecimalField(max_digits=21, decimal_places=2)
+    price_currency = models.ForeignKey(Currency, blank=True, null=True)
+    funding_source = models.ManyToManyField(Company)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        app_label = 'core'
+
+
 class FacilityProgramSupported(BaseModel):
     """
         This is used to model programs that a facility supports. its is entered for each program a facility supports.
+        and indicates the status of the program at each facility start date and end date.
     """
     program = models.ForeignKey(Program)
     facility = models.ForeignKey(Facility)
@@ -355,14 +391,14 @@ class FacilityProgramSupported(BaseModel):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
 
+    class Meta:
+        app_label = 'core'
 
-class FacilityProgramProduct(BaseModel):
+
+class ProgramProductOrderInfo(BaseModel):
     """
-        Every Facility has this and it is hold information used for stock allocation and
-        determining when to make requisition or order request based on inventory stock level.
+        ProgramProductOrderInfo is used for holding allocation and order point information for each program product.
     """
-    facility = models.ForeignKey(Facility)
-    program_product = models.ForeignKey(ProgramProduct)
     who_ratio = models.FloatField()
     doses_per_year = models.IntegerField()
     wastage_factor = models.FloatField()
@@ -371,9 +407,8 @@ class FacilityProgramProduct(BaseModel):
     maximum_value = models.IntegerField()
     adjustment_value = models.IntegerField()
 
-    def __str__(self):
-        return '{facility}-{program_product}'.format(facility=self.facility.name,
-                                                     program_product=self.program_product.name)
+    class Meta:
+        app_label = 'core'
 
 
 class SupervisoryNode(MPTTModel, BaseModel):
@@ -390,6 +425,9 @@ class SupervisoryNode(MPTTModel, BaseModel):
     def __str__(self):
         return '{name}'.format(name=self.name)
 
+    class Meta:
+        app_label = 'core'
+
 
 class OrderGroup(BaseModel):
     """
@@ -400,10 +438,22 @@ class OrderGroup(BaseModel):
     name = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=55, blank=True)
     supervisory_node = models.ForeignKey('SupervisoryNode')
-    facilities = models.ManyToManyField(Facility, blank=True, null=True, verbose_name='member facilities')
+    member_facilities = models.ManyToManyField(Facility, blank=True, null=True, verbose_name='member facilities')
 
     def __str__(self):
         return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
+
+
+class ProcessingPeriod(BaseModel):
+    """
+        Used to model start and end date of processing or carrying out an action.
+    """
+    start_date = models.DateField()
+    end_date = models.DateField()
+    name = models.CharField(max_length=35)
 
 
 
