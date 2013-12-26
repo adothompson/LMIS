@@ -2,7 +2,7 @@
 from django.db import models
 
 #import project modules
-from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement
+from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement, Facility, Employee
 
 
 class Inventory(BaseModel):
@@ -26,12 +26,31 @@ class InventoryLine(BaseModel):
     inventory = models.ForeignKey(Inventory)
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
+    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='weight uom')
     volume = models.FloatField(blank=True, null=True)
-    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
+    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='volume uom')
     active = models.BooleanField()
 
 
+class PhysicalStockCount(BaseModel):
+    """
+        This is used record physical stock counts
+    """
+    facility = models.ForeignKey(Facility)
+    date = models.DateField()
+    performed_by = models.ForeignKey(Employee)
+    verified_by = models.ForeignKey(Employee, related_name='verifier')
 
 
+class PhysicalStockCountLine(BaseModel):
+    """
+        This is used to record each unique item counted during physical stock count
+    """
+    item = models.ForeignKey(Item)
+    physical_stock_count = models.ForeignKey(PhysicalStockCount)
+    quantity = models.IntegerField(verbose_name='physically counted quantity')
+    inventory_quantity = models.IntegerField()
+    quantity_uom = models.ForeignKey(UnitOfMeasurement)
+    vvm_status = models.IntegerField(blank=True, null=True)
+    comment = models.CharField(blank=True)
 

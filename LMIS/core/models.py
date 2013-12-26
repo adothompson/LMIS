@@ -20,6 +20,16 @@ class BaseModel(models.Model):
     modified_date = models.DateTimeField(blank=True, null=True)
 
 
+class VVMStage(object):
+    """
+        This is used to represent possible stages of vaccine vial monitor attached to vaccines to  which gives a visual
+        indication of whether the vaccine has been kept at a temperature which preserves its potency.
+    """
+    ONE = 1
+    TWO = 2
+    THREE = 3
+
+
 class UOMCategory(MPTTModel, BaseModel):
     """
         This represents categories of different unit of measurements.
@@ -449,8 +459,11 @@ class SupervisoryNode(MPTTModel, BaseModel):
 
 class OrderGroup(BaseModel):
     """
-        OrderGroup is used to model facilities that has same supervisory node or
-         makes order from same supplying facility
+        OrderGroup is used to link a Supplying Facility to other facility which they can supply items and
+        the supervisory nodes for the order group.
+        A facility can belong to more than one order group and an order group can have more than one facility.
+
+        A facility can link one of its order groups as the supplier of a program product it supports.
     """
     code = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=35, unique=True)
