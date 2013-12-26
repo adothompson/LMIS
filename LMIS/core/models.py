@@ -431,8 +431,8 @@ class FacilitySupportedProgramProduct(BaseModel):
 
 class SupervisoryNode(MPTTModel, BaseModel):
     """
-        SupervisoryNode is a facility that supervises and manages a OrderGroup, it has a hierarchical
-        structure. This can be used to know whom to escalate notification or alert to.
+        SupervisoryNode is a facility that supervises and manages an OrderGroup, it has a hierarchical
+        structure. This can be used to know whom to send escalated notification or alert to.
     """
     code = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=25, unique=True)
@@ -507,8 +507,6 @@ class Product(BaseModel):
     base_uom = models.ForeignKey(UnitOfMeasurement, verbose_name='default unit of measurement')
     description = models.CharField(max_length=100, blank=True)
     active = models.BooleanField(default=True)
-    moh_bar_code = models.CharField(max_length=255, blank=True)
-    gtin = models.CharField(max_length=35, blank=True)
 
 
 class ProductPresentation(BaseModel):
@@ -559,7 +557,10 @@ class Item(BaseModel):
     """
     code = models.CharField(max_length=35, unique=True)
     name = models.CharField(max_length=55, unique=True)
+    product = models.ForeignKey(Product)
     presentation = models.ForeignKey('ProductPresentation')
+    moh_bar_code = models.CharField(max_length=255, blank=True)
+    gtin = models.CharField(max_length=35, blank=True)
     price_per_product_base_uom = models.DecimalField(max_length=21, decimal_places=2)
     #ppp_base_uom_currency = price per product base unit of measurement
     ppp_base_uom_currency = models.ForeignKey(Currency)
