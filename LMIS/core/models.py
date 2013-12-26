@@ -14,10 +14,14 @@ class BaseModel(models.Model):
     """
         BaseModel is the abstract base class for all the LMIS domain models.
     """
-    #created_by = models.ForeignKey('User', blank=True, null=True, related_name='%(app_label)s_%(class)s_created_by')
-    #modified_by = models.ForeignKey('User', blank=True, null=True, related_name='%(app_label)s_%(class)s_modified_by')
+    created_by = models.ForeignKey('Employee', blank=True, null=True, related_name='%(app_label)s_%(class)s_created_by')
+    modified_by = models.ForeignKey('Employee', blank=True, null=True,
+                                    related_name='%(app_label)s_%(class)s_modified_by')
     created_date = models.DateTimeField(blank=True, null=True)
     modified_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        abstract = True
 
 
 class VVMStage(BaseModel):
@@ -196,7 +200,7 @@ class Company(Party):
 
 class CompanyCategory(MPTTModel, BaseModel):
     """
-        Used to model company category, it can be Facility, Manufacturer, Partner, FacilityOperators etc.
+        Used to model company category, it can be Facility, Partner, FacilityOperators etc.
     """
     name = models.CharField(max_length=35, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_company_categories')
@@ -349,6 +353,7 @@ class Program(BaseModel):
     name = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=55, blank=True)
     active = models.BooleanField()
+    partners = models.ManyToManyField(Company)
     push = models.BooleanField()
 
     def __str__(self):
