@@ -377,7 +377,6 @@ class ProgramProduct(BaseModel):
     current_price_per_base_uom = models.DecimalField(max_digits=21, decimal_places=2,
                                                      verbose_name='price per product uom')
     is_active = models.BooleanField()
-    program_product_price = models.ForeignKey(ProgramProductPriceHistory)
 
     def __str__(self):
         return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
@@ -391,6 +390,7 @@ class ProgramProductPriceHistory(BaseModel):
         ProgramProductPrice is used to model the changes in price of each program product,
         start date and end date represents the period which the price was valid.
     """
+    program_product = models.ForeignKey(ProgramProduct)
     price_per_dosage = models.DecimalField(max_digits=21, decimal_places=2)
     price_currency = models.ForeignKey(Currency, blank=True, null=True)
     funding_source = models.ManyToManyField(Company)
@@ -417,15 +417,16 @@ class FacilityProgramSupported(BaseModel):
         app_label = 'core'
 
 
-class FacilityProgramProductAllocation(BaseModel):
+class FacilitySupportedProgramProduct(BaseModel):
     """
-        This is used used to map ProgramProductAllocationInfo to Facility for each ProgramProduct for
-        programs that a facility support
+        This is used to keep track of program-products a facility support, how the product is allocated to the facility
+        , who supplies the facility the product, current status of the program product at the facility etc.
     """
     facility = models.ForeignKey(Facility)
     program_product = models.ForeignKey(ProgramProduct)
     allocation_info = models.OneToOneField(ProgramProductAllocationInfo)
     active = models.BooleanField(default=True)
+    order_group = models.ForeignKey('OrderGroup')
 
 
 class SupervisoryNode(MPTTModel, BaseModel):
