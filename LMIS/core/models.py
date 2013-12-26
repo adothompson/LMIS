@@ -20,14 +20,13 @@ class BaseModel(models.Model):
     modified_date = models.DateTimeField(blank=True, null=True)
 
 
-class VVMStage(object):
+class VVMStage(BaseModel):
     """
         This is used to represent possible stages of vaccine vial monitor attached to vaccines to  which gives a visual
         indication of whether the vaccine has been kept at a temperature which preserves its potency.
     """
-    ONE = 1
-    TWO = 2
-    THREE = 3
+    name = models.CharField(max_length=35, unique=True)
+    description = models.CharField(max_length=35, unique=True)
 
 
 class UOMCategory(MPTTModel, BaseModel):
