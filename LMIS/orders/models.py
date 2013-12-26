@@ -2,7 +2,7 @@
 from django.db import models
 
 #import project modules
-from core.models import BaseModel, Facility, Product, UnitOfMeasurement, Item, Currency
+from core.models import BaseModel, Facility, Product, UnitOfMeasurement, Item, Currency, Employee
 
 
 class PurchaseOrder(BaseModel):
@@ -46,9 +46,10 @@ class SalesOrder(BaseModel):
     """
     recipient = models.ForeignKey(Facility, related_name='recipient')
     supplier = models.ForeignKey(Facility, related_name='supplier')
-    due_date = models.DateField(blank=True, null=True)
+    approved_by = models.ForeignKey(Employee)
     #the date this was recorded in the system
     sales_date = models.DateField()
+    due_date = models.DateField(blank=True, null=True)
     completed_date = models.DateField(null=True, blank=True)
 
 
