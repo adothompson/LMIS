@@ -323,7 +323,7 @@ class Warehouse(BaseModel):
     """
     code = models.CharField(max_length=55, unique=True)
     facility = models.ForeignKey(Facility)
-    is_refrigerated = models.BooleanField(default=True, verbose_name='cold storage warehouse')
+    is_refrigerated = models.BooleanField(default=False, verbose_name='is cold storage warehouse')
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     cold_storage_gross_capacity = models.FloatField(blank=True, null=True)
@@ -404,7 +404,8 @@ class ProgramProductPriceHistory(BaseModel):
 class FacilityProgramSupported(BaseModel):
     """
         This is used to model programs that a facility supports. its is entered for each program a facility supports.
-        and indicates the status of the program at each facility start date and end date.
+        and indicates the status(active or not) of the program at each facility, program start date and end date at the
+        facility.
     """
     program = models.ForeignKey(Program)
     facility = models.ForeignKey(Facility)
@@ -505,6 +506,8 @@ class Product(BaseModel):
     base_uom = models.ForeignKey(UnitOfMeasurement, verbose_name='default unit of measurement')
     description = models.CharField(max_length=100, blank=True)
     active = models.BooleanField(default=True)
+    moh_bar_code = models.CharField(max_length=255, blank=True)
+    gtin = models.CharField(max_length=35, blank=True)
 
 
 class ProductPresentation(BaseModel):
@@ -545,13 +548,13 @@ class ModeOfAdministration(models.Model):
         app_label = 'core'
 
 
-class StockKeepingUnit(BaseModel):
+class Item(BaseModel):
     """
-        StockKeepingUnit used to describe a particular product in stock inventory listing. It is used to uniquely
-        identify collection of a given product that has same value for a given set of attributes that can vary for
-         another collection of same product.
+        Item is used to describe a particular product in stock inventory listing. It is used to uniquely
+        identify collection of a given product that has same value for a given set of attributes that can vary from
+         one collection of same product to another.
 
-         for instance a collection of a product with same value for each of SKU attributes will have same SKU code.
+         for instance a collection of a product with same value for each of Item attributes will have same item code.
     """
     code = models.CharField(max_length=35, unique=True)
     name = models.CharField(max_length=55, unique=True)
@@ -566,3 +569,11 @@ class StockKeepingUnit(BaseModel):
     description = models.CharField(max_length=100, blank=True)
     #weight_per_base_uom is the weight per product base unit of measurement.
     weight_per_base_uom = models.FloatField(verbose_name='weight per product base uom')
+    active = models.BooleanField()
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
+
