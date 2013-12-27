@@ -2,7 +2,8 @@
 from django.db import models
 
 #import project modules
-from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement, Facility, Employee, VVMStatus
+from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement, Facility, Employee, VVMStatus, Company
+from orders.models import Voucher
 
 
 class Inventory(BaseModel):
@@ -83,3 +84,76 @@ class ConsumptionRecordLine(BaseModel):
     consumption_record = models.ForeignKey(ConsumptionRecord)
     quantity_dispensed = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
+
+
+class IncomingShipment(BaseModel):
+    """
+        This is used to record stock arrival from supplier or supplying facility.
+
+        warehouse - is the storage location of the recipient, where the item will be kept.
+    """
+    STATUS = (
+        (0, 'Draft'),
+        (1, 'Received'),
+        (2, 'Cancelled')
+    )
+    supplier = models.ForeignKey(Facility)
+    input_warehouse = models.ForeignKey(Warehouse)
+    created_date = models.DateField()
+    others = models.BooleanField(default=False)
+    other_source = models.CharField()
+    status = models.IntegerField(choices=STATUS)
+
+
+class IncomingShipmentLine(BaseModel):
+    """
+        This is used to record the detail of each unique item of an IncomingShipment
+    """
+    item = models.ForeignKey(Item)
+    quantity_received = models.IntegerField()
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
+    stock_before = models.IntegerField()
+    stock_after = models.IntegerField()
+    stock_balance = models.IntegerField(blank=True, null=True)
+    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='stock balance uom')
+    weight = models.FloatField(blank=True, null=True)
+    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight uom')
+    packed_volume = models.FloatField(blank=True, null=True)
+    packed_volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='packed volume uom')
+    vvm_status = models.ForeignKey(VVMStatus, blank=True, null=True)
+    voucher = models.ForeignKey(Voucher, blank=True, null=True)
+
+
+class OutgoingShipment(BaseModel):
+    """
+        This is used to track stock movements out to recipient or receiving facility
+
+        output_warehouse is the storage location the item will be shipped from.
+    """
+    STATUS = (
+        (0, 'Draft'),
+        (1, 'Received'),
+        (2, 'Cancelled')
+    )
+    recipient = models.ForeignKey(Facility)
+    output_warehouse = models.ForeignKey(Warehouse)
+    created_date = models.DateField()
+    status = models.IntegerField(choices=STATUS)
+
+
+class OutgoingShipmentLine(BaseModel):
+    """
+        This is used to record the detail of each unique item of an OutgoingShipment
+    """
+    item = models.ForeignKey(Item)
+    quantity_issued = models.IntegerField()
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
+    weight_issued = models.FloatField(blank=True, null=True)
+    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='weight uom')
+    volume = models.FloatField(blank=True, null=True)
+    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='volume uom')
+    stock_before = models.IntegerField()
+    stock_after = models.IntegerField()
+    stock_balance = models.IntegerField(blank=True, null=True)
+    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='stock balance uom')
+    remark = models.CharField(blank=True, null=True)
