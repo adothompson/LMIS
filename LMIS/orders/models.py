@@ -49,7 +49,7 @@ class SalesOrder(BaseModel):
     approved_by = models.ForeignKey(Employee)
     #the date this was recorded in the system
     sales_date = models.DateField()
-    due_date = models.DateField(blank=True, null=True)
+    planned_date = models.DateField(blank=True, null=True)
     completed_date = models.DateField(null=True, blank=True)
 
 
@@ -64,3 +64,10 @@ class SalesOrderLine(BaseModel):
     price_per_base_uom = models.DecimalField(max_length=21, decimal_places=2)
     price_currency = models.FloatField(Currency)
     description = models.CharField(max_length=55, blank=True)
+
+
+class Voucher(BaseModel):
+    """
+
+    """
+    sales_order = models.ForeignKey(SalesOrder)
