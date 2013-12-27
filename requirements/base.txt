@@ -12,7 +12,8 @@ django-model-utils==1.5.0
 django-reversion==1.8.0
 django-extensions==1.2.5
 
-#pydot==1.0.15
+# Pydot Py3 (requires mercurial)
+hg+https://bitbucket.org/prologic/pydot#egg=pydot
 
 # API
 djangorestframework==2.3.10
