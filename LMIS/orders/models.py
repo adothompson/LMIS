@@ -2,7 +2,7 @@
 from django.db import models
 
 #import project modules
-from core.models import BaseModel, Facility, Product, UnitOfMeasurement, Item, Currency, Employee
+from core.models import BaseModel, Facility, Product, UnitOfMeasurement, Item, Currency, Employee, Warehouse, VVMStatus
 
 
 class PurchaseOrder(BaseModel):
@@ -22,7 +22,6 @@ class PurchaseOrder(BaseModel):
     emergency = models.BooleanField(default=False)
     order_date = models.DateField()
     expected_date = models.DateField(blank=True, null=True)
-    sales_order = models.ForeignKey('SaleOrder', blank=True, null=True)
 
 
 class PurchaseOrderLine(BaseModel):
@@ -47,6 +46,7 @@ class SalesOrder(BaseModel):
     recipient = models.ForeignKey(Facility, related_name='recipient')
     supplier = models.ForeignKey(Facility, related_name='supplier')
     approved_by = models.ForeignKey(Employee)
+    purchase_order = models.ForeignKey('PurchaseOrder', blank=True, null=True)
     #the date this was recorded in the system
     sales_date = models.DateField()
     planned_date = models.DateField(blank=True, null=True)
@@ -68,6 +68,18 @@ class SalesOrderLine(BaseModel):
 
 class Voucher(BaseModel):
     """
-
+        Voucher is used as proof of delivery, it list
     """
     sales_order = models.ForeignKey(SalesOrder)
+    recipient_representative = models.ForeignKey('Employee', related_name='recipient representative')
+    supplier_representative = models.ForeignKey('Employee', related_name='supplier representative')
+    date = models.DateField()
+
+
+class VoucherLine(BaseModel):
+    item = models.ForeignKey(Item)
+    warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
+    quantity_supplied = models.IntegerField()
+    quantity_uom = models.ForeignKey(UnitOfMeasurement)
+    vvm_status = models.ForeignKey(VVMStatus, blank=True, null=True)
+    remark = models.CharField(max_length=55, blank=True)
