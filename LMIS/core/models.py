@@ -490,8 +490,8 @@ class ProcessingPeriod(BaseModel):
         Used to model start and end date of processing or carrying out an action.
     """
     name = models.CharField(max_length=35, unique=True)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -517,7 +517,7 @@ class ProductCategory(MPTTModel, BaseModel):
 
 class Product(BaseModel):
     """
-        Product represents a particular item or object that can be distributed, e.g BCG, OPV, etc.
+        Product represents a particular object that is used in a program, e.g BCG, OPV, etc.
 
         -active: can be used to disable a product if false.
     """

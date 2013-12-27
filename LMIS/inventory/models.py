@@ -8,7 +8,7 @@ from orders.models import Voucher
 
 class Inventory(BaseModel):
     """
-        This is used to track the current quantity of each product at a facility. each facility warehouse
+        This is used to track the current quantity of each product at a warehouse. each facility warehouse
         (storage location) has an inventory.
     """
     warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
@@ -69,7 +69,7 @@ class PhysicalStockCountLine(BaseModel):
 
 class ConsumptionRecord(FacilityActivity):
     """
-        This is used to keep track of consumption records at facilities within a start and end date.
+        This is used to keep track of product consumptions at a facility within a given period.
     """
     start_date = models.DateField()
     end_date = models.DateField()

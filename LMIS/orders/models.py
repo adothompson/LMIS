@@ -2,13 +2,14 @@
 from django.db import models
 
 #import project modules
-from core.models import BaseModel, Facility, Product, UnitOfMeasurement, Item, Currency, Employee, Warehouse, VVMStatus
+from core.models import BaseModel, Facility, ProgramProduct, UnitOfMeasurement, Item, Currency, Employee, Warehouse, \
+    VVMStatus
 
 
 class PurchaseOrder(BaseModel):
     """
-        PurchaseOrder: is used to request a Facility to supply product to the facility that placed the PurchaseOrder
-        and it provides specifications and quantities.
+        PurchaseOrder: is used to place a formal request for supply of products listed in the purchase order lines by
+        the purchasing facility(purchaser).
     """
     STATUS = (
         (0, 'Draft'),
@@ -30,7 +31,7 @@ class PurchaseOrderLine(BaseModel):
         it is used to fill an order.
     """
     models.ForeignKey(PurchaseOrder)
-    product = models.ForeignKey(Product)
+    program_product = models.ForeignKey(ProgramProduct)
     quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     remark = models.CharField(max_length=55, blank=True)
