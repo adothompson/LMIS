@@ -367,13 +367,16 @@ class ProgramProductAllocationInfo(BaseModel):
     """
         This models information used to allocate a program product.
     """
-    who_ratio = models.FloatField()#World Health Ratio
+    #World Health Ratio
+    who_ratio = models.FloatField()
     coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
     wastage_rate = models.FloatField(verbose_name='wastage rate(%)')
     buffer_percentage = models.FloatField()
     target_population = models.IntegerField(verbose_name='target population(%)')
     min_quantity = models.IntegerField()
     max_quantity = models.IntegerField()
+    #supply_interval is specified in months
+    supply_interval = models.IntegerField(verbose_name='supply interval(months)')
     adjustment_value = models.IntegerField()
 
 
