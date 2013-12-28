@@ -1,6 +1,9 @@
 #import core django module.
 from django.db import models
 
+#import external modules
+from django_extensions.db.fields import UUIDField
+
 #import project modules
 from core.models import BaseModel, Facility, ProgramProduct, UnitOfMeasurement, Item, Currency, Employee, Warehouse, \
     VVMStatus
@@ -11,6 +14,7 @@ class PurchaseOrder(BaseModel):
         PurchaseOrder: is used to place a formal request for supply of products listed in the purchase order lines by
         the purchasing facility(purchaser).
     """
+    uuid = UUIDField(version=4, primary_key=True)
     STATUS = (
         (0, 'Draft'),
         (1, 'Assigned'),
@@ -27,9 +31,10 @@ class PurchaseOrder(BaseModel):
 
 class PurchaseOrderLine(BaseModel):
     """
-        PurchaseOrderLine defines product, quantity of product, current stock level of product at the requesting facility,
-        it is used to fill an order.
+        PurchaseOrderLine defines product, quantity of product, current stock level of product at the requesting
+         facility, it is used to fill a purchase order.
     """
+    uuid = UUIDField(version=4, primary_key=True)
     models.ForeignKey(PurchaseOrder)
     program_product = models.ForeignKey(ProgramProduct)
     quantity = models.IntegerField()
@@ -44,6 +49,7 @@ class SalesOrder(BaseModel):
 
         optionally, it can be linked to a purchase order.
     """
+    uuid = UUIDField(version=4, primary_key=True)
     recipient = models.ForeignKey(Facility, related_name='recipient')
     supplier = models.ForeignKey(Facility, related_name='supplier')
     approved_by = models.ForeignKey(Employee)
@@ -58,6 +64,7 @@ class SalesOrderLine(BaseModel):
     """
         This is used to model each product unique item that is part of a sales order.
     """
+    uuid = UUIDField(version=4, primary_key=True)
     sales_order = models.ForeignKey(SalesOrder)
     item = models.ForeignKey(Item)
     quantity = models.IntegerField()
@@ -71,6 +78,7 @@ class Voucher(BaseModel):
     """
         Voucher is used as proof of delivery, it list
     """
+    uuid = UUIDField(version=4, primary_key=True)
     sales_order = models.ForeignKey(SalesOrder)
     recipient_representative = models.ForeignKey('Employee', related_name='recipient representative')
     supplier_representative = models.ForeignKey('Employee', related_name='supplier representative')
@@ -78,6 +86,7 @@ class Voucher(BaseModel):
 
 
 class VoucherLine(BaseModel):
+    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
     quantity_supplied = models.IntegerField()

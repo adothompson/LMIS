@@ -1,6 +1,9 @@
 #import core django modules
 from django.db import models
 
+#import external modules
+from django_extensions.db.fields import UUIDField
+
 #import project modules
 from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement, Facility, Employee, VVMStatus, Company
 from orders.models import Voucher
@@ -11,6 +14,7 @@ class Inventory(BaseModel):
         This is used to track the current quantity of each product at a warehouse. each facility warehouse
         (storage location) has an inventory.
     """
+    uuid = UUIDField(version=4, primary_key=True)
     warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
 
 
@@ -23,6 +27,7 @@ class InventoryLine(BaseModel):
         active - is used to indicate if the inventory line should be considered when calculating current quantity of
         a product at a facility etc.
     """
+    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     inventory = models.ForeignKey(Inventory)
     quantity = models.IntegerField()
@@ -38,6 +43,7 @@ class FacilityActivity(BaseModel):
         This is abstract base model for activities that are performed at Facilities such as PhysicalStockCount,
         recording ConsumptionRecord
     """
+    uuid = UUIDField(version=4, primary_key=True)
     facility = models.ForeignKey(Facility)
     date = models.DateField()
     performed_by = models.ForeignKey(Employee)
@@ -58,6 +64,7 @@ class PhysicalStockCountLine(BaseModel):
     """
         This is used to record each unique item counted during physical stock count
     """
+    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     physical_stock_count = models.ForeignKey(PhysicalStockCount)
     quantity = models.IntegerField(verbose_name='physically counted quantity')
@@ -80,6 +87,7 @@ class ConsumptionRecordLine(BaseModel):
         ConsumptionRecordLine represents the quantity of each item consumed at a facility within the ConsumptionRecord
         start and end date
     """
+    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     consumption_record = models.ForeignKey(ConsumptionRecord)
     quantity_dispensed = models.IntegerField()
@@ -92,6 +100,7 @@ class IncomingShipment(BaseModel):
 
         warehouse - is the storage location of the recipient, where the item will be kept.
     """
+    uuid = UUIDField(version=4, primary_key=True)
     STATUS = (
         (0, 'Draft'),
         (1, 'Received'),
@@ -109,6 +118,7 @@ class IncomingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique item of an IncomingShipment
     """
+    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     quantity_received = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
@@ -130,6 +140,7 @@ class OutgoingShipment(BaseModel):
 
         output_warehouse is the storage location the item will be shipped from.
     """
+    uuid = UUIDField(version=4, primary_key=True)
     STATUS = (
         (0, 'Draft'),
         (1, 'Received'),
@@ -145,6 +156,7 @@ class OutgoingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique item of an OutgoingShipment
     """
+    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     quantity_issued = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
