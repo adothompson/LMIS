@@ -9,17 +9,22 @@ from django.contrib.auth.models import User
 #import external modules
 from mptt.models import MPTTModel, TreeForeignKey
 from django_extensions.db.fields import UUIDField
+from model_utils.models import TimeStampedModel
+from model_utils import Choices
 
 
-class BaseModel(models.Model):
+class BaseModel(TimeStampedModel):
     """
-        BaseModel is the abstract base class for all the LMIS domain models.
+        BaseModel is the abstract base class for all the LMIS domain models. it is used to keep track of who created
+        an object and when and when last an object was modified.
+        it extends TimeStampedModel which adds self-updating created and modified fields on any model that
+        inherits from it.
+
     """
+    uuid = UUIDField(version=4, primary_key=True)
     created_by = models.ForeignKey('Employee', blank=True, null=True, related_name='%(app_label)s_%(class)s_created_by')
     modified_by = models.ForeignKey('Employee', blank=True, null=True,
                                     related_name='%(app_label)s_%(class)s_modified_by')
-    created_date = models.DateTimeField(blank=True, null=True)
-    modified_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -30,35 +35,31 @@ class VVMStage(BaseModel):
         This is used to represent possible stages of vaccine vial monitor attached to vaccines to  which gives a visual
         indication of whether the vaccine has been kept at a temperature which preserves its potency.
     """
-    #TODO: implemengt with django model util
-    name = models.CharField(max_length=35, unique=True)
-    description = models.CharField(max_length=35, unique=True)
+    STATUS = Choices('Stage 1', 'Stage 2', 'Stage 3', 'Stage 4')
+
+    class Meta:
+        managed = False
 
 
 class UOMCategory(MPTTModel, BaseModel):
     """
         This represents categories of different unit of measurements.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=50, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_uom_categories')
 
-    class MPTTMeta:
-        order_insertion_by = ['name']
-
     def __str__(self):
         return '{name}'.format(name=self.name)
 
-    class Meta:
-        app_label = 'core'
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
 
 class UnitOfMeasurement(BaseModel):
     """
         This represents the standard of unit of measurement of things like temp, volume, dosage etc etc.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=25, unique=True)
     symbol = models.CharField(max_length=10)
     uom_category = models.ForeignKey(UOMCategory)
@@ -79,7 +80,6 @@ class Rate(BaseModel):
         a currency should have at least one rate with value equals to 1, this is the rate of the currency against itself
         The date is the date from which the rate becomes effective.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=35)
     value = models.DecimalField(max_digits=21, decimal_places=2)
     date = models.DateField(null=True, blank=True, verbose_name='effective date')
@@ -97,20 +97,17 @@ class Currency(BaseModel):
         This is used to represent currency for monetary units
 
         Attribute:
-            symbol_position_before: this is used to know how to format this currency, default is True hence currency symbol
-            appear before the monetary value.
+            symbol_position_before: this is used to know how to format this currency, default is True hence currency
+            symbol appear before the monetary value.
+            name: Dollars
+            symbol: $
+            code: USD
     """
-    SYMBOL_BEFORE = 1
-    SYMBOL_AFTER = 1
-    SYMBOL_POSITIONS = (
-        (SYMBOL_BEFORE, 'Before'),
-        (SYMBOL_AFTER, 'After'),
-    )
-    uuid = UUIDField(version=4, primary_key=True)
+    SYMBOL_POSITION = Choices('before', 'after')
     name = models.CharField(max_length=35, unique=True)
     symbol = models.CharField(max_length=5, unique=True)
     code = models.CharField(max_length=15, unique=True)
-    symbol_position_before = models.IntegerField(max_length=1, choices=SYMBOL_POSITIONS, default=SYMBOL_BEFORE)
+    symbol_position = models.CharField(choices=SYMBOL_POSITION, default=SYMBOL_POSITION.before, max_length=20)
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -123,7 +120,6 @@ class Contact(BaseModel):
     """
         This models contact info of other domain models such as Facility, Partners, Manufacturers etc
     """
-    uuid = UUIDField(version=4, primary_key=True)
     tag = models.CharField(max_length=35, unique=True)
     phone_number = models.CharField(max_length=15, blank=True)
     email = models.EmailField(blank=True)
@@ -147,22 +143,20 @@ class Address(BaseModel):
     """
         Attributes:
             tag : used to refer to the address, could be Head Office Address, Branch Office Address, etc
-            subdivision :  holds PyCountry Subdivision unique code for the subdivision. subdivision could be a region
-                or state, it varies from one country to another.
             country : This is used to hold the country code.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     tag = models.CharField(max_length=35, blank=True, null=True)
     street = models.CharField(max_length=35, blank=True, null=True)
     zip = models.CharField(max_length=15, blank=True, null=True)
     city = models.CharField(max_length=35, blank=True, null=True)
     #ward = models.ForeignKey('Ward', blank=True, null=True)
+    #TODO: decided whether this should be removed or added
     #lga = models.ForeignKey('LGA', blank=True, null=True)
     subdivision = models.CharField(max_length=10, blank=True, null=True)
     country = models.CharField(max_length=5, blank=True, null=True)
 
     def __str__(self):
-        return '{street}'.format(street=self.streets)
+        return '{street}'.format(street=self.street)
 
     class Meta:
         app_label = 'core'
@@ -172,7 +166,6 @@ class Party(BaseModel):
     """
         This is the abstract base class of all entities such as Employee, Facility, Partners, Manufacturers
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=55, unique=True)
     code = models.CharField(max_length=35, unique=True)
     contact = models.ForeignKey(Contact, null=True, blank=True)
@@ -180,8 +173,6 @@ class Party(BaseModel):
 
     class Meta:
         abstract = True
-
-    class Meta:
         app_label = 'core'
 
 
@@ -191,6 +182,12 @@ class Manufacturer(Party):
         a product can have one or more manufacturers.
     """
     products = models.ManyToManyField('Product', blank=True, null=True)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
 
 
 class Company(Party):
@@ -211,7 +208,6 @@ class CompanyCategory(MPTTModel, BaseModel):
     """
         Used to model company category, it can be Facility, Partner, FacilityOperators etc.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=35, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_company_categories')
 
@@ -226,7 +222,6 @@ class EmployeeCategory(MPTTModel, BaseModel):
     """
         used to model employee categories
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=35, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_employee_categories')
 
@@ -264,15 +259,10 @@ class FacilityType(MPTTModel, BaseModel):
     """
         This models different types of facilities, each country should have their different types of facilities.
     """
-    uuid = UUIDField(version=4, primary_key=True)
-    code = models.CharField(max_length=25, unique=True)
-    name = models.CharField(max_length=25, unique=True)
-    description = models.CharField(max_length=200, blank=True)
+    code = models.CharField(max_length=35, unique=True)
+    name = models.CharField(max_length=35, unique=True)
+    description = models.CharField(max_length=55, blank=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_facility_types')
-    #TODO: find out what nominal max month means.
-    #level_id = models.IntegerField()
-    #nominal_max_month = models.IntegerField()
-    #nominal_eop = models.FloatField(blank=True, null=True)
     active = models.BooleanField()
 
     def __str__(self):
@@ -286,10 +276,12 @@ class FacilityTypeApprovedProduct(BaseModel):
     """
         Used to represent the program products that are approved for a given facility type.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     facility_type = models.ForeignKey(FacilityType)
     program_product = models.ForeignKey('ProgramProduct')
     max_months_of_stock = models.IntegerField()
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
     class Meta:
         app_label = 'core'
@@ -300,29 +292,25 @@ class Facility(MPTTModel, Company):
         This is used to model stores, health facilities, Satellite stores etc
         facility_operator is a set of organizations that
     """
-    description = models.CharField(max_length=200, blank=True)
-    facility_operators = models.ForeignKey(Company, verbose_name='facility operators')
-    global_location_no = models.CharField(max_length=55, blank=True)
-    #TODO: this will be replaced by the location module. geo_zone = models.ForeignKey(GeographicZone)
+    description = models.CharField(max_length=55, blank=True)
     facility_type = models.ForeignKey(FacilityType)
+    supplies_others = models.BooleanField()
+    sdp = models.BooleanField(verbose_name="is service delivery point")
+    facility_operators = models.ManyToManyField(Company, blank=True, null=True)
+    global_location_no = models.CharField(max_length=55, blank=True)
     catchment_population = models.IntegerField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     altitude = models.FloatField(blank=True, null=True)
-    operated_by = models.ManyToManyField('FacilityOperator', blank=True, null=True)
-    supplies_others = models.BooleanField(default=True)
-    sdp = models.BooleanField(verbose_name="is service delivery point")
     has_electricity = models.NullBooleanField(blank=True)
     is_online = models.NullBooleanField(blank=True, null=True)
     has_electronic_scc = models.NullBooleanField(blank=True, null=False)
     has_electronic_dar = models.NullBooleanField(blank=True, null=False)
-    is_active = models.NullBooleanField()
+    is_active = models.NullBooleanField(default=True)
     go_live_date = models.DateField()
-    go_down_date = models.DateField(blank=True)
+    go_down_date = models.DateField(blank=True, null=True)
     is_satellite = models.NullBooleanField(blank=True, null=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='child_facilities')
-    comment = models.CharField(max_length=200, blank=True)
-    enabled = models.BooleanField()
     virtual_facility = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
@@ -337,10 +325,15 @@ class WarehouseType(BaseModel):
         This is used to model different types of Warehouse or Storage Location. it can be a Physical Warehouse,
         In-Transit Warehouse(like products being transported)
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.ForeignKey(max_length=35, unique=True)
     name = models.ForeignKey(max_length=55, unique=True)
     description = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
 
 
 class Warehouse(BaseModel):
@@ -348,7 +341,6 @@ class Warehouse(BaseModel):
         This defines the storage locations at each Facility. a facility can have more than one warehouse i.e storage -
         location.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=55, unique=True)
     facility = models.ForeignKey(Facility)
     is_refrigerated = models.BooleanField(default=False, verbose_name='is cold storage warehouse')
@@ -359,12 +351,17 @@ class Warehouse(BaseModel):
     ambient_storage_gross_capacity = models.FloatField(blank=True, null=True)
     ambient_storage_net_capacity = models.FloatField(blank=True, null=True)
 
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
+
 
 class Program(BaseModel):
     """
         Program is used to represent different types of health programs that facilities runs. ARV, HIV, KIck Polio
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=55, blank=True)
@@ -383,7 +380,6 @@ class ProgramProductAllocationInfo(BaseModel):
     """
         This models information used to allocate a program product.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     #World Health Ratio
     who_ratio = models.FloatField()
     coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
@@ -396,6 +392,9 @@ class ProgramProductAllocationInfo(BaseModel):
     supply_interval = models.IntegerField(verbose_name='supply interval(months)')
     adjustment_value = models.IntegerField()
 
+    class Meta:
+        app_label = 'core'
+
 
 class ProgramProduct(BaseModel):
     """
@@ -405,7 +404,6 @@ class ProgramProduct(BaseModel):
         -base_uom_per_person is the number of base units of the product required per person(in the target population)
          to complete treatment or immunization.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     program = models.ForeignKey(Program)
     product = models.ForeignKey('Product')
     product_base_uom_per_month = models.IntegerField()
@@ -425,7 +423,6 @@ class ProgramProductPriceHistory(BaseModel):
         ProgramProductPrice is used to model the changes in price of each program product,
         start date and end date represents the period which the price was valid.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     program_product = models.ForeignKey(ProgramProduct)
     price_per_dosage = models.DecimalField(max_digits=21, decimal_places=2)
     price_currency = models.ForeignKey(Currency, blank=True, null=True)
@@ -443,7 +440,6 @@ class FacilityProgramSupported(BaseModel):
         and indicates the status(active or not) of the program at each facility, program start date and end date at the
         facility.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     program = models.ForeignKey(Program)
     facility = models.ForeignKey(Facility)
     active = models.BooleanField()
@@ -459,12 +455,14 @@ class FacilitySupportedProgramProduct(BaseModel):
         This is used to keep track of program-products a facility support, how the product is allocated to the facility
         , who supplies the facility the product, current status of the program product at the facility etc.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     facility = models.ForeignKey(Facility)
     program_product = models.ForeignKey(ProgramProduct)
     allocation_info = models.OneToOneField(ProgramProductAllocationInfo)
     active = models.BooleanField(default=True)
     order_group = models.ForeignKey('OrderGroup')
+
+    class Meta:
+        app_label = 'core'
 
 
 class SupervisoryNode(MPTTModel, BaseModel):
@@ -472,7 +470,6 @@ class SupervisoryNode(MPTTModel, BaseModel):
         SupervisoryNode is a facility that supervises and manages an OrderGroup, it has a hierarchical
         structure. This can be used to know whom to send escalated notification or alert to.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=25, unique=True)
     description = models.CharField(max_length=55, blank=True)
@@ -494,7 +491,6 @@ class OrderGroup(BaseModel):
 
         A facility can link one of its order groups as the supplier of a program product it supports.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=55, blank=True)
@@ -512,7 +508,6 @@ class ProcessingPeriod(BaseModel):
     """
         Used to model start and end date of processing or carrying out an action.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=35, unique=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
@@ -528,11 +523,10 @@ class ProductCategory(MPTTModel, BaseModel):
     """
        This is used group products, it is hierarchical. it can be device, vaccine, diluent, syringes etc
     """
-    uuid = UUIDField(version=4, primary_key=True)
     name = models.CharField(max_length=50, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_product_categories')
 
-    def __unicode__(self):
+    def __str__(self):
         return '{name}'.format(name=self.name)
 
     class MPTTMeta:
@@ -546,13 +540,18 @@ class Product(BaseModel):
 
         -active: can be used to disable a product if false.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=35, unique=True)
     name = models.CharField(max_length=55, unique=True)
     category = models.ForeignKey(ProductCategory, verbose_name='product category')
     base_uom = models.ForeignKey(UnitOfMeasurement, verbose_name='default unit of measurement')
     description = models.CharField(max_length=100, blank=True)
     active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
 
 
 class ProductPresentation(BaseModel):
@@ -562,7 +561,6 @@ class ProductPresentation(BaseModel):
         -it can be 5 uom where uom is unit per box for syringes
 
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=35, unique=True)
     name = models.CharField(max_length=55, unique=True)
     value = models.IntegerField()
@@ -583,7 +581,6 @@ class ModeOfAdministration(models.Model):
         for vaccines that can be delivered as SC or IM, Mode of Administration can be used to model that too.
         e.g code for IM and SC mode of admin can be IM-SC
     """
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=35)
     name = models.CharField(max_length=55)
     description = models.CharField(max_length=100, blank=True)
@@ -603,24 +600,24 @@ class Item(BaseModel):
 
          for instance a collection of a product with same value for each of Item attributes will have same item code.
     """
-    #TODO: introduce ItemMeasurement
-    uuid = UUIDField(version=4, primary_key=True)
     code = models.CharField(max_length=35, unique=True)
     name = models.CharField(max_length=55, unique=True)
     product = models.ForeignKey(Product)
     presentation = models.ForeignKey('ProductPresentation')
+    manufacturer = models.ForeignKey(Company)
+    batch_no = models.CharField(max_length=35)
     moh_bar_code = models.CharField(max_length=255, blank=True)
     gtin = models.CharField(max_length=35, blank=True)
-    price_per_product_base_uom = models.DecimalField(max_length=21, decimal_places=2)
-    #ppp_base_uom_currency = price per product base unit of measurement
-    ppp_base_uom_currency = models.ForeignKey(Currency)
-    batch_no = models.CharField(max_length=35)
-    expiration_date = models.DateField(blank=True, null=True)
-    manufacturer = models.ForeignKey(Company)
-    mode_of_use = models.ForeignKey('ModeOfAdministration')
+    price_per_unit = models.DecimalField(max_length=21, decimal_places=2)
+    price_currency = models.ForeignKey(Currency, blank=True, null=True)
+    expiration_date = models.DateField()
+    country_of_origin = models.CharField(max_length=55)
+    mode_of_use = models.ForeignKey('ModeOfAdministration', blank=True, null=True)
     description = models.CharField(max_length=100, blank=True)
-    #weight_per_base_uom is the weight per product base unit of measurement.
-    weight_per_base_uom = models.FloatField(verbose_name='weight per product base uom')
+    weight_per_unit = models.FloatField(blank=True, null=True)
+    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
+    volume_per_unit = models.FloatField(blank=True, null=True)
+    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
     active = models.BooleanField()
 
     def __str__(self):
