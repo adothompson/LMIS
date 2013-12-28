@@ -68,6 +68,8 @@ class SalesOrderLine(BaseModel):
     sales_order = models.ForeignKey(SalesOrder)
     item = models.ForeignKey(Item)
     quantity = models.IntegerField()
+    buffer_quantity = models.IntegerField()
+    total_quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     price_per_base_uom = models.DecimalField(max_length=21, decimal_places=2)
     price_currency = models.FloatField(Currency)
