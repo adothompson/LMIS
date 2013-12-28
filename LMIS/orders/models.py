@@ -2,11 +2,11 @@
 from django.db import models
 
 #import external modules
-from django_extensions.db.fields import UUIDField
+from model_utils import Choices
 
 #import project modules
-from core.models import BaseModel, Facility, ProgramProduct, UnitOfMeasurement, Item, Currency, Employee, Warehouse, \
-    VVMStatus
+from core.models import BaseModel, Facility, Program, Product, UnitOfMeasurement, Item, Currency, Employee, Warehouse, \
+    VVMStage
 
 
 class PurchaseOrder(BaseModel):
@@ -14,18 +14,15 @@ class PurchaseOrder(BaseModel):
         PurchaseOrder: is used to place a formal request for supply of products listed in the purchase order lines by
         the purchasing facility(purchaser).
     """
-    uuid = UUIDField(version=4, primary_key=True)
-    STATUS = (
-        (0, 'Draft'),
-        (1, 'Assigned'),
-        (2, 'Done'),
-        (3, 'Cancelled')
-    )
+    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (1, 'done', _('Done')),
+                     (1, 'cancelled', _('Cancelled'))
+                     )
     purchaser = models.ForeignKey(Facility, related_name='purchaser')
     supplier = models.ForeignKey(Facility, related_name='supplier')
-    status = models.IntegerField(choices=STATUS, default=0)
+    status = models.IntegerField(choices=STATUS, default=STATUS.draft)
     emergency = models.BooleanField(default=False)
     order_date = models.DateField()
+    sales_order = models.ForeignKey('SalesOrder', blank=True, null=True)
     expected_date = models.DateField(blank=True, null=True)
 
 
@@ -34,10 +31,11 @@ class PurchaseOrderLine(BaseModel):
         PurchaseOrderLine defines product, quantity of product, current stock level of product at the requesting
          facility, it is used to fill a purchase order.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     models.ForeignKey(PurchaseOrder)
-    program_product = models.ForeignKey(ProgramProduct)
-    quantity = models.IntegerField()
+    program = models.ForeignKey(Program)
+    product = models.ForeignKey(Product)
+    quantity_needed = models.IntegerField()
+    stock_at_hand = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     remark = models.CharField(max_length=55, blank=True)
 
@@ -49,12 +47,13 @@ class SalesOrder(BaseModel):
 
         optionally, it can be linked to a purchase order.
     """
-    uuid = UUIDField(version=4, primary_key=True)
+    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (1, 'done', _('Done')),
+                     (1, 'cancelled', _('Cancelled'))
+                     )
     recipient = models.ForeignKey(Facility, related_name='recipient')
     supplier = models.ForeignKey(Facility, related_name='supplier')
     approved_by = models.ForeignKey(Employee)
-    purchase_order = models.ForeignKey('PurchaseOrder', blank=True, null=True)
-    #the date this was recorded in the system
+    status = models.IntegerField(choices=STATUS, default=STATUS.draft)
     sales_date = models.DateField()
     planned_date = models.DateField(blank=True, null=True)
     completed_date = models.DateField(null=True, blank=True)
@@ -64,23 +63,27 @@ class SalesOrderLine(BaseModel):
     """
         This is used to model each product unique item that is part of a sales order.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     sales_order = models.ForeignKey(SalesOrder)
+    program = models.ForeignKey(Program)
     item = models.ForeignKey(Item)
-    quantity = models.IntegerField()
+    quantity_requested = models.IntegerField(blank=True, null=True)
     buffer_quantity = models.IntegerField()
     total_quantity = models.IntegerField()
-    quantity_uom = models.ForeignKey(UnitOfMeasurement)
-    price_per_base_uom = models.DecimalField(max_length=21, decimal_places=2)
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
+    total_price = models.DecimalField(max_length=21, decimal_places=2)
     price_currency = models.FloatField(Currency)
+    total_weight = models.FloatField(blank=True, null=True)
+    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight uom')
+    total_volume = models.FloatField()
+    vvm_status = models.IntegerField(Choices=VVMStage.STATUS, blank=True, null=True)
+    volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='volume uom')
     description = models.CharField(max_length=55, blank=True)
 
 
 class Voucher(BaseModel):
     """
-        Voucher is used as proof of delivery, it list
+        Voucher is used as a proof of delivery
     """
-    uuid = UUIDField(version=4, primary_key=True)
     sales_order = models.ForeignKey(SalesOrder)
     recipient_representative = models.ForeignKey('Employee', related_name='recipient representative')
     supplier_representative = models.ForeignKey('Employee', related_name='supplier representative')
@@ -88,10 +91,10 @@ class Voucher(BaseModel):
 
 
 class VoucherLine(BaseModel):
-    uuid = UUIDField(version=4, primary_key=True)
+    program = models.ForeignKey(Program)
     item = models.ForeignKey(Item)
     warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
     quantity_supplied = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
-    vvm_status = models.ForeignKey(VVMStatus, blank=True, null=True)
+    vvm_status = models.IntegerField(Choices=VVMStage.STATUS, blank=True, null=True)
     remark = models.CharField(max_length=55, blank=True)
