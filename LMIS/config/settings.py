@@ -34,6 +34,7 @@ class Common(Configuration):
         'rest_framework',  # API
         'django_filters',  # API filter support
         'mptt',
+        'django-model-utils',
     )
 
     # Apps specific for this project go here.

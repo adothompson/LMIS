@@ -75,7 +75,7 @@ class SalesOrderLine(BaseModel):
     total_weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight uom')
     total_volume = models.FloatField()
-    vvm_status = models.IntegerField(Choices=VVMStage.STATUS, blank=True, null=True)
+    vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='volume uom')
     description = models.CharField(max_length=55, blank=True)
 
@@ -96,5 +96,5 @@ class VoucherLine(BaseModel):
     warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
     quantity_supplied = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
-    vvm_status = models.IntegerField(Choices=VVMStage.STATUS, blank=True, null=True)
+    vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     remark = models.CharField(max_length=55, blank=True)
