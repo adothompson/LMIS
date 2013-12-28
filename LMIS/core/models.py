@@ -35,7 +35,7 @@ class VVMStage(BaseModel):
         This is used to represent possible stages of vaccine vial monitor attached to vaccines to  which gives a visual
         indication of whether the vaccine has been kept at a temperature which preserves its potency.
     """
-    STATUS = Choices('Stage 1', 'Stage 2', 'Stage 3', 'Stage 4')
+    STAGE = Choices('Stage 1', 'Stage 2', 'Stage 3', 'Stage 4')
 
     class Meta:
         managed = False
