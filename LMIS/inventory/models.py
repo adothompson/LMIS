@@ -1,11 +1,9 @@
 #import core django modules
 from django.db import models
 
-#import external modules
-from django_extensions.db.fields import UUIDField
-
 #import project modules
-from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement, Facility, Employee, VVMStatus, Company
+from cce.models import ColdChainEquipment
+from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement, Facility, Employee, VVMStage, Company
 from orders.models import Voucher
 
 
@@ -13,9 +11,12 @@ class Inventory(BaseModel):
     """
         This is used to track the current quantity of each product at a warehouse. each facility warehouse
         (storage location) has an inventory.
+
+        the cce link will enable us to keep track of inventory at CCE level.
+
     """
-    uuid = UUIDField(version=4, primary_key=True)
-    warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
+    warehouse = models.ForeignKey(Warehouse)
+    cce = models.ForeignKey(ColdChainEquipment, blank=True, null=True)
 
 
 class InventoryLine(BaseModel):
@@ -27,7 +28,6 @@ class InventoryLine(BaseModel):
         active - is used to indicate if the inventory line should be considered when calculating current quantity of
         a product at a facility etc.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     inventory = models.ForeignKey(Inventory)
     quantity = models.IntegerField()
@@ -43,7 +43,6 @@ class FacilityActivity(BaseModel):
         This is abstract base model for activities that are performed at Facilities such as PhysicalStockCount,
         recording ConsumptionRecord
     """
-    uuid = UUIDField(version=4, primary_key=True)
     facility = models.ForeignKey(Facility)
     date = models.DateField()
     performed_by = models.ForeignKey(Employee)
@@ -55,7 +54,7 @@ class FacilityActivity(BaseModel):
 
 class PhysicalStockCount(FacilityActivity):
     """
-        This is used record physical stock counts
+        This is used record physical stock counts results.
     """
     pass
 
@@ -64,13 +63,12 @@ class PhysicalStockCountLine(BaseModel):
     """
         This is used to record each unique item counted during physical stock count
     """
-    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     physical_stock_count = models.ForeignKey(PhysicalStockCount)
     quantity = models.IntegerField(verbose_name='physically counted quantity')
     inventory_quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
-    vvm_status = models.IntegerField(VVMStatus, blank=True, null=True)
+    vvm_stage = models.IntegerField(choices=VVMStage.STAGE, blank=True, null=True)
     comment = models.CharField(blank=True)
 
 
@@ -87,7 +85,6 @@ class ConsumptionRecordLine(BaseModel):
         ConsumptionRecordLine represents the quantity of each item consumed at a facility within the ConsumptionRecord
         start and end date
     """
-    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     consumption_record = models.ForeignKey(ConsumptionRecord)
     quantity_dispensed = models.IntegerField()
@@ -100,25 +97,17 @@ class IncomingShipment(BaseModel):
 
         warehouse - is the storage location of the recipient, where the item will be kept.
     """
-    uuid = UUIDField(version=4, primary_key=True)
-    STATUS = (
-        (0, 'Draft'),
-        (1, 'Received'),
-        (2, 'Cancelled')
-    )
     supplier = models.ForeignKey(Facility)
     input_warehouse = models.ForeignKey(Warehouse)
     created_date = models.DateField()
     others = models.BooleanField(default=False)
     other_source = models.CharField()
-    status = models.IntegerField(choices=STATUS)
 
 
 class IncomingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique item of an IncomingShipment
     """
-    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     quantity_received = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
@@ -130,7 +119,7 @@ class IncomingShipmentLine(BaseModel):
     weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight uom')
     packed_volume = models.FloatField(blank=True, null=True)
     packed_volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='packed volume uom')
-    vvm_status = models.ForeignKey(VVMStatus, blank=True, null=True)
+    vvm_stage = models.ForeignKey(choices=VVMStage.STAGES, blank=True, null=True)
     voucher = models.ForeignKey(Voucher, blank=True, null=True)
 
 
