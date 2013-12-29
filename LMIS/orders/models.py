@@ -14,8 +14,8 @@ class PurchaseOrder(BaseModel):
         PurchaseOrder: is used to place a formal request for supply of products listed in the purchase order lines by
         the purchasing facility(purchaser).
     """
-    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (1, 'done', _('Done')),
-                     (1, 'cancelled', _('Cancelled'))
+    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (2, 'done', _('Done')),
+                     (3, 'cancelled', _('Cancelled'))
                      )
     purchaser = models.ForeignKey(Facility, related_name='purchaser')
     supplier = models.ForeignKey(Facility, related_name='supplier')
@@ -47,8 +47,8 @@ class SalesOrder(BaseModel):
 
         optionally, it can be linked to a purchase order.
     """
-    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (1, 'done', _('Done')),
-                     (1, 'cancelled', _('Cancelled'))
+    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (2, 'done', _('Done')),
+                     (3, 'cancelled', _('Cancelled'))
                      )
     recipient = models.ForeignKey(Facility, related_name='recipient')
     supplier = models.ForeignKey(Facility, related_name='supplier')
