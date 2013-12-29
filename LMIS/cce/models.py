@@ -10,8 +10,8 @@ from core.models import BaseModel, UnitOfMeasurement, Facility, Warehouse
 
 class ColdChainEquipmentType(BaseModel):
     """
-        This class is used to classify different types of ColdChainEquipment such as Freezers and Fridge etc
-        Fridge has minimum of +2 degree celsius to +8 degree celsius.
+        This class is used to classify different types of ColdChainEquipment such as Freezers and Fridge, Dry Storage
+        etc Fridge has minimum of +2 degree celsius to +8 degree celsius.
     """
     code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=20, unique=True)

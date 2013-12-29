@@ -380,7 +380,7 @@ class ProgramProductAllocationInfo(BaseModel):
     """
         This models information used to allocate a program product.
     """
-    #World Health Ratio
+    #World Health Ratio for the program
     who_ratio = models.FloatField()
     coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
     wastage_rate = models.FloatField(verbose_name='wastage rate(%)')
@@ -401,34 +401,19 @@ class ProgramProduct(BaseModel):
         ProgramProduct models set of products that can be used in a Program.
         it is recorded for each product used in a program
 
-        -base_uom_per_person is the number of base units of the product required per person(in the target population)
+        -unit_per_target is the number of base units of the product required per person(in the target population)
          to complete treatment or immunization.
     """
     program = models.ForeignKey(Program)
     product = models.ForeignKey('Product')
-    product_base_uom_per_month = models.IntegerField()
-    current_price_per_base_uom = models.DecimalField(max_digits=21, decimal_places=2,
-                                                     verbose_name='price per product uom')
+    unit_per_target = models.IntegerField()
+    current_price_per_unit = models.DecimalField(max_digits=21, decimal_places=2, verbose_name='price per product uom')
+    price_currency = models.ForeignKey(Currency, blank=True, null=True)
+    funding_source = models.ManyToManyField(Company)
     is_active = models.BooleanField()
 
     def __str__(self):
         return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
-
-    class Meta:
-        app_label = 'core'
-
-
-class ProgramProductPriceHistory(BaseModel):
-    """
-        ProgramProductPrice is used to model the changes in price of each program product,
-        start date and end date represents the period which the price was valid.
-    """
-    program_product = models.ForeignKey(ProgramProduct)
-    price_per_dosage = models.DecimalField(max_digits=21, decimal_places=2)
-    price_currency = models.ForeignKey(Currency, blank=True, null=True)
-    funding_source = models.ManyToManyField(Company)
-    start_date = models.DateField()
-    end_date = models.DateField(blank=True, null=True)
 
     class Meta:
         app_label = 'core'
@@ -592,6 +577,12 @@ class ModeOfAdministration(models.Model):
         app_label = 'core'
 
 
+class ProductMeasurement(BaseModel):
+    """
+        Value-Object used to
+    """
+
+
 class Item(BaseModel):
     """
         Item is used to describe a particular product in stock inventory listing. It is used to uniquely
@@ -605,7 +596,7 @@ class Item(BaseModel):
     product = models.ForeignKey(Product)
     presentation = models.ForeignKey('ProductPresentation')
     manufacturer = models.ForeignKey(Company)
-    batch_no = models.CharField(max_length=35)
+    product_batch_no = models.CharField(max_length=35)
     moh_bar_code = models.CharField(max_length=255, blank=True)
     gtin = models.CharField(max_length=35, blank=True)
     price_per_unit = models.DecimalField(max_length=21, decimal_places=2)

@@ -1,6 +1,9 @@
 #import core django modules
 from django.db import models
 
+#import external modules
+from model_utils import Choices
+
 #import project modules
 from cce.models import ColdChainEquipment
 from core.models import Warehouse, BaseModel, Item, UnitOfMeasurement, Facility, Employee, VVMStage, Company
@@ -91,6 +94,23 @@ class ConsumptionRecordLine(BaseModel):
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
 
 
+class StockEntryType(BaseModel):
+    """
+        This is used to indicate different types of stock entry.
+
+        New Arrival: stock entry type used to record quantity received from supplier
+        Surplus: stock entry type used to record excess quantity recorded from physical stock count.
+        Return: stock entry type used to record stock received from lower level stores.
+        Other Sources: stock entry type used to record stock received from other sources
+
+    """
+    TYPES = Choices((0, 'new_arrival', _('New Arrival')), (1, 'surplus', _('Surplus')), (2, 'return', _('Return')),
+                    (3, 'others', _('Other Sources')))
+
+    class Meta:
+        managed = False
+
+
 class IncomingShipment(BaseModel):
     """
         This is used to record stock arrival from supplier or supplying facility.
@@ -98,6 +118,7 @@ class IncomingShipment(BaseModel):
         warehouse - is the storage location of the recipient, where the item will be kept.
     """
     supplier = models.ForeignKey(Facility)
+    stock_entry_type = models.IntegerField(choices=StockEntryType.TYPES)
     input_warehouse = models.ForeignKey(Warehouse)
     created_date = models.DateField()
     others = models.BooleanField(default=False)
@@ -129,6 +150,7 @@ class OutgoingShipment(BaseModel):
 
         output_warehouse is the storage location the item will be shipped from.
     """
+    #TODO: review status
     STATUS = (
         (0, 'Draft'),
         (1, 'Received'),
