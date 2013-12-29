@@ -129,7 +129,6 @@ class OutgoingShipment(BaseModel):
 
         output_warehouse is the storage location the item will be shipped from.
     """
-    uuid = UUIDField(version=4, primary_key=True)
     STATUS = (
         (0, 'Draft'),
         (1, 'Received'),
@@ -145,7 +144,6 @@ class OutgoingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique item of an OutgoingShipment
     """
-    uuid = UUIDField(version=4, primary_key=True)
     item = models.ForeignKey(Item)
     quantity_issued = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
