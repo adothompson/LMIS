@@ -11,6 +11,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django_extensions.db.fields import UUIDField
 from model_utils.models import TimeStampedModel
 from model_utils import Choices
+from locations.models import Location
 
 
 class BaseModel(TimeStampedModel):
@@ -299,8 +300,9 @@ class Facility(MPTTModel, Company):
     facility_operators = models.ManyToManyField(Company, blank=True, null=True)
     global_location_no = models.CharField(max_length=55, blank=True)
     catchment_population = models.IntegerField(blank=True, null=True)
-    latitude = models.FloatField(blank=True, null=True)
-    longitude = models.FloatField(blank=True, null=True)
+    location = models.ForeignKey(Location)
+    #latitude = models.FloatField(blank=True, null=True)
+    #longitude = models.FloatField(blank=True, null=True)
     altitude = models.FloatField(blank=True, null=True)
     has_electricity = models.NullBooleanField(blank=True)
     is_online = models.NullBooleanField(blank=True, null=True)
@@ -388,6 +390,7 @@ class ProgramProductAllocationInfo(BaseModel):
     target_population = models.IntegerField(verbose_name='target population(%)')
     min_quantity = models.IntegerField()
     max_quantity = models.IntegerField()
+    lead_time = models.IntegerField(verbose_name='lead time(weeks)')
     #supply_interval is specified in months
     supply_interval = models.IntegerField(verbose_name='supply interval(months)')
     adjustment_value = models.IntegerField()
@@ -577,9 +580,9 @@ class ModeOfAdministration(BaseModel):
         app_label = 'core'
 
 
-class Item(BaseModel):
+class ProductItem(BaseModel):
     """
-        Item is used to describe a particular product in stock inventory listing. It is used to uniquely
+        ProductItem is used to describe a particular product in stock inventory listing. It is used to uniquely
         identify collection of a given product that has same value for a given set of attributes that can vary from
          one collection of same product to another.
 

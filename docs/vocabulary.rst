@@ -110,7 +110,7 @@ ModeOfAdministration
      This models how a product is used. it could be Oral, Subcutaneous, Intramuscular for Vaccine or
      N/A (Not Applicable) for some products.
 
-Item
+ProductItem
     It is used to uniquely identify collection of a given product that has same value for a given set of attributes that
     can vary from one collection of same product to another.
 
