@@ -559,7 +559,7 @@ class ProductPresentation(BaseModel):
         app_label = 'core'
 
 
-class ModeOfAdministration(models.Model):
+class ModeOfAdministration(BaseModel):
     """
         This models how a product is used. it could be Oral, Subcutaneous, Intramuscular for Vaccine or
         N/A (Not Applicable) for some device that doesnt have mode of administration.
@@ -611,3 +611,12 @@ class Item(BaseModel):
     class Meta:
         app_label = 'core'
 
+
+class Adjustment(BaseModel):
+    """
+        Adjustment is used to account for difference between physical stock count quantities and inventory quantity.
+
+    """
+    previous_quantity = models.IntegerField()
+    revised_quantity = models.IntegerField()
+    date_time = models.DateTimeField()

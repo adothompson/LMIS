@@ -9,10 +9,10 @@ from django.db import models
 from model_utils import Choices
 
 #import project modules
-from core.models import Facility, Employee
+from core.models import BaseModel, Facility, Employee
 
 
-class Priority(models.Model):
+class Priority(BaseModel):
     """
         This is used to model notification priority levels
     """
@@ -23,7 +23,7 @@ class Priority(models.Model):
         managed = False
 
 
-class OnSiteNotification(models.Model):
+class OnSiteNotification(BaseModel):
     """
         This is used to log each on-site notification flag.
     """
@@ -34,7 +34,7 @@ class OnSiteNotification(models.Model):
     date_time = models.DateTimeField()
 
 
-class OnSiteNotificationRecipient(models.Model):
+class OnSiteNotificationRecipient(BaseModel):
     """
         This is used to keep track of notification recipients and whether they have seen the notification or not.
     """
