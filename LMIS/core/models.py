@@ -577,12 +577,6 @@ class ModeOfAdministration(models.Model):
         app_label = 'core'
 
 
-class ProductMeasurement(BaseModel):
-    """
-        Value-Object used to
-    """
-
-
 class Item(BaseModel):
     """
         Item is used to describe a particular product in stock inventory listing. It is used to uniquely
