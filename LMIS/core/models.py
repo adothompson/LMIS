@@ -616,7 +616,10 @@ class Adjustment(BaseModel):
     """
         Adjustment is used to account for difference between physical stock count quantities and inventory quantity.
 
+        the physical stock count line is the physical stock count line the adjustment is for.
     """
+    physical_stock_line = models.ForeignKey('PhysicalStockCountLine')
     previous_quantity = models.IntegerField()
     revised_quantity = models.IntegerField()
+    reason = models.CharField(max_length=55, verbose_name='reason for adjustment')
     date_time = models.DateTimeField()
