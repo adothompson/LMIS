@@ -83,7 +83,7 @@ def create_locations_from_geo(parent_loc):
         state_loc = Location.objects.create(uuid=state.uuid, name=state.name, parent=parent_loc, location_type=state_type)
         state.location = state_loc
         state.save()
-        print("%s %s %s" % (state_loc.name, parent_loc.name, state_loc.poly.global_id))
+        print("%s %s %s" % (state_loc.name, parent_loc.name, state_loc.poly.uuid))
         # loop through geopoly objects where parent_code e = state.code
         lgas_in_state = GeoPoly.objects.filter(parent_code=state.code)
         for lga in lgas_in_state:
@@ -92,7 +92,7 @@ def create_locations_from_geo(parent_loc):
             lga_loc = Location.objects.create(uuid=lga.uuid, name=lga.name, parent=state_loc, location_type=lga_type)
             lga.location = lga_loc
             lga.save()
-            print("%s %s %s" % (lga_loc.name, lga_loc.parent.name, lga_loc.poly.global_id))
+            print("%s %s %s" % (lga_loc.name, lga_loc.parent.name, lga_loc.poly.uuid))
             # loop through geopoly to find wards
             wards_in_lga = GeoPoly.objects.filter(parent_code=lga.code)
             for ward in wards_in_lga:
@@ -101,7 +101,7 @@ def create_locations_from_geo(parent_loc):
                 ward_loc = Location.objects.create(uuid=ward.uuid, name=ward.name, parent=lga_loc, location_type=ward_type)
                 ward.location = ward_loc
                 print("%s, %s, %s, %s, %s, %s" % (
-                    ward_loc.name, ward_loc.parent.name, ward_loc.parent.parent.name, ward_loc.poly.global_id,
+                    ward_loc.name, ward_loc.parent.name, ward_loc.parent.parent.name, ward_loc.poly.uuid,
                     ward_loc.poly.code, ward_loc.poly.parent_code))
                 ward.save()
 

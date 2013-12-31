@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -9,116 +9,132 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'LocationType'
-        db.create_table(u'locations_locationtype', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        db.create_table('locations_locationtype', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
+            ('sub_name', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
+            ('code', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=10)),
         ))
-        db.send_create_signal(u'locations', ['LocationType'])
+        db.send_create_signal('locations', ['LocationType'])
 
         # Adding model 'Location'
-        db.create_table(u'locations_location', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('parent', self.gf('mptt.fields.TreeForeignKey')(related_name=u'children', null=True, to=orm['locations.Location'])),
-            ('name', self.gf('django.db.models.fields.CharField')(default=u'Unknown', max_length=100)),
-            ('alt_names', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
+        db.create_table('locations_location', (
+            ('parent', self.gf('mptt.fields.TreeForeignKey')(to=orm['locations.Location'], null=True, related_name='children')),
+            ('uuid', self.gf('django.db.models.fields.CharField')(primary_key=True, max_length=36)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, default='Unknown')),
+            ('alt_names', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=200)),
             ('location_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['locations.LocationType'])),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
-            ('last_modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
-            (u'lft', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
-            (u'rght', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
-            (u'tree_id', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
-            (u'level', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(blank=True, default=datetime.datetime.now)),
+            ('last_modified', self.gf('django.db.models.fields.DateTimeField')(blank=True, default=datetime.datetime.now)),
+            ('lft', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
+            ('rght', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
+            ('tree_id', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
+            ('level', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True)),
         ))
-        db.send_create_signal(u'locations', ['Location'])
+        db.send_create_signal('locations', ['Location'])
 
         # Adding model 'GeoPoly'
-        db.create_table(u'locations_geopoly', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('location', self.gf('django.db.models.fields.related.OneToOneField')(related_name=u'poly', unique=True, null=True, to=orm['locations.Location'])),
-            ('global_id', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
-            ('source', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
-            ('last_modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+        db.create_table('locations_geopoly', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=200)),
+            ('location', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['locations.Location'], null=True, related_name='poly', unique=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=36)),
+            ('global_id_text', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=200)),
+            ('code', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
+            ('parent_code', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
+            ('source', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(blank=True, default=datetime.datetime.now)),
+            ('last_modified', self.gf('django.db.models.fields.DateTimeField')(blank=True, default=datetime.datetime.now)),
+            ('last_modified_gis', self.gf('django.db.models.fields.DateField')(null=True)),
             ('geom', self.gf('django.contrib.gis.db.models.fields.MultiPolygonField')()),
         ))
-        db.send_create_signal(u'locations', ['GeoPoly'])
+        db.send_create_signal('locations', ['GeoPoly'])
 
         # Adding model 'GeoPoint'
-        db.create_table(u'locations_geopoint', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('location', self.gf('django.db.models.fields.related.OneToOneField')(related_name=u'point', unique=True, null=True, to=orm['locations.Location'])),
-            ('global_id', self.gf('django.db.models.fields.CharField')(max_length=36, blank=True)),
-            ('code', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
-            ('source', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
-            ('created_at', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
-            ('last_modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+        db.create_table('locations_geopoint', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=200)),
+            ('location', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['locations.Location'], null=True, related_name='point', unique=True)),
+            ('uuid', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=36)),
+            ('global_id_text', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=200)),
+            ('code', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
+            ('parent_code', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
+            ('source', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
+            ('created_at', self.gf('django.db.models.fields.DateTimeField')(blank=True, default=datetime.datetime.now)),
+            ('last_modified', self.gf('django.db.models.fields.DateTimeField')(blank=True, default=datetime.datetime.now)),
+            ('last_modified_gis', self.gf('django.db.models.fields.DateField')(null=True)),
+            ('category', self.gf('django.db.models.fields.CharField')(null=True, blank=True, max_length=100)),
             ('geom', self.gf('django.contrib.gis.db.models.fields.PointField')()),
         ))
-        db.send_create_signal(u'locations', ['GeoPoint'])
+        db.send_create_signal('locations', ['GeoPoint'])
 
 
     def backwards(self, orm):
         # Deleting model 'LocationType'
-        db.delete_table(u'locations_locationtype')
+        db.delete_table('locations_locationtype')
 
         # Deleting model 'Location'
-        db.delete_table(u'locations_location')
+        db.delete_table('locations_location')
 
         # Deleting model 'GeoPoly'
-        db.delete_table(u'locations_geopoly')
+        db.delete_table('locations_geopoly')
 
         # Deleting model 'GeoPoint'
-        db.delete_table(u'locations_geopoint')
+        db.delete_table('locations_geopoint')
 
 
     models = {
-        u'locations.geopoint': {
+        'locations.geopoint': {
             'Meta': {'object_name': 'GeoPoint'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'category': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
+            'code': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'default': 'datetime.datetime.now'}),
             'geom': ('django.contrib.gis.db.models.fields.PointField', [], {}),
-            'global_id': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            'location': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "u'point'", 'unique': 'True', 'null': 'True', 'to': u"orm['locations.Location']"}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'source': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
+            'global_id_text': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '200'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_modified': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'default': 'datetime.datetime.now'}),
+            'last_modified_gis': ('django.db.models.fields.DateField', [], {'null': 'True'}),
+            'location': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['locations.Location']", 'null': 'True', 'related_name': "'point'", 'unique': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '200'}),
+            'parent_code': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
+            'source': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '36'})
         },
-        u'locations.geopoly': {
+        'locations.geopoly': {
             'Meta': {'object_name': 'GeoPoly'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'code': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'default': 'datetime.datetime.now'}),
             'geom': ('django.contrib.gis.db.models.fields.MultiPolygonField', [], {}),
-            'global_id': ('django.db.models.fields.CharField', [], {'max_length': '36', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            'location': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "u'poly'", 'unique': 'True', 'null': 'True', 'to': u"orm['locations.Location']"}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'source': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
+            'global_id_text': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '200'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'last_modified': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'default': 'datetime.datetime.now'}),
+            'last_modified_gis': ('django.db.models.fields.DateField', [], {'null': 'True'}),
+            'location': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['locations.Location']", 'null': 'True', 'related_name': "'poly'", 'unique': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '200'}),
+            'parent_code': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
+            'source': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '36'})
         },
-        u'locations.location': {
+        'locations.location': {
             'Meta': {'object_name': 'Location'},
-            'alt_names': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'created_at': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            u'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'location_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['locations.LocationType']"}),
-            'name': ('django.db.models.fields.CharField', [], {'default': "u'Unknown'", 'max_length': '100'}),
-            'parent': ('mptt.fields.TreeForeignKey', [], {'related_name': "u'children'", 'null': 'True', 'to': u"orm['locations.Location']"}),
-            u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'})
+            'alt_names': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '200'}),
+            'created_at': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'default': 'datetime.datetime.now'}),
+            'last_modified': ('django.db.models.fields.DateTimeField', [], {'blank': 'True', 'default': 'datetime.datetime.now'}),
+            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'location_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['locations.LocationType']"}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'default': "'Unknown'"}),
+            'parent': ('mptt.fields.TreeForeignKey', [], {'to': "orm['locations.Location']", 'null': 'True', 'related_name': "'children'"}),
+            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'primary_key': 'True', 'max_length': '36'})
         },
-        u'locations.locationtype': {
+        'locations.locationtype': {
             'Meta': {'object_name': 'LocationType'},
-            'code': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+            'code': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '10'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'sub_name': ('django.db.models.fields.CharField', [], {'null': 'True', 'blank': 'True', 'max_length': '100'})
         }
     }
 
