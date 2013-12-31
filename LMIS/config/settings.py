@@ -72,7 +72,7 @@ class Common(Configuration):
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
     # Note: This key only used for development and testing.
     #       In production, this is changed to a values.SecretValue() setting
-    SECRET_KEY = "CHANGEME!!!"
+    SECRET_KEY = ")si==z7zmk=))$d^))bhz6gnix)g&yytkix&@i6$n#&@u77(0)"
     ########## END SECRET CONFIGURATION
 
     ########## FIXTURE CONFIGURATION
