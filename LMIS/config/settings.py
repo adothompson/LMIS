@@ -10,7 +10,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 class Common(Configuration):
-
     ########## APP CONFIGURATION
     DJANGO_APPS = (
         # Default Django apps:
@@ -20,6 +19,7 @@ class Common(Configuration):
         'django.contrib.sites',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.gis',
 
         # Useful template tags:
         # 'django.contrib.humanize',
@@ -28,11 +28,11 @@ class Common(Configuration):
         'django.contrib.admin',
     )
     THIRD_PARTY_APPS = (
-        'south',  # Database migration helper
-        'reversion',  # Rollback & recovery
+        'south', # Database migration helper
+        'reversion', # Rollback & recovery
         'django_extensions',
-        'rest_framework',  # API
-        'django_filters',  # API filter support
+        'rest_framework', # API
+        'django_filters', # API filter support
         'mptt',
     )
 
@@ -79,7 +79,7 @@ class Common(Configuration):
         join(BASE_DIR, 'fixtures'),
     )
     ########## END FIXTURE CONFIGURATION
-    
+
     ########## EMAIL CONFIGURATION
     EMAIL_BACKEND = values.Value('django.core.mail.backends.smtp.EmailBackend')
     ########## END EMAIL CONFIGURATION
@@ -94,25 +94,11 @@ class Common(Configuration):
     MANAGERS = ADMINS
     ########## END MANAGER CONFIGURATION
 
-    ########## DATABASE CONFIGURATION
-    # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-    DATABASES = {
-        'default': {
-            'ENGINE':'django.db.backends.sqlite3',
-            'NAME': 'dev_db',
-            'USER': '',
-            'PASSWORD': '',
-            'HOST': '',
-            'PORT': '',
-        }
-    }
-    ########## END DATABASE CONFIGURATION
-
     ########## CACHING
     CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': ''
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': ''
         }
     }
     ########## END CACHING
@@ -157,9 +143,9 @@ class Common(Configuration):
     )
 
     TEMPLATE_LOADERS = (
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-        )
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )
     ########## END TEMPLATE CONFIGURATION
 
     ########## STATIC FILE CONFIGURATION
@@ -239,7 +225,6 @@ class Common(Configuration):
 
 
 class Local(Common):
-
     ########## INSTALLED_APPS
     INSTALLED_APPS = Common.INSTALLED_APPS
     ########## END INSTALLED_APPS
@@ -262,11 +247,26 @@ class Local(Common):
     }
     ########## end django-debug-toolbar
 
+    ########## DATABASE CONFIGURATION
+    # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'lmisdb',
+            'USER': 'lmisdbuser',
+            'PASSWORD': 'nigerialmistest',
+            'HOST': 'cdc-staging.eocng.org',
+            'OPTIONS': {
+                'autocommit': True,
+            }
+        }
+    }
+    ########## END DATABASE CONFIGURATION
+
     ########## Below this line define 3rd party library settings
 
 
 class Production(Common):
-
     ########## INSTALLED_APPS
     INSTALLED_APPS = Common.INSTALLED_APPS
     ########## END INSTALLED_APPS
