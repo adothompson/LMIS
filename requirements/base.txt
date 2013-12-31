@@ -11,6 +11,7 @@ django-model-utils==1.5.0
 # Utils
 django-reversion==1.8.0
 django-extensions==1.2.5
+django-mptt==0.6.0
 
 # Pydot Py3 (requires mercurial)
 hg+https://bitbucket.org/prologic/pydot#egg=pydot
