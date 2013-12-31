@@ -1,3 +1,8 @@
+"""
+    Inventory/models.py is the module that holds all the domain models etc that are used mainly for
+    Inventory management
+"""
+
 #import core django modules
 from django.db import models
 
@@ -6,7 +11,7 @@ from model_utils import Choices
 
 #import project modules
 from cce.models import ColdChainEquipment
-from core.models import Warehouse, BaseModel, ProductItem, UnitOfMeasurement, Facility, Employee, VVMStage, Company
+from core.models import Warehouse, BaseModel, ProductItem, UnitOfMeasurement, Facility, Employee, VVMStage
 from orders.models import Voucher
 
 
@@ -70,7 +75,7 @@ class PhysicalStockCountLine(BaseModel):
     physical_quantity = models.IntegerField(verbose_name='physically counted quantity')
     inventory_quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
-    vvm_stage = models.IntegerField(choices=VVMStage.STAGE, blank=True, null=True)
+    vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     comment = models.CharField(blank=True)
 
 
@@ -93,6 +98,27 @@ class ConsumptionRecordLine(BaseModel):
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
 
 
+class StockEntry(BaseModel):
+    """
+        This is used to indicate different types of stock entry.
+
+            New Arrival: stock entry type used to record quantity received from supplier
+
+            Surplus: stock entry type used to record excess quantity recorded from physical stock count.
+
+            Return: stock entry type used to record stock received from lower level stores.
+
+            Other Sources: stock entry type used to record stock received from other sources
+
+    """
+    TYPES = Choices((0, 'new_arrival', _('New Arrival')), (1, 'surplus', _('Surplus')), (2, 'return', _('Return')),
+
+                    (3, 'others', _('Other Sources')))
+
+    class Meta:
+            managed = False
+
+
 class IncomingShipment(BaseModel):
     """
         This is used to record stock arrival from supplier or supplying facility.
@@ -101,6 +127,7 @@ class IncomingShipment(BaseModel):
         from the input_warehouse.facility we can get the facility that received the shipment
     """
     supplier = models.ForeignKey(Facility)
+    stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     input_warehouse = models.ForeignKey(Warehouse)
     others = models.BooleanField(default=False)
     other_source = models.CharField()
@@ -136,6 +163,7 @@ class OutgoingShipment(BaseModel):
                      (3, 'cancelled', _('Cancelled'))
                      )
     recipient = models.ForeignKey(Facility)
+    stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     output_warehouse = models.ForeignKey(Warehouse)
     status = models.IntegerField(choices=STATUS)
 

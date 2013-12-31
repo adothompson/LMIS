@@ -1,3 +1,7 @@
+"""
+    Orders/models.py is the module that handles all order taking and order processing etc
+"""
+
 #import core django module.
 from django.db import models
 
@@ -100,3 +104,4 @@ class VoucherLine(BaseModel):
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     remark = models.CharField(max_length=55, blank=True)
+
