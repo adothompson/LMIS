@@ -4,6 +4,7 @@
 
 #import core django module.
 from django.db import models
+from django.utils.translation import ugettext as _
 
 #import external modules
 from model_utils import Choices

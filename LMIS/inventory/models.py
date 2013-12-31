@@ -5,6 +5,7 @@
 
 #import core django modules
 from django.db import models
+from django.utils.translation import ugettext as _
 
 #import external modules
 from model_utils import Choices
@@ -148,7 +149,7 @@ class IncomingShipmentLine(BaseModel):
     weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight uom')
     packed_volume = models.FloatField(blank=True, null=True)
     packed_volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='packed volume uom')
-    vvm_stage = models.ForeignKey(choices=VVMStage.STAGES, blank=True, null=True)
+    vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     voucher = models.ForeignKey(Voucher, blank=True, null=True)
 
 
