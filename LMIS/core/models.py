@@ -313,8 +313,8 @@ class WarehouseType(BaseModel):
         This is used to model different types of Warehouse or Storage Location. it can be a Physical Warehouse,
         In-Transit Warehouse(like products being transported)
     """
-    code = models.CharField(max_length=35, unique=True)
-    name = models.CharField(max_length=55, unique=True)
+    #code = models.CharField(max_length=35, unique=True)
+    #name = models.CharField(max_length=55, unique=True)
     description = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
