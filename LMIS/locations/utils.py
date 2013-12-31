@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # encoding=utf-8
 
 import re
@@ -80,30 +79,30 @@ def create_locations_from_geo(parent_loc):
     ward_type, c = LocationType.objects.get_or_create(name="Ward", code='ward')
     for state in states:
         # create state object
-        state_loc = Location.objects.create(name=state.name, parent=parent_loc, location_type=state_type)
-        state.global_id = re.sub('[{}]', '', state.global_id_text)
+        state.uuid = re.sub('[{}]', '', state.global_id_text)
+        state_loc = Location.objects.create(uuid=state.uuid, name=state.name, parent=parent_loc, location_type=state_type)
         state.location = state_loc
         state.save()
-        print "%s %s %s" % (state_loc.name, parent_loc.name, state_loc.poly.global_id)
+        print("%s %s %s" % (state_loc.name, parent_loc.name, state_loc.poly.global_id))
         # loop through geopoly objects where parent_code e = state.code
         lgas_in_state = GeoPoly.objects.filter(parent_code=state.code)
         for lga in lgas_in_state:
             # create lga location object
-            lga_loc = Location.objects.create(name=lga.name, parent=state_loc, location_type=lga_type)
-            lga.global_id = re.sub('[{}]', '', lga.global_id_text)
+            lga.uuid = re.sub('[{}]', '', lga.global_id_text)
+            lga_loc = Location.objects.create(uuid=lga.uuid, name=lga.name, parent=state_loc, location_type=lga_type)
             lga.location = lga_loc
             lga.save()
-            print "%s %s %s" % (lga_loc.name, lga_loc.parent.name, lga_loc.poly.global_id)
+            print("%s %s %s" % (lga_loc.name, lga_loc.parent.name, lga_loc.poly.global_id))
             # loop through geopoly to find wards
             wards_in_lga = GeoPoly.objects.filter(parent_code=lga.code)
             for ward in wards_in_lga:
                 #create ward location object
-                ward_loc = Location.objects.create(name=ward.name, parent=lga_loc, location_type=ward_type)
-                ward.global_id = re.sub('[{}]', '', ward.global_id_text)
+                ward.uuid = re.sub('[{}]', '', ward.global_id_text)
+                ward_loc = Location.objects.create(uuid=ward.uuid, name=ward.name, parent=lga_loc, location_type=ward_type)
                 ward.location = ward_loc
-                print "%s, %s, %s, %s, %s, %s" % (
+                print("%s, %s, %s, %s, %s, %s" % (
                     ward_loc.name, ward_loc.parent.name, ward_loc.parent.parent.name, ward_loc.poly.global_id,
-                    ward_loc.poly.code, ward_loc.poly.parent_code)
+                    ward_loc.poly.code, ward_loc.poly.parent_code))
                 ward.save()
 
     return True
@@ -111,21 +110,20 @@ def create_locations_from_geo(parent_loc):
 
 def create_locations_from_pt():
     ward_type = LocationType.objects.get(code="ward")
-    lga_type = LocationType.objects.get(code='lga')
     for hf in GeoPoint.objects.all():
         hf_type, c = LocationType.objects.get_or_create(name='Health Facility', code='HF', sub_name=hf.category)
         # find parent or assign to state (KN in this example)
         try:
             parent_geo = GeoPoly.objects.get(geom__contains=hf.geom, location__location_type=ward_type)
             parent_loc = parent_geo.location
-        except GeoPoly.DoesNotExist, e:
+        except GeoPoly.DoesNotExist as e:
             parent_loc = Location.objects.get(name="Nigeria")
-            print "################ %s" % e
+            print("################ %s" % e)
 
         # create HF Location Object
         hf_loc = Location.objects.create(name=hf.name, location_type=hf_type, parent=parent_loc)
-        print "%s, %s, %s, %s, %s" % (hf.name, hf_type.name, hf_type.sub_name, parent_loc.name,
-                                      parent_loc.location_type)
+        print("%s, %s, %s, %s, %s" % (hf.name, hf_type.name, hf_type.sub_name, parent_loc.name,
+                                      parent_loc.location_type))
         hf.location = hf_loc
         hf.save()
 
