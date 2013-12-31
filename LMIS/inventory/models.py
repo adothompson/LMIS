@@ -41,9 +41,11 @@ class InventoryLine(BaseModel):
     inventory = models.ForeignKey(Inventory)
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='weight uom')
+    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
+                                   related_name='%(app_label)s_%(class)s_weight_uom')
     volume = models.FloatField(blank=True, null=True)
-    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='volume uom')
+    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
+                                   related_name='%(app_label)s_%(class)s_volume_uom')
     active = models.BooleanField()
 
 
@@ -54,7 +56,7 @@ class FacilityActivity(BaseModel):
     """
     facility = models.ForeignKey(Facility)
     performed_by = models.ForeignKey(Employee)
-    verified_by = models.ForeignKey(Employee, related_name='verifier')
+    verified_by = models.ForeignKey(Employee, related_name='%(app_label)s_%(class)s_verifier')
 
     class Meta:
         abstract = True
@@ -73,11 +75,11 @@ class PhysicalStockCountLine(BaseModel):
     """
     product_item = models.ForeignKey(ProductItem)
     physical_stock_count = models.ForeignKey(PhysicalStockCount)
-    physical_quantity = models.IntegerField(verbose_name='physically counted quantity')
+    physical_quantity = models.IntegerField(verbose_name='%(app_label)s_%(class)s_counted_quantity')
     inventory_quantity = models.IntegerField()
-    quantity_uom = models.ForeignKey(UnitOfMeasurement)
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
-    comment = models.CharField(blank=True)
+    comment = models.CharField(max_length=35, blank=True)
 
 
 class ConsumptionRecord(FacilityActivity):
@@ -112,9 +114,9 @@ class StockEntry(BaseModel):
             Other Sources: stock entry type used to record stock received from other sources
 
     """
-    TYPES = Choices((0, 'new_arrival', _('New Arrival')), (1, 'surplus', _('Surplus')), (2, 'return', _('Return')),
+    TYPES = Choices((0, 'new_arrival', ('New Arrival')), (1, 'surplus', ('Surplus')), (2, 'return', ('Return')),
 
-                    (3, 'others', _('Other Sources')))
+                    (3, 'others', ('Other Sources')))
 
     class Meta:
             managed = False
@@ -131,7 +133,7 @@ class IncomingShipment(BaseModel):
     stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     input_warehouse = models.ForeignKey(Warehouse)
     others = models.BooleanField(default=False)
-    other_source = models.CharField()
+    other_source = models.CharField(max_length=35, blank=True)
 
 
 class IncomingShipmentLine(BaseModel):
@@ -140,15 +142,17 @@ class IncomingShipmentLine(BaseModel):
     """
     product_item = models.ForeignKey(ProductItem)
     quantity_received = models.IntegerField()
-    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
+    quantity_uom = models.ForeignKey(UnitOfMeasurement,
+                                     related_name='%(app_label)s_%(class)s_quantity_uom')
     stock_before = models.IntegerField()
     stock_after = models.IntegerField()
     stock_balance = models.IntegerField(blank=True, null=True)
-    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='stock balance uom')
+    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
+                                          related_name='%(app_label)s_%(class)s_stock_balance_uom')
     weight = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight uom')
+    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight_uom')
     packed_volume = models.FloatField(blank=True, null=True)
-    packed_volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='packed volume uom')
+    packed_volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_packed_volume_uom')
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     voucher = models.ForeignKey(Voucher, blank=True, null=True)
 
@@ -160,8 +164,8 @@ class OutgoingShipment(BaseModel):
         output_warehouse is the storage location the product item will be shipped from and it belongs to the supplying facility.
         from the output_warehouse: we can get the facility that made the supply.
     """
-    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (2, 'done', _('Done')),
-                     (3, 'cancelled', _('Cancelled'))
+    STATUS = Choices((0, 'draft', ('Draft')), (1, 'assigned', ('Assigned')), (2, 'done', ('Done')),
+                     (3, 'cancelled', ('Cancelled'))
                      )
     recipient = models.ForeignKey(Facility)
     stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
@@ -175,16 +179,19 @@ class OutgoingShipmentLine(BaseModel):
     """
     product_item = models.ForeignKey(ProductItem)
     quantity_issued = models.IntegerField()
-    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
     weight_issued = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='weight uom')
+    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
+                                   related_name='%(app_label)s_%(class)s_weight_uom')
     volume = models.FloatField(blank=True, null=True)
-    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='volume uom')
+    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
+                                   related_name='%(app_label)s_%(class)s_volume_uom')
     stock_before = models.IntegerField()
     stock_after = models.IntegerField()
     stock_balance = models.IntegerField(blank=True, null=True)
-    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='stock balance uom')
-    remark = models.CharField(blank=True, null=True)
+    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
+                                          related_name='%(app_label)s_%(class)s_stock_balance_uom')
+    remark = models.CharField(max_length=55, blank=True, null=True)
 
 
 class Adjustment(BaseModel):
