@@ -35,7 +35,7 @@ class PurchaseOrderLine(BaseModel):
     program = models.ForeignKey(Program)
     product = models.ForeignKey(Product)
     quantity_needed = models.IntegerField()
-    stock_at_hand = models.IntegerField()
+    quantity_at_hand = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     remark = models.CharField(max_length=55, blank=True)
 

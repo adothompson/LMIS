@@ -39,8 +39,8 @@ class OnSiteNotificationRecipient(BaseModel):
         This is used to keep track of notification recipients and whether they have seen the notification or not.
     """
     recipient = models.ForeignKey(Employee)
-    seen = models.BooleanField(default=True)
-    resolved = models.BooleanField(default=True)
+    seen = models.BooleanField(default=False)
+    resolved = models.BooleanField(default=False)
 
 
 
