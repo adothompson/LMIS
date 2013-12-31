@@ -1,3 +1,8 @@
+"""
+    This module handles all cold chain equipment management issues such as temperature log, problem log, current
+    facility the CCE is at and the warehouse.
+"""
+
 #import django modules
 from django.db import models
 
@@ -28,7 +33,7 @@ class ColdChainEquipment(BaseModel):
         Cold Chain Equipment is used to store vaccines in order to avoid cold chain breach, could be freezer, fridge,
         insulated coolers etc.
     """
-    STATUS = Choices('Green', 'Yellow', 'Red')
+    STATUS = Choices('Working', 'Not Working', 'In Repair')
     code = models.CharField(max_length=35, unique=True)
     gross_capacity = models.FloatField(blank=True, null=True)
     net_capacity = models.FloatField(blank=True, null=True)

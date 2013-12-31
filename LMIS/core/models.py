@@ -11,6 +11,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django_extensions.db.fields import UUIDField
 from model_utils.models import TimeStampedModel
 from model_utils import Choices
+
+#import project app modules
 from locations.models import Location
 
 
@@ -150,9 +152,6 @@ class Address(BaseModel):
     street = models.CharField(max_length=35, blank=True, null=True)
     zip = models.CharField(max_length=15, blank=True, null=True)
     city = models.CharField(max_length=35, blank=True, null=True)
-    #ward = models.ForeignKey('Ward', blank=True, null=True)
-    #TODO: decided whether this should be removed or added
-    #lga = models.ForeignKey('LGA', blank=True, null=True)
     subdivision = models.CharField(max_length=10, blank=True, null=True)
     country = models.CharField(max_length=5, blank=True, null=True)
 
@@ -177,24 +176,11 @@ class Party(BaseModel):
         app_label = 'core'
 
 
-class Manufacturer(Party):
-    """
-        This models product manufacturers and each manufacturer can have 0 or more products that it supplies and
-        a product can have one or more manufacturers.
-    """
-    products = models.ManyToManyField('Product', blank=True, null=True)
-
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
-    class Meta:
-        app_label = 'core'
-
-
 class Company(Party):
     """
-        Base class for Facilities, Partners,  etc,
+        Base class for Facility. Company is also used to model Manufacturers, Suppliers, Partners etc,  etc,
     """
+    products = models.ManyToManyField('Product', blank=True, null=True)
     header = models.CharField(max_length=100, blank=True, null=True)
     footer = models.CharField(max_length=100, blank=True, null=True)
 
@@ -364,7 +350,6 @@ class Program(BaseModel):
     description = models.CharField(max_length=55, blank=True)
     active = models.BooleanField()
     partners = models.ManyToManyField(Company)
-    push = models.BooleanField()
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -375,7 +360,7 @@ class Program(BaseModel):
 
 class ProgramProductAllocationInfo(BaseModel):
     """
-        This models information used to allocate a program product.
+        This models information used to allocate a program product to a facility.
     """
     #World Health Ratio for the program
     who_ratio = models.FloatField()
@@ -385,7 +370,8 @@ class ProgramProductAllocationInfo(BaseModel):
     target_population = models.IntegerField(verbose_name='target population(%)')
     min_quantity = models.IntegerField()
     max_quantity = models.IntegerField()
-    lead_time = models.IntegerField(verbose_name='lead time (weeks)')
+    push = models.BooleanField()
+    lead_time = models.IntegerField(verbose_name='lead time(weeks)')
     #supply_interval is specified in months
     supply_interval = models.IntegerField(verbose_name='supply interval(months)')
     adjustment_value = models.IntegerField()
@@ -581,7 +567,8 @@ class ProductItem(BaseModel):
         identify collection of a given product that has same value for a given set of attributes that can vary from
          one collection of same product to another.
 
-         for instance a collection of a product with same value for each of Item attributes will have same item code.
+         for instance a collection of a product with same value for each of ProductItem attributes will have same
+         product item code.
     """
     code = models.CharField(max_length=35, unique=True)
     name = models.CharField(max_length=55, unique=True)
@@ -609,15 +596,3 @@ class ProductItem(BaseModel):
     class Meta:
         app_label = 'core'
 
-
-class Adjustment(BaseModel):
-    """
-        Adjustment is used to account for difference between physical stock count quantities and inventory quantity.
-
-        the physical stock count line is the physical stock count line the adjustment is for.
-    """
-    physical_stock_line = models.ForeignKey('PhysicalStockCountLine')
-    previous_quantity = models.IntegerField()
-    revised_quantity = models.IntegerField()
-    reason = models.CharField(max_length=55, verbose_name='reason for adjustment')
-    date_time = models.DateTimeField()

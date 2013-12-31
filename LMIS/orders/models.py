@@ -5,8 +5,8 @@ from django.db import models
 from model_utils import Choices
 
 #import project modules
-from core.models import BaseModel, Facility, Program, Product, UnitOfMeasurement, Item, Currency, Employee, Warehouse, \
-    VVMStage
+from core.models import BaseModel, Facility, Program, Product, UnitOfMeasurement, ProductItem, Currency, Employee, \
+    Warehouse, VVMStage
 
 
 class PurchaseOrder(BaseModel):
@@ -22,7 +22,6 @@ class PurchaseOrder(BaseModel):
     status = models.IntegerField(choices=STATUS, default=STATUS.draft)
     emergency = models.BooleanField(default=False)
     order_date = models.DateField()
-    sales_order = models.ForeignKey('SalesOrder', blank=True, null=True)
     expected_date = models.DateField(blank=True, null=True)
 
 
@@ -35,7 +34,7 @@ class PurchaseOrderLine(BaseModel):
     program = models.ForeignKey(Program)
     product = models.ForeignKey(Product)
     quantity_needed = models.IntegerField()
-    quantity_at_hand = models.IntegerField()
+    current_quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     remark = models.CharField(max_length=55, blank=True)
 
@@ -50,13 +49,13 @@ class SalesOrder(BaseModel):
     STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (2, 'done', _('Done')),
                      (3, 'cancelled', _('Cancelled'))
                      )
+    sales_order = models.ForeignKey('PurchaseOrder', blank=True, null=True)
     recipient = models.ForeignKey(Facility, related_name='recipient')
     supplier = models.ForeignKey(Facility, related_name='supplier')
     approved_by = models.ForeignKey(Employee)
     status = models.IntegerField(choices=STATUS, default=STATUS.draft)
-    sales_date = models.DateField()
-    planned_date = models.DateField(blank=True, null=True)
-    completed_date = models.DateField(null=True, blank=True)
+    planned_date = models.DateTimeField(blank=True, null=True)
+    completed_date = models.DateTimeField(null=True, blank=True)
 
 
 class SalesOrderLine(BaseModel):
@@ -65,7 +64,7 @@ class SalesOrderLine(BaseModel):
     """
     sales_order = models.ForeignKey(SalesOrder)
     program = models.ForeignKey(Program)
-    item = models.ForeignKey(Item)
+    product_item = models.ForeignKey(ProductItem)
     quantity_requested = models.IntegerField(blank=True, null=True)
     buffer_quantity = models.IntegerField()
     total_quantity = models.IntegerField()
@@ -87,13 +86,16 @@ class Voucher(BaseModel):
     sales_order = models.ForeignKey(SalesOrder)
     recipient_representative = models.ForeignKey('Employee', related_name='recipient representative')
     supplier_representative = models.ForeignKey('Employee', related_name='supplier representative')
-    date = models.DateField()
 
 
 class VoucherLine(BaseModel):
+    """
+        This is used to represent each unique product item in a voucher.
+        input_warehouse is the warehouse the item was dropped at.
+    """
     program = models.ForeignKey(Program)
-    item = models.ForeignKey(Item)
-    warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
+    product_item = models.ForeignKey(ProductItem)
+    input_warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
     quantity_supplied = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
