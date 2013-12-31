@@ -18,11 +18,11 @@ class PurchaseOrder(BaseModel):
         PurchaseOrder: is used to place a formal request for supply of products listed in the purchase order lines by
         the purchasing facility(purchaser).
     """
-    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (2, 'done', _('Done')),
-                     (3, 'cancelled', _('Cancelled'))
+    STATUS = Choices((0, 'draft', ('Draft')), (1, 'assigned', ('Assigned')), (2, 'done', ('Done')),
+                     (3, 'cancelled', ('Cancelled'))
                      )
     purchaser = models.ForeignKey(Facility, related_name='purchaser')
-    supplier = models.ForeignKey(Facility, related_name='supplier')
+    supplier = models.ForeignKey(Facility, related_name='purchase_order_supplier')
     status = models.IntegerField(choices=STATUS, default=STATUS.draft)
     emergency = models.BooleanField(default=False)
     order_date = models.DateField()
@@ -50,12 +50,12 @@ class SalesOrder(BaseModel):
 
         optionally, it can be linked to a purchase order.
     """
-    STATUS = Choices((0, 'draft', _('Draft')), (1, 'assigned', _('Assigned')), (2, 'done', _('Done')),
-                     (3, 'cancelled', _('Cancelled'))
+    STATUS = Choices((0, 'draft', ('Draft')), (1, 'assigned', ('Assigned')), (2, 'done', ('Done')),
+                     (3, 'cancelled', ('Cancelled'))
                      )
     sales_order = models.ForeignKey('PurchaseOrder', blank=True, null=True)
     recipient = models.ForeignKey(Facility, related_name='recipient')
-    supplier = models.ForeignKey(Facility, related_name='supplier')
+    supplier = models.ForeignKey(Facility, related_name='sales_order_supplier')
     approved_by = models.ForeignKey(Employee)
     status = models.IntegerField(choices=STATUS, default=STATUS.draft)
     planned_date = models.DateTimeField(blank=True, null=True)
@@ -72,14 +72,14 @@ class SalesOrderLine(BaseModel):
     quantity_requested = models.IntegerField(blank=True, null=True)
     buffer_quantity = models.IntegerField()
     total_quantity = models.IntegerField()
-    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='quantity uom')
-    total_price = models.DecimalField(max_length=21, decimal_places=2)
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='sales_quantity_uom')
+    total_price = models.DecimalField(max_digits=21, decimal_places=2)
     price_currency = models.FloatField(Currency)
     total_weight = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight uom')
+    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='sales_weight_uom')
     total_volume = models.FloatField()
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
-    volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='volume uom')
+    volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='sales_volume_uom')
     description = models.CharField(max_length=55, blank=True)
 
 
@@ -88,8 +88,8 @@ class Voucher(BaseModel):
         Voucher is used as a proof of delivery
     """
     sales_order = models.ForeignKey(SalesOrder)
-    recipient_representative = models.ForeignKey('Employee', related_name='recipient representative')
-    supplier_representative = models.ForeignKey('Employee', related_name='supplier representative')
+    recipient_representative = models.ForeignKey(Employee, related_name='recipient_representative')
+    supplier_representative = models.ForeignKey(Employee, related_name='supplier_representative')
 
 
 class VoucherLine(BaseModel):

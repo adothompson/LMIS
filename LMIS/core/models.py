@@ -283,7 +283,7 @@ class Facility(MPTTModel, Company):
     facility_type = models.ForeignKey(FacilityType)
     supplies_others = models.BooleanField()
     sdp = models.BooleanField(verbose_name="is service delivery point")
-    facility_operators = models.ManyToManyField(Company, blank=True, null=True)
+    facility_operators = models.ManyToManyField(Company, blank=True, null=True, related_name='facility_operators')
     global_location_no = models.CharField(max_length=55, blank=True)
     catchment_population = models.IntegerField(blank=True, null=True)
     location = models.ForeignKey(Location, null=True)
@@ -310,8 +310,8 @@ class WarehouseType(BaseModel):
         This is used to model different types of Warehouse or Storage Location. it can be a Physical Warehouse,
         In-Transit Warehouse(like products being transported)
     """
-    # code = models.ForeignKey(max_length=35, unique=True)
-    # name = models.ForeignKey(max_length=55, unique=True)
+    code = models.CharField(max_length=35, unique=True)
+    name = models.CharField(max_length=55, unique=True)
     description = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
@@ -578,16 +578,16 @@ class ProductItem(BaseModel):
     product_batch_no = models.CharField(max_length=35)
     moh_bar_code = models.CharField(max_length=255, blank=True)
     gtin = models.CharField(max_length=35, blank=True)
-    price_per_unit = models.DecimalField(max_length=21, decimal_places=2)
+    price_per_unit = models.DecimalField(max_digits=21, decimal_places=2)
     price_currency = models.ForeignKey(Currency, blank=True, null=True)
     expiration_date = models.DateField()
     country_of_origin = models.CharField(max_length=55)
     mode_of_use = models.ForeignKey('ModeOfAdministration', blank=True, null=True)
     description = models.CharField(max_length=100, blank=True)
-    weight_per_unit = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
+    weight_per_unit = models.FloatField(max_length=21, blank=True, null=True)
+    weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='product_item_weight_uom')
     volume_per_unit = models.FloatField(blank=True, null=True)
-    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
+    volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='product_item_volume_uom')
     active = models.BooleanField()
 
     def __str__(self):

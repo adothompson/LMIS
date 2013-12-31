@@ -40,7 +40,9 @@ class Common(Configuration):
     LOCAL_APPS = (
         'core',
         'cce',
-        'inventory'
+        'inventory',
+        'locations',
+        'orders'
     )
 
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
