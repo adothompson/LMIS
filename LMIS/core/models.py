@@ -50,7 +50,7 @@ class UOMCategory(MPTTModel, BaseModel):
     """
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=50, unique=True)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_uom_categories')
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='%(app_label)s_%(class)s_sub_uom_categories')
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -196,7 +196,8 @@ class CompanyCategory(MPTTModel, BaseModel):
         Used to model company category, it can be Facility, Partner, FacilityOperators etc.
     """
     name = models.CharField(max_length=35, unique=True)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_company_categories')
+    parent = TreeForeignKey('self', null=True, blank=True,
+                            related_name='%(app_label)s_%(class)s_sub_company_categories')
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -210,7 +211,8 @@ class EmployeeCategory(MPTTModel, BaseModel):
         used to model employee categories
     """
     name = models.CharField(max_length=35, unique=True)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_employee_categories')
+    parent = TreeForeignKey('self', null=True, blank=True,
+                            related_name='%(app_label)s_%(class)s_sub_employee_categories')
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -231,7 +233,8 @@ class Employee(Party):
             or one of the children companies.
     """
     current_company = models.ForeignKey(Company, related_name="employees")
-    main_company = models.ForeignKey(Company, related_name="main_company_employees", blank=True, null=True)
+    main_company = models.ForeignKey(Company,
+                                     related_name="%(app_label)s_%(class)s_main_company_employees", blank=True, null=True)
     category = models.ForeignKey(EmployeeCategory)
     user = models.OneToOneField(User, blank=True, null=True)
 
