@@ -31,8 +31,8 @@ class Common(Configuration):
         'south', # Database migration helper
         'reversion', # Rollback & recovery
         'django_extensions',
-        'rest_framework', # API
-        'django_filters', # API filter support
+        'rest_framework',  # API
+        'django_filters',  # API filter support
         'mptt',
     )
 
@@ -258,9 +258,6 @@ class Local(Common):
             'USER': 'lmisdbuser',
             'PASSWORD': 'nigerialmistest',
             'HOST': 'cdc-staging.eocng.org',
-            'OPTIONS': {
-                'autocommit': True,
-            }
         }
     }
     ########## END DATABASE CONFIGURATION
