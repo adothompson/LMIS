@@ -7,6 +7,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 #import external modules
+import reversion
 from mptt.models import MPTTModel, TreeForeignKey
 from django_extensions.db.fields import UUIDField
 from model_utils.models import TimeStampedModel
@@ -184,11 +185,11 @@ class Company(Party):
     header = models.CharField(max_length=100, blank=True, null=True)
     footer = models.CharField(max_length=100, blank=True, null=True)
 
-    class Meta:
-        app_label = 'core'
-
     def __str__(self):
         return '{name}'.format(name=self.name)
+
+    class Meta:
+        app_label = 'core'
 
 
 class CompanyCategory(MPTTModel, BaseModel):
@@ -406,7 +407,7 @@ class ProgramProduct(BaseModel):
         app_label = 'core'
 
 
-class FacilityProgramSupported(BaseModel):
+class FacilitySupportedProgram(BaseModel):
     """
         This is used to model programs that a facility supports. its is entered for each program a facility supports.
         and indicates the status(active or not) of the program at each facility, program start date and end date at the
@@ -598,4 +599,35 @@ class ProductItem(BaseModel):
 
     class Meta:
         app_label = 'core'
+
+
+#register models to be tracked via Reversion
+
+reversion.register(UOMCategory)
+reversion.register(UnitOfMeasurement)
+reversion.register(Rate)
+reversion.register(Currency)
+reversion.register(Contact)
+reversion.register(Address)
+reversion.register(Company)
+reversion.register(CompanyCategory)
+reversion.register(EmployeeCategory)
+reversion.register(Employee)
+reversion.register(FacilityType)
+reversion.register(Facility)
+reversion.register(FacilityTypeApprovedProduct)
+reversion.register(WarehouseType)
+reversion.register(Warehouse)
+reversion.register(Program)
+reversion.register(ProgramProductAllocationInfo)
+reversion.register(FacilitySupportedProgram)
+reversion.register(FacilitySupportedProgramProduct)
+reversion.register(SupervisoryNode)
+reversion.register(OrderGroup)
+reversion.register(ProcessingPeriod)
+reversion.register(ProductCategory)
+reversion.register(Product)
+reversion.register(ProductPresentation)
+reversion.register(ModeOfAdministration)
+reversion.register(ProductItem)
 

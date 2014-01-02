@@ -346,7 +346,7 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['programproduct_id', 'company_id'])
 
-        # Adding model 'FacilityProgramSupported'
+        # Adding model 'FacilitySupportedProgram'
         db.create_table('core_facilityprogramsupported', (
             ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
             ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
@@ -359,7 +359,7 @@ class Migration(SchemaMigration):
             ('start_date', self.gf('django.db.models.fields.DateField')(blank=True, null=True)),
             ('end_date', self.gf('django.db.models.fields.DateField')(blank=True, null=True)),
         ))
-        db.send_create_signal('core', ['FacilityProgramSupported'])
+        db.send_create_signal('core', ['FacilitySupportedProgram'])
 
         # Adding model 'FacilitySupportedProgramProduct'
         db.create_table('core_facilitysupportedprogramproduct', (
@@ -588,7 +588,7 @@ class Migration(SchemaMigration):
         # Removing M2M table for field funding_source on 'ProgramProduct'
         db.delete_table(db.shorten_name('core_programproduct_funding_source'))
 
-        # Deleting model 'FacilityProgramSupported'
+        # Deleting model 'FacilitySupportedProgram'
         db.delete_table('core_facilityprogramsupported')
 
         # Deleting model 'FacilitySupportedProgramProduct'
@@ -790,7 +790,7 @@ class Migration(SchemaMigration):
             'virtual_facility': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         'core.facilityprogramsupported': {
-            'Meta': {'object_name': 'FacilityProgramSupported'},
+            'Meta': {'object_name': 'FacilitySupportedProgram'},
             'active': ('django.db.models.fields.BooleanField', [], {}),
             'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'to': "orm['core.Employee']", 'null': 'True', 'related_name': "'core_facilityprogramsupported_created_by'"}),

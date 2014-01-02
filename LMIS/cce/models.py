@@ -7,6 +7,7 @@
 from django.db import models
 
 #import external modules
+import reversion
 from model_utils import Choices
 
 #import project app modules
@@ -72,3 +73,11 @@ class CCEProblemLog(BaseModel):
 
     def __str__(self):
         return '{name}'.format(name=self.name)
+
+
+#Register models that will be tracked with reversion
+
+reversion.register(ColdChainEquipmentType)
+reversion.register(ColdChainEquipment)
+reversion.register(CCETemperatureLog)
+reversion.register(CCEProblemLog)

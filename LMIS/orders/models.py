@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 #import external modules
+import reversion
 from model_utils import Choices
 
 #import project modules
@@ -22,8 +23,8 @@ class PurchaseOrder(BaseModel):
     STATUS = Choices((0, 'draft', ('Draft')), (1, 'assigned', ('Assigned')), (2, 'done', ('Done')),
                      (3, 'cancelled', ('Cancelled'))
                      )
-    purchaser = models.ForeignKey(Facility, related_name='purchaser')
-    supplier = models.ForeignKey(Facility, related_name='purchase_order_supplier')
+    purchaser = models.ForeignKey(Facility, related_name='%(app_label)s_%(class)s_purchaser')
+    supplier = models.ForeignKey(Facility, related_name='%(app_label)s_%(class)s_supplier')
     status = models.IntegerField(choices=STATUS, default=STATUS.draft)
     emergency = models.BooleanField(default=False)
     order_date = models.DateField()
@@ -55,8 +56,8 @@ class SalesOrder(BaseModel):
                      (3, 'cancelled', ('Cancelled'))
                      )
     sales_order = models.ForeignKey('PurchaseOrder', blank=True, null=True)
-    recipient = models.ForeignKey(Facility, related_name='recipient')
-    supplier = models.ForeignKey(Facility, related_name='sales_order_supplier')
+    recipient = models.ForeignKey(Facility, related_name='%(app_label)s_%(class)s_recipient')
+    supplier = models.ForeignKey(Facility, related_name='%(app_label)s_%(class)s_supplier')
     approved_by = models.ForeignKey(Employee)
     status = models.IntegerField(choices=STATUS, default=STATUS.draft)
     planned_date = models.DateTimeField(blank=True, null=True)
@@ -73,14 +74,14 @@ class SalesOrderLine(BaseModel):
     quantity_requested = models.IntegerField(blank=True, null=True)
     buffer_quantity = models.IntegerField()
     total_quantity = models.IntegerField()
-    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='sales_quantity_uom')
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
     total_price = models.DecimalField(max_digits=21, decimal_places=2)
     price_currency = models.FloatField(Currency)
     total_weight = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='sales_weight_uom')
+    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_weight_uom')
     total_volume = models.FloatField()
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
-    volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='sales_volume_uom')
+    volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_volume_uom')
     description = models.CharField(max_length=55, blank=True)
 
 
@@ -89,8 +90,10 @@ class Voucher(BaseModel):
         Voucher is used as a proof of delivery
     """
     sales_order = models.ForeignKey(SalesOrder)
-    recipient_representative = models.ForeignKey(Employee, related_name='recipient_representative')
-    supplier_representative = models.ForeignKey(Employee, related_name='supplier_representative')
+    recipient_representative = models.ForeignKey(Employee,
+                                                 related_name='%(app_label)s_%(class)s_recipient_representative')
+    supplier_representative = models.ForeignKey(Employee,
+                                                related_name='%(app_label)s_%(class)s_supplier_representative')
 
 
 class VoucherLine(BaseModel):
@@ -106,3 +109,12 @@ class VoucherLine(BaseModel):
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     remark = models.CharField(max_length=55, blank=True)
 
+
+#register models to be tracked by Reversion.
+
+reversion.register(PurchaseOrder)
+reversion.register(PurchaseOrderLine)
+reversion.register(SalesOrder)
+reversion.register(SalesOrderLine)
+reversion.register(Voucher)
+reversion.register(VoucherLine)

@@ -8,6 +8,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 #import external modules
+import reversion
 from model_utils import Choices
 
 #import project modules
@@ -150,7 +151,7 @@ class IncomingShipmentLine(BaseModel):
     stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
                                           related_name='%(app_label)s_%(class)s_stock_balance_uom')
     weight = models.FloatField(blank=True, null=True)
-    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='weight_uom')
+    weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_weight_uom')
     packed_volume = models.FloatField(blank=True, null=True)
     packed_volume_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_packed_volume_uom')
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
@@ -206,3 +207,17 @@ class Adjustment(BaseModel):
     revised_quantity = models.IntegerField()
     reason = models.CharField(max_length=55, verbose_name='reason for adjustment')
     date_time = models.DateTimeField()
+
+
+#register models that will be tracked by Reversion
+reversion.register(Inventory)
+reversion.register(InventoryLine)
+reversion.register(PhysicalStockCount)
+reversion.register(PhysicalStockCountLine)
+reversion.register(ConsumptionRecord)
+reversion.register(ConsumptionRecordLine)
+reversion.register(IncomingShipment)
+reversion.register(IncomingShipmentLine)
+reversion.register(OutgoingShipment)
+reversion.register(OutgoingShipmentLine)
+reversion.register(Adjustment)

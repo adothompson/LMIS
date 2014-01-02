@@ -6,6 +6,7 @@
 from django.db import models
 
 #import external modules
+import reversion
 from model_utils import Choices
 
 #import project modules
@@ -16,8 +17,8 @@ class Priority(BaseModel):
     """
         This is used to model notification priority levels
     """
-    LEVELS = Choices((0, 'low', _('Low')), (1, 'medium', _('Medium')), (2, 'high', _('High')),
-                    (3, 'critical', _('Critical')))
+    LEVELS = Choices((0, 'low', ('Low')), (1, 'medium', ('Medium')), (2, 'high', ('High')),
+                     (3, 'critical', ('Critical')))
 
     class Meta:
         managed = False
@@ -43,6 +44,8 @@ class OnSiteNotificationRecipient(BaseModel):
     resolved = models.BooleanField(default=False)
 
 
+#register models that will be tracked with reversion
 
-
+reversion.register(OnSiteNotification)
+reversion.register(OnSiteNotificationRecipient)
 
