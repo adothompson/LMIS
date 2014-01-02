@@ -7,7 +7,7 @@ from .models import LocationType, Location, GeoPoint, GeoPoly
 
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location_type', 'global_id')
+    list_display = ('name', 'location_type', 'uuid')
     list_filter = ('location_type', )
     search_fields = ('name', )
 
@@ -17,7 +17,7 @@ class LocationTypeAdmin(admin.ModelAdmin):
 
 
 class GeoPolyAdmin(geoadmin.OSMGeoAdmin):
-    list_display = ('name', 'location', 'global_id', 'code', 'parent_code', 'source',
+    list_display = ('name', 'location', 'uuid', 'code', 'parent_code', 'source',
                     'last_modified_gis')
     list_filter = ('location__location_type', 'source', )
     search_fields = ('name', 'code', 'source',)
