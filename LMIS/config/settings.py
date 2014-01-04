@@ -31,8 +31,8 @@ class Common(Configuration):
         'south', # Database migration helper
         'reversion', # Rollback & recovery
         'django_extensions',
-        'rest_framework',  # API
-        'django_filters',  # API filter support
+        'rest_framework', # API
+        'django_filters', # API filter support
         'mptt',
     )
 
@@ -60,12 +60,6 @@ class Common(Configuration):
     )
     ########## END MIDDLEWARE CONFIGURATION
 
-    ######### DJANGO REST CONFIGURATION
-    REST_FRAMEWORK = {
-        'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-        'PAGINATE_BY': 10
-    }
-    ######## END OF DJANGO REST CONFIGURATION
 
     ########## DEBUG
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
@@ -261,10 +255,13 @@ class Local(Common):
     DATABASES = {
         'default': {
             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'lmisdb',
+            'NAME': 'locallmisdb',
             'USER': 'lmisdbuser',
             'PASSWORD': 'nigerialmistest',
-            'HOST': 'cdc-staging.eocng.org',
+            'HOST': 'localhost',
+            'OPTIONS': {
+                'autocommit': True,
+            }
         }
     }
     ########## END DATABASE CONFIGURATION

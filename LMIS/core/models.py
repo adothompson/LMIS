@@ -14,7 +14,7 @@ from model_utils.models import TimeStampedModel
 from model_utils import Choices
 
 #import project app modules
-from locations.models import Location
+#from locations.models import Location
 
 
 class BaseModel(TimeStampedModel):
@@ -290,7 +290,7 @@ class Facility(MPTTModel, Company):
     facility_operators = models.ManyToManyField(Company, blank=True, null=True, related_name='facility_operators')
     global_location_no = models.CharField(max_length=55, blank=True)
     catchment_population = models.IntegerField(blank=True, null=True)
-    location = models.ForeignKey(Location, null=True)
+    #location = models.ForeignKey(Location, null=True)
     has_electricity = models.NullBooleanField(blank=True)
     is_online = models.NullBooleanField(blank=True, null=True)
     has_electronic_scc = models.NullBooleanField(blank=True, null=False)

@@ -3,7 +3,7 @@ from rest_framework import viewsets
 
 #import project modules
 from .models import Product
-from .LMIS.core.serializers import ProductSerializer
+from .serializers import ProductSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
