@@ -4,6 +4,9 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'api/products', views.ProductViewSet)
+router.register(r'api/productcategory', views.ProductCategoryViewSet)
+router.register(r'api/uom', views.UnitOfMeasurementViewSet)
+router.register(r'api/uomcategory', views.UOMCategoryViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.

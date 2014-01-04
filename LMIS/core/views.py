@@ -2,13 +2,38 @@
 from rest_framework import viewsets
 
 #import project modules
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, ProductCategory, UnitOfMeasurement, UOMCategory
+from .serializers import ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer, \
+    UOMCategorySerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
-    API end-point that allows list of all products to be view
+        API end-point that allows list of all products to be view
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class ProductCategoryViewSet(viewsets.ModelViewSet):
+    """
+        API end point for product category
+    """
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
+
+
+class UnitOfMeasurementViewSet(viewsets.ModelViewSet):
+    """
+       API end point for Unit of Measurement
+    """
+    queryset = UnitOfMeasurement.objects.all()
+    serializer_class = UnitOfMeasurementSerializer
+
+
+class UOMCategoryViewSet(viewsets.ModelViewSet):
+    """
+        API end point for unit of measurement category
+    """
+    queryset = UOMCategory.objects.all()
+    serializer_class = UOMCategorySerializer
