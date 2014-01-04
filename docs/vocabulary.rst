@@ -76,7 +76,7 @@ ProgramProductPriceHistory
     updated anytime program product price per unit changes or funding source(partners) changes.
 
 
-FacilityProgramSupported
+FacilitySupportedProgram
     This is used to keep track of programs a facility supports, the program start and end date at the facility and
     program status at the facility.
 
