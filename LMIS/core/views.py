@@ -1,3 +1,14 @@
-from django.shortcuts import render
+#import external modules
+from rest_framework import viewsets
 
-# Create your views here.
+#import project modules
+from .models import Product
+from .LMIS.core.serializers import ProductSerializer
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    """
+    API end-point that allows list of all products to be view
+    """
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
