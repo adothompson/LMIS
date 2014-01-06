@@ -97,6 +97,11 @@ class Common(Configuration):
     MANAGERS = ADMINS
     ########## END MANAGER CONFIGURATION
 
+    ########## DATABASE CONFIGURATION
+    # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
+    DATABASES = values.DatabaseURLValue()
+    ########## END DATABASE CONFIGURATION
+
     ########## CACHING
     CACHES = {
         'default': {
@@ -249,22 +254,6 @@ class Local(Common):
         'SHOW_TEMPLATE_CONTEXT': True,
     }
     ########## end django-debug-toolbar
-
-    ########## DATABASE CONFIGURATION
-    # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'locallmisdb',
-            'USER': 'lmisdbuser',
-            'PASSWORD': 'nigerialmistest',
-            'HOST': 'localhost',
-            'OPTIONS': {
-                'autocommit': True,
-            }
-        }
-    }
-    ########## END DATABASE CONFIGURATION
 
     ########## Below this line define 3rd party library settings
 
