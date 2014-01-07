@@ -28,11 +28,11 @@ class Common(Configuration):
         'django.contrib.admin',
     )
     THIRD_PARTY_APPS = (
-        'south', # Database migration helper
-        'reversion', # Rollback & recovery
+        'south',  # Database migration helper
+        'reversion',  # Rollback & recovery
         'django_extensions',
-        'rest_framework', # API
-        'django_filters', # API filter support
+        'rest_framework',  # API
+        'django_filters',  # API filter support
         'mptt',
     )
 
