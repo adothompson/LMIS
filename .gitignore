@@ -9,7 +9,8 @@ __pycache__
 # PyCharm
 .idea
 
-*.pot
-
 # Development Database
 dev_db
+
+*.pot
+_build

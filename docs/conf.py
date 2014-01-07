@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# eHealth Nigeria LMIS documentation build configuration file, created by
+# eHealth Africa LMIS documentation build configuration file, created by
 # sphinx-quickstart on Fri Dec 27 13:45:00 2013.
 #
 # This file is execfile()d with the current directory set to its
@@ -51,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'eHealth Nigeria LMIS'
+project = 'eHealth Africa LMIS'
 copyright = '2013, eHealth Africa'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -184,7 +184,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'eHealthNigeriaLMISdoc'
+htmlhelp_basename = 'eHealthAfricaLMISdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -204,7 +204,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'eHealthNigeriaLMIS.tex', 'eHealth Nigeria LMIS Documentation',
+  ('index', 'eHealthAfricaLMIS.tex', 'eHealth Africa LMIS Documentation',
    'eHealth Africa', 'manual'),
 ]
 
@@ -234,7 +234,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ehealthnigerialmis', 'eHealth Nigeria LMIS Documentation',
+    ('index', 'ehealthafricalmis', 'eHealth Africa LMIS Documentation',
      ['eHealth Africa'], 1)
 ]
 
@@ -248,8 +248,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'eHealthNigeriaLMIS', 'eHealth Nigeria LMIS Documentation',
-   'eHealth Africa', 'eHealthNigeriaLMIS', 'One line description of project.',
+  ('index', 'eHealthAfricaLMIS', 'eHealth Africa LMIS Documentation',
+   'eHealth Africa', 'eHealthAfricaLMIS', 'One line description of project.',
    'Miscellaneous'),
 ]
 
