@@ -13,7 +13,7 @@ from rest_framework import viewsets
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
                      Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
-                     FacilitySupportedProgram
+                     FacilitySupportedProgram, ProgramProductAllocationInfo
                      )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
@@ -21,7 +21,7 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
                               EmployeeSerializer, UserSerializer, PermissionSerializer, FacilityTypeSerializer,
                               FacilitySerializer, ProgramSerializer, ProgramProductSerializer,
-                              FacilitySupportedProgramSerializer
+                              FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer
                               )
 
 
@@ -179,3 +179,11 @@ class FacilitySupportedProgramViewSet(viewsets.ModelViewSet):
     """
     queryset = FacilitySupportedProgram.objects.all()
     serializer_class = FacilitySupportedProgramSerializer
+
+
+class ProgramProductAllocationInfoViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for ProgramProductAllocationInfo model
+    """
+    queryset = ProgramProductAllocationInfo.objects.all()
+    serializer_class = ProgramProductAllocationInfoSerializer
