@@ -3,8 +3,8 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'product', views.ProductViewSet)
-router.register(r'productcategory', views.ProductCategoryViewSet)
+router.register(r'^product', views.ProductViewSet)
+router.register(r'^productcategory', views.ProductCategoryViewSet)
 router.register(r'uom', views.UnitOfMeasurementViewSet)
 router.register(r'uomcategory', views.UOMCategoryViewSet)
 router.register(r'companycategory', views.CompanyCategoryViewSet)
