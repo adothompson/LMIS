@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
-                         Currency)
+                         Currency, Rate)
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
@@ -60,3 +60,11 @@ class CurrencySerializer(serializers.HyperlinkedModelSerializer):
     """
     class Meta:
         model = Currency
+
+
+class RateSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        REST API serializer for Rate model
+    """
+    class Meta:
+        model = Rate

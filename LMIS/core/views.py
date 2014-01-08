@@ -2,10 +2,15 @@
 from rest_framework import viewsets
 
 #import project modules
-from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company)
+from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate)
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
-                              UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer)
+                              UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
+                              RateSerializer)
 
+
+#TODO: add view function that returns only deleted models and make normal query set to return only models not yet
+#TODO: deleted
+#TODO: over-ride ModelViewSet.destroy() to return just turn on model is_deleted flag on(soft delete)
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
@@ -61,3 +66,11 @@ class CurrencyViewSet(viewsets.ModelViewSet):
     """
     queryset = Company.objects.all()
     serializer_class = CurrencySerializer
+
+
+class RateViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for Rate
+    """
+    queryset = Rate.objects.all()
+    serializer_class = RateSerializer
