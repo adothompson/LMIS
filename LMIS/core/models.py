@@ -183,6 +183,7 @@ class Company(Party):
     """
     products = models.ManyToManyField('Product', blank=True, null=True)
     header = models.CharField(max_length=100, blank=True, null=True)
+    category = models.ForeignKey('CompanyCategory')
     footer = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
