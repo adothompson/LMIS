@@ -2,10 +2,11 @@
 from rest_framework import viewsets
 
 #import project modules
-from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact)
+from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
+                     Address, EmployeeCategory)
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                               UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
-                              RateSerializer, ContactSerializer)
+                              RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer)
 
 
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
@@ -82,3 +83,19 @@ class ContactViewSet(viewsets.ModelViewSet):
     """
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    """
+        API end point for Address Model
+    """
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+
+class EmployeeCategoryViewSet(viewsets.ModelViewSet):
+    """
+        API end point for EmployeeCategory
+    """
+    queryset = EmployeeCategory.objects.all()
+    serializer_class = EmployeeCategorySerializer
