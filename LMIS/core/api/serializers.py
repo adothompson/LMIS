@@ -1,5 +1,5 @@
 #import core django module
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 #import external modules
 from rest_framework import serializers
@@ -111,3 +111,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     """
     class Meta:
         model = User
+
+
+class PermissionSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        REST API serializer for Permission model
+    """
+    class Meta:
+        model = Permission

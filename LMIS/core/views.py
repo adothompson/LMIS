@@ -1,5 +1,5 @@
 #import from django core modules
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 
 #import external modules
 from rest_framework import viewsets
@@ -11,7 +11,7 @@ from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, C
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                               UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
                               RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
-                              EmployeeSerializer)
+                              EmployeeSerializer, UserSerializer, PermissionSerializer)
 
 
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
@@ -119,4 +119,9 @@ class UserViewSet(viewsets.ModelViewSet):
         API end point User model, required by EmployeeViewSet
     """
     queryset = User.objects.all()
-    serializer_class = EmployeeSerializer
+    serializer_class = UserSerializer
+
+
+class PermissionViewSet(viewsets.ModelViewSet):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionSerializer
