@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
-                         Currency, Rate, Contact, Address, EmployeeCategory, Employee)
+                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType)
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
@@ -119,3 +119,11 @@ class PermissionSerializer(serializers.HyperlinkedModelSerializer):
     """
     class Meta:
         model = Permission
+
+
+class FacilityTypeSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        REST API serializer for FacilityType model
+    """
+    class Meta:
+        model = FacilityType

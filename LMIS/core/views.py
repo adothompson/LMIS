@@ -6,12 +6,12 @@ from rest_framework import viewsets
 
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
-                     Address, EmployeeCategory, Employee)
+                     Address, EmployeeCategory, Employee, FacilityType)
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                               UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
                               RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
-                              EmployeeSerializer, UserSerializer, PermissionSerializer)
+                              EmployeeSerializer, UserSerializer, PermissionSerializer, FacilityTypeSerializer)
 
 
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
@@ -123,5 +123,16 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for Permission model required by UserViewSet since User model references Permission
+    """
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
+
+
+class FacilityTypeViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for FacilityType model.
+    """
+    queryset = FacilityType.objects.all()
+    serializer_class = FacilityTypeSerializer
