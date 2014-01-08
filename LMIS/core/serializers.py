@@ -31,7 +31,7 @@ class  UnitOfMeasurementSerializer(serializers.HyperlinkedModelSerializer):
 
 class UOMCategorySerializer(serializers.HyperlinkedModelSerializer):
     """
-        Serializer for UnitOfMeasurement
+        Serializer for UOMCategory
     """
     class Meta:
         model = UOMCategory

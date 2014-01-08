@@ -3,8 +3,8 @@ from rest_framework import viewsets
 
 #import project modules
 from .models import Product, ProductCategory, UnitOfMeasurement, UOMCategory
-from .serializers import ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer, \
-    UOMCategorySerializer
+from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
+                          UOMCategorySerializer)
 
 
 class ProductViewSet(viewsets.ModelViewSet):
