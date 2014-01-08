@@ -2,9 +2,9 @@
 from rest_framework import viewsets
 
 #import project modules
-from .models import Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory
-from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
-                          UOMCategorySerializer, CompanyCategorySerializer)
+from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company)
+from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
+                              UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer)
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -45,3 +45,11 @@ class CompanyCategoryViewSet(viewsets.ModelViewSet):
     """
     queryset = CompanyCategory.objects.all()
     serializer_class = CompanyCategorySerializer
+
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    """
+        API end point for Company
+    """
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
