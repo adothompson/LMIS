@@ -26,6 +26,7 @@ router.register(r'program-product-allocation-info', views.ProgramProductAllocati
 router.register(r'facility-supported-program-product', views.FacilitySupportedProgramProductViewSet)
 router.register(r'supervisory-node', views.SupervisoryNodeViewSet)
 router.register(r'order-group', views.OrderGroupViewSet)
+router.register(r'product-presentation', views.ProductPresentationViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',

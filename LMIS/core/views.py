@@ -14,7 +14,7 @@ from rest_framework import viewsets
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
                      Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
                      FacilitySupportedProgram, ProgramProductAllocationInfo, FacilitySupportedProgramProduct,
-                     SupervisoryNode, OrderGroup
+                     SupervisoryNode, OrderGroup, ProductPresentation
                      )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
@@ -23,7 +23,8 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               EmployeeSerializer, UserSerializer, PermissionSerializer, FacilityTypeSerializer,
                               FacilitySerializer, ProgramSerializer, ProgramProductSerializer,
                               FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer,
-                              FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer, OrderGroupSerializer
+                              FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer,
+                              OrderGroupSerializer, ProductPresentationSerializer
                               )
 
 
@@ -213,3 +214,11 @@ class OrderGroupViewSet(viewsets.ModelViewSet):
     """
     queryset = OrderGroup.objects.all()
     serializer_class = OrderGroupSerializer
+
+
+class ProductPresentationViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for ProductPresentation model
+    """
+    queryset = ProductPresentation.objects.all()
+    serializer_class = ProductPresentationSerializer

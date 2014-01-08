@@ -12,7 +12,7 @@ from rest_framework import serializers
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
                          Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType, Facility, Program,
                          ProgramProduct, FacilitySupportedProgram, ProgramProductAllocationInfo,
-                         FacilitySupportedProgramProduct, SupervisoryNode, OrderGroup)
+                         FacilitySupportedProgramProduct, SupervisoryNode, OrderGroup, ProductPresentation)
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
@@ -197,3 +197,11 @@ class OrderGroupSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = OrderGroup
+
+
+class ProductPresentationSerializer(serializers.ModelSerializer):
+    """
+        REST API serializer for ProductPresentation model
+    """
+    class Meta:
+        model = ProductPresentation
