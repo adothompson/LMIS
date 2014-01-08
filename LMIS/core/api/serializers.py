@@ -6,18 +6,10 @@ from rest_framework import serializers
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
-                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType)
+                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType, Facility)
 
 
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    """
-        REST API Serializer for Product models
-    """
-    class Meta:
-        model = Product
-
-
-class ProductCategorySerializer(serializers.HyperlinkedModelSerializer):
+class ProductCategorySerializer(serializers.ModelSerializer):
     """
         REST API Serializer for ProductCategory model
     """
@@ -25,15 +17,15 @@ class ProductCategorySerializer(serializers.HyperlinkedModelSerializer):
         model = ProductCategory
 
 
-class UnitOfMeasurementSerializer(serializers.HyperlinkedModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     """
-        REST API Serializer for UnitOfMeasurement model
+        REST API Serializer for Product models
     """
     class Meta:
-        model = UnitOfMeasurement
+        model = Product
 
 
-class UOMCategorySerializer(serializers.HyperlinkedModelSerializer):
+class UOMCategorySerializer(serializers.ModelSerializer):
     """
         REST API Serializer for UOMCategory model
     """
@@ -41,7 +33,15 @@ class UOMCategorySerializer(serializers.HyperlinkedModelSerializer):
         model = UOMCategory
 
 
-class CompanyCategorySerializer(serializers.HyperlinkedModelSerializer):
+class UnitOfMeasurementSerializer(serializers.ModelSerializer):
+    """
+        REST API Serializer for UnitOfMeasurement model
+    """
+    class Meta:
+        model = UnitOfMeasurement
+
+
+class CompanyCategorySerializer(serializers.ModelSerializer):
     """
         REST API serializer for CompanyCategory model
     """
@@ -49,7 +49,7 @@ class CompanyCategorySerializer(serializers.HyperlinkedModelSerializer):
         model = CompanyCategory
 
 
-class CompanySerializer(serializers.HyperlinkedModelSerializer):
+class CompanySerializer(serializers.ModelSerializer):
     """
         REST API serializer for Company model
     """
@@ -57,7 +57,7 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
         model = Company
 
 
-class CurrencySerializer(serializers.HyperlinkedModelSerializer):
+class CurrencySerializer(serializers.ModelSerializer):
     """
         REST API serializer for Currency model
     """
@@ -65,7 +65,7 @@ class CurrencySerializer(serializers.HyperlinkedModelSerializer):
         model = Currency
 
 
-class RateSerializer(serializers.HyperlinkedModelSerializer):
+class RateSerializer(serializers.ModelSerializer):
     """
         REST API serializer for Rate model
     """
@@ -73,7 +73,7 @@ class RateSerializer(serializers.HyperlinkedModelSerializer):
         model = Rate
 
 
-class ContactSerializer(serializers.HyperlinkedModelSerializer):
+class ContactSerializer(serializers.ModelSerializer):
     """
         REST API serializer for Contact model
     """
@@ -81,7 +81,7 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
         model = Contact
 
 
-class AddressSerializer(serializers.HyperlinkedModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
     """
         REST  API serializer for Address model
     """
@@ -89,7 +89,7 @@ class AddressSerializer(serializers.HyperlinkedModelSerializer):
         model = Address
 
 
-class EmployeeCategorySerializer(serializers.HyperlinkedModelSerializer):
+class EmployeeCategorySerializer(serializers.ModelSerializer):
     """
         REST API serializer for EmployeeCategory
     """
@@ -97,7 +97,7 @@ class EmployeeCategorySerializer(serializers.HyperlinkedModelSerializer):
         model = EmployeeCategory
 
 
-class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
+class EmployeeSerializer(serializers.ModelSerializer):
     """
         REST API serializer for Employee
     """
@@ -105,7 +105,7 @@ class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
         model = Employee
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     """
         REST API serializer for User model
     """
@@ -113,7 +113,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
 
 
-class PermissionSerializer(serializers.HyperlinkedModelSerializer):
+class PermissionSerializer(serializers.ModelSerializer):
     """
         REST API serializer for Permission model
     """
@@ -121,9 +121,17 @@ class PermissionSerializer(serializers.HyperlinkedModelSerializer):
         model = Permission
 
 
-class FacilityTypeSerializer(serializers.HyperlinkedModelSerializer):
+class FacilityTypeSerializer(serializers.ModelSerializer):
     """
         REST API serializer for FacilityType model
     """
     class Meta:
         model = FacilityType
+
+
+class FacilitySerializer(serializers.ModelSerializer):
+    """
+        REST API serializer for Facility model
+    """
+    class Meta:
+        model = Facility

@@ -18,6 +18,7 @@ router.register(r'employee', views.EmployeeViewSet)
 router.register(r'user', views.UserViewSet)
 router.register(r'permission', views.PermissionViewSet)
 router.register(r'facility-type', views.FacilityTypeViewSet)
+router.register(r'facility', views.FacilityViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
