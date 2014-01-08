@@ -13,7 +13,8 @@ from rest_framework import viewsets
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
                      Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
-                     FacilitySupportedProgram, ProgramProductAllocationInfo
+                     FacilitySupportedProgram, ProgramProductAllocationInfo, FacilitySupportedProgramProduct,
+                     SupervisoryNode
                      )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
@@ -21,7 +22,8 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
                               EmployeeSerializer, UserSerializer, PermissionSerializer, FacilityTypeSerializer,
                               FacilitySerializer, ProgramSerializer, ProgramProductSerializer,
-                              FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer
+                              FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer,
+                              FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer
                               )
 
 
@@ -187,3 +189,19 @@ class ProgramProductAllocationInfoViewSet(viewsets.ModelViewSet):
     """
     queryset = ProgramProductAllocationInfo.objects.all()
     serializer_class = ProgramProductAllocationInfoSerializer
+
+
+class FacilitySupportedProgramProductViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for FacilitySupportedProgramProduct model
+    """
+    queryset = FacilitySupportedProgramProduct.objects.all()
+    serializer_class = FacilitySupportedProgramProductSerializer
+
+
+class SupervisoryNodeViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for SupervisoryNode model
+    """
+    queryset = SupervisoryNode.objects.all()
+    serializer_class = SupervisoryNodeSerializer

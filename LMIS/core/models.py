@@ -398,7 +398,7 @@ class ProgramProduct(BaseModel):
     program = models.ForeignKey(Program)
     product = models.ForeignKey('Product')
     unit_per_target = models.IntegerField()
-    current_price_per_unit = models.DecimalField(max_digits=21, decimal_places=2, verbose_name='price per product uom')
+    current_price_per_unit = models.DecimalField(max_digits=21, decimal_places=2, verbose_name='price per uom')
     price_currency = models.ForeignKey(Currency, blank=True, null=True)
     funding_source = models.ManyToManyField(Company)
     is_active = models.BooleanField()
@@ -447,7 +447,7 @@ class SupervisoryNode(MPTTModel, BaseModel):
         structure. This can be used to know whom to send escalated notification or alert to.
     """
     code = models.CharField(max_length=25, unique=True)
-    name = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=55, blank=True)
     parent = TreeForeignKey('self', blank=True, null=True, related_name='parent_supervisory_node')
     facility = models.ForeignKey(Facility)

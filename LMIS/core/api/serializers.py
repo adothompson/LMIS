@@ -1,3 +1,7 @@
+"""
+    core/api/serializers.py is the module for core model api data serializers
+"""
+
 #import core django module
 from django.contrib.auth.models import User, Permission
 
@@ -7,7 +11,8 @@ from rest_framework import serializers
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
                          Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType, Facility, Program,
-                         ProgramProduct, FacilitySupportedProgram, ProgramProductAllocationInfo)
+                         ProgramProduct, FacilitySupportedProgram, ProgramProductAllocationInfo,
+                         FacilitySupportedProgramProduct, SupervisoryNode)
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
@@ -168,3 +173,19 @@ class ProgramProductAllocationInfoSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = ProgramProductAllocationInfo
+
+
+class FacilitySupportedProgramProductSerializer(serializers.ModelSerializer):
+    """
+        REST API serializer for FacilitySupportedProgramProduct model
+    """
+    class Meta:
+        model = FacilitySupportedProgramProduct
+
+
+class SupervisoryNodeSerializer(serializers.ModelSerializer):
+    """
+       REST API serializer for SupervisoryNode model
+    """
+    class Meta:
+        model = SupervisoryNode

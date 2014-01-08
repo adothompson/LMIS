@@ -23,6 +23,8 @@ router.register(r'program', views.ProgramViewSet)
 router.register(r'program-products', views.ProgramProductViewSet)
 router.register(r'facility-supported-program', views.FacilitySupportedProgramViewSet)
 router.register(r'program-product-allocation-info', views.ProgramProductAllocationInfoViewSet)
+router.register(r'facility-supported-program-product', views.FacilitySupportedProgramProductViewSet)
+router.register(r'supervisory-node', views.SupervisoryNodeViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
