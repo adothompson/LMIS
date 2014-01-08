@@ -1,9 +1,12 @@
+#import core django module
+from django.contrib.auth.models import User
+
 #import external modules
 from rest_framework import serializers
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
-                         Currency, Rate, Contact, Address, EmployeeCategory)
+                         Currency, Rate, Contact, Address, EmployeeCategory, Employee)
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
@@ -92,3 +95,19 @@ class EmployeeCategorySerializer(serializers.HyperlinkedModelSerializer):
     """
     class Meta:
         model = EmployeeCategory
+
+
+class EmployeeSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        REST API serializer for Employee
+    """
+    class Meta:
+        model = Employee
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        REST API serializer for User model
+    """
+    class Meta:
+        model = User

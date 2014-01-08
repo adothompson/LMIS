@@ -14,10 +14,12 @@ router.register(r'rate', views.RateViewSet)
 router.register(r'contact', views.ContactViewSet)
 router.register(r'address', views.AddressViewSet)
 router.register(r'employee-category', views.EmployeeCategoryViewSet)
+router.register(r'employee', views.EmployeeViewSet)
+router.register(r'user', views.UserViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
-    # Additionally, we include login URLs for the browseable API.
-    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    # Additionally, we include login URLs for the browse-able API.
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 )

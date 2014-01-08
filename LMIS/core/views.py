@@ -1,12 +1,17 @@
+#import from django core modules
+from django.contrib.auth.models import User
+
 #import external modules
 from rest_framework import viewsets
 
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
-                     Address, EmployeeCategory)
+                     Address, EmployeeCategory, Employee)
+
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                               UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
-                              RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer)
+                              RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
+                              EmployeeSerializer)
 
 
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
@@ -95,7 +100,23 @@ class AddressViewSet(viewsets.ModelViewSet):
 
 class EmployeeCategoryViewSet(viewsets.ModelViewSet):
     """
-        API end point for EmployeeCategory
+        API end point for EmployeeCategory model
     """
     queryset = EmployeeCategory.objects.all()
     serializer_class = EmployeeCategorySerializer
+
+
+class EmployeeViewSet(viewsets.ModelViewSet):
+    """
+        API end point for Employee model
+    """
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+        API end point User model, required by EmployeeViewSet
+    """
+    queryset = User.objects.all()
+    serializer_class = EmployeeSerializer
