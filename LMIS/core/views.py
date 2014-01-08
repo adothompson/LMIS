@@ -1,3 +1,9 @@
+"""
+    core/views.py holds the API end-point for core models. it is used to define the API views from which external
+    clients can interact with the models to perform operations such as Create, Retrieve, Update, Delete etc via
+    ModelViewSet functions such as list(), retrieve(), update(), partial_update(), destroy().
+"""
+
 #import from django core modules
 from django.contrib.auth.models import User, Permission
 
@@ -6,13 +12,13 @@ from rest_framework import viewsets
 
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
-                     Address, EmployeeCategory, Employee, FacilityType, Facility)
+                     Address, EmployeeCategory, Employee, FacilityType, Facility, Program)
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                               UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
                               RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
                               EmployeeSerializer, UserSerializer, PermissionSerializer, FacilityTypeSerializer,
-                              FacilitySerializer)
+                              FacilitySerializer, ProgramSerializer)
 
 
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
@@ -145,3 +151,11 @@ class FacilityViewSet(viewsets.ModelViewSet):
     """
     queryset = Facility.objects.all()
     serializer_class = FacilitySerializer
+
+
+class ProgramViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for Program model
+    """
+    queryset = Program.objects.all()
+    serializer_class = ProgramSerializer
