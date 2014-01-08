@@ -6,7 +6,8 @@ from rest_framework import serializers
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
-                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType, Facility, Program)
+                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType, Facility, Program,
+                         ProgramProduct)
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
@@ -143,3 +144,11 @@ class ProgramSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Program
+
+
+class ProgramProductSerializer(serializers.ModelSerializer):
+    """
+        REST API serializer for ProgramProduct model
+    """
+    class Meta:
+        model = ProgramProduct
