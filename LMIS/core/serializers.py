@@ -2,12 +2,12 @@
 from rest_framework import serializers
 
 #import project modules
-from .models import Product, ProductCategory, UnitOfMeasurement, UOMCategory
+from .models import Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     """
-        Serializer for product models
+        REST API Serializer for product models
     """
     class Meta:
         model = Product
@@ -15,15 +15,15 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
 class ProductCategorySerializer(serializers.HyperlinkedModelSerializer):
     """
-        Serializer for Product Category
+        REST API Serializer for Product Category
     """
     class Meta:
         model = ProductCategory
 
 
-class  UnitOfMeasurementSerializer(serializers.HyperlinkedModelSerializer):
+class UnitOfMeasurementSerializer(serializers.HyperlinkedModelSerializer):
     """
-        Serializer for UnitOfMeasurement
+        REST API Serializer for UnitOfMeasurement
     """
     class Meta:
         model = UnitOfMeasurement
@@ -31,7 +31,15 @@ class  UnitOfMeasurementSerializer(serializers.HyperlinkedModelSerializer):
 
 class UOMCategorySerializer(serializers.HyperlinkedModelSerializer):
     """
-        Serializer for UOMCategory
+        REST API Serializer for UOMCategory
     """
     class Meta:
         model = UOMCategory
+
+
+class CompanyCategorySerializer(serializers.HyperlinkedModelSerializer):
+    """
+        REST API serializer for CompanyCategory model
+    """
+    class Meta:
+        model = CompanyCategory
