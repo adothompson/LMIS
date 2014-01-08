@@ -164,7 +164,7 @@ class FacilitySupportedProgramSerializer(serializers.ModelSerializer):
 
 class ProgramProductAllocationInfoSerializer(serializers.ModelSerializer):
     """
-        REST API serializer for ProgramProductAllocationInfo model
+        REST API  serializer for ProgramProductAllocationInfo model
     """
     class Meta:
         model = ProgramProductAllocationInfo
