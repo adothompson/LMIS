@@ -21,6 +21,7 @@ router.register(r'facility-type', views.FacilityTypeViewSet)
 router.register(r'facility', views.FacilityViewSet)
 router.register(r'program', views.ProgramViewSet)
 router.register(r'program-products', views.ProgramProductViewSet)
+router.register(r'facility-supported-program', views.FacilitySupportedProgramViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',

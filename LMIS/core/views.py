@@ -12,18 +12,22 @@ from rest_framework import viewsets
 
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
-                     Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct)
+                     Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
+                     FacilitySupportedProgram
+                     )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                               UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
                               RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
                               EmployeeSerializer, UserSerializer, PermissionSerializer, FacilityTypeSerializer,
-                              FacilitySerializer, ProgramSerializer, ProgramProductSerializer)
+                              FacilitySerializer, ProgramSerializer, ProgramProductSerializer,
+                              FacilitySupportedProgramSerializer
+                              )
 
 
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
 #TODO: deleted
-#TODO: over-ride ModelViewSet.destroy() to return just turn on model is_deleted flag on(soft delete)
+#TODO: over-ride ModelViewSet.destroy() to just turn on model is_deleted flag on(soft delete)
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
@@ -167,3 +171,11 @@ class ProgramProductViewSet(viewsets.ModelViewSet):
     """
     queryset = ProgramProduct.objects.all()
     serializer_class = ProgramProductSerializer
+
+
+class FacilitySupportedProgramViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for FacilitySupportedProgram model
+    """
+    queryset = FacilitySupportedProgram.objects.all()
+    serializer_class = FacilitySupportedProgramSerializer
