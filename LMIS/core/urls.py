@@ -9,6 +9,7 @@ router.register(r'uom', views.UnitOfMeasurementViewSet)
 router.register(r'uomcategory', views.UOMCategoryViewSet)
 router.register(r'companycategory', views.CompanyCategoryViewSet)
 router.register(r'company', views.CompanyViewSet)
+router.register(r'currency', views.CurrencyViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.

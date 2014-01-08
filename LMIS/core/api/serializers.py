@@ -2,12 +2,13 @@
 from rest_framework import serializers
 
 #import project modules
-from core.models import Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company
+from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
+                         Currency)
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     """
-        REST API Serializer for product models
+        REST API Serializer for Product models
     """
     class Meta:
         model = Product
@@ -15,7 +16,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 
 class ProductCategorySerializer(serializers.HyperlinkedModelSerializer):
     """
-        REST API Serializer for Product Category
+        REST API Serializer for ProductCategory model
     """
     class Meta:
         model = ProductCategory
@@ -23,7 +24,7 @@ class ProductCategorySerializer(serializers.HyperlinkedModelSerializer):
 
 class UnitOfMeasurementSerializer(serializers.HyperlinkedModelSerializer):
     """
-        REST API Serializer for UnitOfMeasurement
+        REST API Serializer for UnitOfMeasurement model
     """
     class Meta:
         model = UnitOfMeasurement
@@ -31,7 +32,7 @@ class UnitOfMeasurementSerializer(serializers.HyperlinkedModelSerializer):
 
 class UOMCategorySerializer(serializers.HyperlinkedModelSerializer):
     """
-        REST API Serializer for UOMCategory
+        REST API Serializer for UOMCategory model
     """
     class Meta:
         model = UOMCategory
@@ -47,7 +48,15 @@ class CompanyCategorySerializer(serializers.HyperlinkedModelSerializer):
 
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
     """
-        REST API serializer for CompanySerializer
+        REST API serializer for Company model
     """
     class Meta:
         model = Company
+
+
+class CurrencySerializer(serializers.HyperlinkedModelSerializer):
+    """
+        REST API serializer for Currency model
+    """
+    class Meta:
+        model = Currency

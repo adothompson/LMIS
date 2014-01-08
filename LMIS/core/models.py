@@ -236,7 +236,8 @@ class Employee(Party):
     """
     current_company = models.ForeignKey(Company, related_name="employees")
     main_company = models.ForeignKey(Company,
-                                     related_name="%(app_label)s_%(class)s_main_company_employees", blank=True, null=True)
+                                     related_name="%(app_label)s_%(class)s_main_company_employees", blank=True,
+                                     null=True)
     category = models.ForeignKey(EmployeeCategory)
     user = models.OneToOneField(User, blank=True, null=True)
 
