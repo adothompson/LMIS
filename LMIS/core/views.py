@@ -53,7 +53,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             @param pk : primary key that is uuid of object to be retrieved.
             returns the object if found else returns None
         """
-        model_class = self.serializer_class.Meta.model
+        model_class = self.get_view_model_class()
         try:
             obj = model_class.objects.get(uuid=pk)
         except model_class.DoesNotExist:
@@ -68,6 +68,13 @@ class BaseModelViewSet(viewsets.ModelViewSet):
         self.pre_save(obj)
         obj.save()
 
+    def get_view_model_class(self):
+        """
+            return the class of the model attribute of the ViewSet Serializer class e.g for ProductViewSet, it returns
+            Product which is the model specified on ProductSerializer model attribute
+        """
+        return self.serializer_class.Meta.model
+
     def destroy(self, request, pk):
         """
             This over-rides ModelViewSet.destroy() so that objects are not deleted (hard deleted) but it just turns the
@@ -78,6 +85,18 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             self.update_obj_is_deleted(obj, is_deleted=True)
             return Response(data={'success': True})
         return Response(data={'detail': 'not found'})
+
+    @action(methods=['GET'])
+    def list_deleted(self, request):
+        """
+            returns a collection of all deleted objects of the given model the view set represents.
+        """
+        print('show soft deleted objects')
+        model_class = self.get_view_model_class()
+        queryset = model_class.objects.filter(is_deleted=False)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
 
     @action(methods=['POST', 'DELETE'])
     def recover(self, request, pk):
