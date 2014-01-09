@@ -34,8 +34,6 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               )
 
 
-#TODO: add view function that returns only deleted models and make normal query set to return only models not yet
-#TODO: deleted
 class BaseModelViewSet(viewsets.ModelViewSet):
     """
         Base API end-point for other model view sets end-point.
