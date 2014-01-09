@@ -12,6 +12,7 @@ from django.contrib.auth.models import User, Permission
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import filters
 
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
@@ -35,11 +36,13 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
 
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
 #TODO: deleted
-#TODO: over-ride ModelViewSet.destroy() to just turn on model is_deleted flag on(soft delete)
 class BaseModelViewSet(viewsets.ModelViewSet):
     """
         Base API end-point for other model view sets end-point.
     """
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('is_deleted',)
+
     def pre_save(self, obj):
         """
             This is over-ridden to attach user that created or modified an object to it before the object is saved.
