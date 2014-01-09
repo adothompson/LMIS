@@ -41,7 +41,7 @@ FacilityType
     Facility Type is used to represent different types of facilities available in a country.
     it is modelled hierarchically. it can be a Health Facility or Store.
 
-FacilityTypeApprovedProduct
+FacilityTypeApprovedProgramProduct
     This is used to model products approved for each facility type.
 
 

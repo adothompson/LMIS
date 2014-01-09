@@ -15,7 +15,8 @@ from rest_framework import viewsets
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
                      Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
                      FacilitySupportedProgram, ProgramProductAllocationInfo, FacilitySupportedProgramProduct,
-                     SupervisoryNode, OrderGroup, ProductPresentation, ModeOfAdministration, WarehouseType, Warehouse
+                     SupervisoryNode, OrderGroup, ProductPresentation, ModeOfAdministration, WarehouseType, Warehouse,
+                     FacilityTypeApprovedProgramProduct
                      )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
@@ -26,7 +27,8 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer,
                               FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer,
                               OrderGroupSerializer, ProductPresentationSerializer, ModeOfAdministrationSerializer,
-                              WarehouseTypeSerializer, WarehouseSerializer
+                              WarehouseTypeSerializer, WarehouseSerializer,
+                              FacilityTypeApprovedProgramProductSerializer
                               )
 
 
@@ -248,3 +250,11 @@ class WarehouseViewSet(viewsets.ModelViewSet):
     """
     queryset = Warehouse.objects.all()
     serializer_class = WarehouseSerializer
+
+
+class FacilityTypeApprovedProgramProductViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for FacilityTypeApprovedProgramProduct model
+    """
+    queryset = FacilityTypeApprovedProgramProduct.objects.all()
+    serializer_class = FacilityTypeApprovedProgramProductSerializer

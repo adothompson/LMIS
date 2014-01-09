@@ -266,13 +266,13 @@ class FacilityType(MPTTModel, BaseModel):
         app_label = 'core'
 
 
-class FacilityTypeApprovedProduct(BaseModel):
+class FacilityTypeApprovedProgramProduct(BaseModel):
     """
         Used to represent the program products that are approved for a given facility type.
     """
     facility_type = models.ForeignKey(FacilityType)
     program_product = models.ForeignKey('ProgramProduct')
-    max_months_of_stock = models.IntegerField()
+    max_months_of_stock = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -618,7 +618,7 @@ reversion.register(EmployeeCategory)
 reversion.register(Employee)
 reversion.register(FacilityType)
 reversion.register(Facility)
-reversion.register(FacilityTypeApprovedProduct)
+reversion.register(FacilityTypeApprovedProgramProduct)
 reversion.register(WarehouseType)
 reversion.register(Warehouse)
 reversion.register(Program)
