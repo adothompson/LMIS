@@ -17,104 +17,6 @@ from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategor
                          )
 
 
-class ProductCategorySerializer(serializers.ModelSerializer):
-    """
-        REST API Serializer for ProductCategory model
-    """
-    class Meta:
-        model = ProductCategory
-
-
-class ProductSerializer(serializers.ModelSerializer):
-    """
-        REST API Serializer for Product models
-    """
-    class Meta:
-        model = Product
-
-
-class UOMCategorySerializer(serializers.ModelSerializer):
-    """
-        REST API Serializer for UOMCategory model
-    """
-    read_only_fields = ('created_by', 'modified_by',)
-
-    class Meta:
-        model = UOMCategory
-
-
-class UnitOfMeasurementSerializer(serializers.ModelSerializer):
-    """
-        REST API Serializer for UnitOfMeasurement model
-    """
-    class Meta:
-        model = UnitOfMeasurement
-
-
-class CompanyCategorySerializer(serializers.ModelSerializer):
-    """
-        REST API serializer for CompanyCategory model
-    """
-    class Meta:
-        model = CompanyCategory
-
-
-class CompanySerializer(serializers.ModelSerializer):
-    """
-        REST API serializer for Company model
-    """
-    class Meta:
-        model = Company
-
-
-class CurrencySerializer(serializers.ModelSerializer):
-    """
-        REST API serializer for Currency model
-    """
-    class Meta:
-        model = Currency
-
-
-class RateSerializer(serializers.ModelSerializer):
-    """
-        REST API serializer for Rate model
-    """
-    class Meta:
-        model = Rate
-
-
-class ContactSerializer(serializers.ModelSerializer):
-    """
-        REST API serializer for Contact model
-    """
-    class Meta:
-        model = Contact
-
-
-class AddressSerializer(serializers.ModelSerializer):
-    """
-        REST  API serializer for Address model
-    """
-    class Meta:
-        model = Address
-
-
-class EmployeeCategorySerializer(serializers.ModelSerializer):
-    """
-        REST API serializer for EmployeeCategory
-    """
-    class Meta:
-        model = EmployeeCategory
-
-
-class EmployeeSerializer(serializers.ModelSerializer):
-    """
-        REST API serializer for Employee
-    """
-    class Meta:
-        model = Employee
-
-
 class UserSerializer(serializers.ModelSerializer):
     """
         REST API serializer for User model
@@ -123,7 +25,111 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
 
 
-class PermissionSerializer(serializers.ModelSerializer):
+class BaseModelSerializer(serializers.ModelSerializer):
+    """
+        Base Model Serializer for models
+    """
+    created_by = UserSerializer(required=False, read_only=True)
+    modified_by = UserSerializer(required=False, read_only=True)
+
+
+class ProductCategorySerializer(serializers.ModelSerializer):
+    """
+        REST API Serializer for ProductCategory model
+    """
+    class Meta:
+        model = ProductCategory
+
+
+class ProductSerializer(BaseModelSerializer):
+    """
+        REST API Serializer for Product models
+    """
+    class Meta:
+        model = Product
+
+
+class UOMCategorySerializer(BaseModelSerializer):
+    """
+        REST API Serializer for UOMCategory model
+    """
+    class Meta:
+        model = UOMCategory
+
+
+class UnitOfMeasurementSerializer(BaseModelSerializer):
+    """
+        REST API Serializer for UnitOfMeasurement model
+    """
+    class Meta:
+        model = UnitOfMeasurement
+
+
+class CompanyCategorySerializer(BaseModelSerializer):
+    """
+        REST API serializer for CompanyCategory model
+    """
+    class Meta:
+        model = CompanyCategory
+
+
+class CompanySerializer(BaseModelSerializer):
+    """
+        REST API serializer for Company model
+    """
+    class Meta:
+        model = Company
+
+
+class CurrencySerializer(BaseModelSerializer):
+    """
+        REST API serializer for Currency model
+    """
+    class Meta:
+        model = Currency
+
+
+class RateSerializer(BaseModelSerializer):
+    """
+        REST API serializer for Rate model
+    """
+    class Meta:
+        model = Rate
+
+
+class ContactSerializer(BaseModelSerializer):
+    """
+        REST API serializer for Contact model
+    """
+    class Meta:
+        model = Contact
+
+
+class AddressSerializer(BaseModelSerializer):
+    """
+        REST  API serializer for Address model
+    """
+    class Meta:
+        model = Address
+
+
+class EmployeeCategorySerializer(BaseModelSerializer):
+    """
+        REST API serializer for EmployeeCategory
+    """
+    class Meta:
+        model = EmployeeCategory
+
+
+class EmployeeSerializer(BaseModelSerializer):
+    """
+        REST API serializer for Employee
+    """
+    class Meta:
+        model = Employee
+
+
+class PermissionSerializer(BaseModelSerializer):
     """
         REST API serializer for Permission model
     """
@@ -131,7 +137,7 @@ class PermissionSerializer(serializers.ModelSerializer):
         model = Permission
 
 
-class FacilityTypeSerializer(serializers.ModelSerializer):
+class FacilityTypeSerializer(BaseModelSerializer):
     """
         REST API serializer for FacilityType model
     """
@@ -139,7 +145,7 @@ class FacilityTypeSerializer(serializers.ModelSerializer):
         model = FacilityType
 
 
-class FacilitySerializer(serializers.ModelSerializer):
+class FacilitySerializer(BaseModelSerializer):
     """
         REST API serializer for Facility model
     """
@@ -147,7 +153,7 @@ class FacilitySerializer(serializers.ModelSerializer):
         model = Facility
 
 
-class ProgramSerializer(serializers.ModelSerializer):
+class ProgramSerializer(BaseModelSerializer):
     """
         REST API serializer for Program model
     """
@@ -155,7 +161,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         model = Program
 
 
-class ProgramProductSerializer(serializers.ModelSerializer):
+class ProgramProductSerializer(BaseModelSerializer):
     """
         REST API serializer for ProgramProduct model
     """
@@ -163,7 +169,7 @@ class ProgramProductSerializer(serializers.ModelSerializer):
         model = ProgramProduct
 
 
-class FacilitySupportedProgramSerializer(serializers.ModelSerializer):
+class FacilitySupportedProgramSerializer(BaseModelSerializer):
     """
         REST API serializer for FacilitySupportedProgram model
     """
@@ -171,7 +177,7 @@ class FacilitySupportedProgramSerializer(serializers.ModelSerializer):
         model = FacilitySupportedProgram
 
 
-class ProgramProductAllocationInfoSerializer(serializers.ModelSerializer):
+class ProgramProductAllocationInfoSerializer(BaseModelSerializer):
     """
         REST API  serializer for ProgramProductAllocationInfo model
     """
@@ -179,7 +185,7 @@ class ProgramProductAllocationInfoSerializer(serializers.ModelSerializer):
         model = ProgramProductAllocationInfo
 
 
-class FacilitySupportedProgramProductSerializer(serializers.ModelSerializer):
+class FacilitySupportedProgramProductSerializer(BaseModelSerializer):
     """
         REST API serializer for FacilitySupportedProgramProduct model
     """
@@ -187,7 +193,7 @@ class FacilitySupportedProgramProductSerializer(serializers.ModelSerializer):
         model = FacilitySupportedProgramProduct
 
 
-class SupervisoryNodeSerializer(serializers.ModelSerializer):
+class SupervisoryNodeSerializer(BaseModelSerializer):
     """
        REST API serializer for SupervisoryNode model
     """
@@ -195,7 +201,7 @@ class SupervisoryNodeSerializer(serializers.ModelSerializer):
         model = SupervisoryNode
 
 
-class OrderGroupSerializer(serializers.ModelSerializer):
+class OrderGroupSerializer(BaseModelSerializer):
     """
         REST API serializer for OrderGroup model
     """
@@ -203,7 +209,7 @@ class OrderGroupSerializer(serializers.ModelSerializer):
         model = OrderGroup
 
 
-class ProductPresentationSerializer(serializers.ModelSerializer):
+class ProductPresentationSerializer(BaseModelSerializer):
     """
         REST API serializer for ProductPresentation model
     """
@@ -211,7 +217,7 @@ class ProductPresentationSerializer(serializers.ModelSerializer):
         model = ProductPresentation
 
 
-class ModeOfAdministrationSerializer(serializers.ModelSerializer):
+class ModeOfAdministrationSerializer(BaseModelSerializer):
     """
         REST API serializer for ModeOfAdministration model
     """
@@ -219,7 +225,7 @@ class ModeOfAdministrationSerializer(serializers.ModelSerializer):
         model = ModeOfAdministration
 
 
-class WarehouseTypeSerializer(serializers.ModelSerializer):
+class WarehouseTypeSerializer(BaseModelSerializer):
     """
         REST API serializer for WarehouseType model
     """
@@ -227,7 +233,7 @@ class WarehouseTypeSerializer(serializers.ModelSerializer):
         model = WarehouseType
 
 
-class WarehouseSerializer(serializers.ModelSerializer):
+class WarehouseSerializer(BaseModelSerializer):
     """
         REST API serializer for Warehouse model
     """
@@ -235,7 +241,7 @@ class WarehouseSerializer(serializers.ModelSerializer):
         model = Warehouse
 
 
-class ProductItemSerializer(serializers.ModelSerializer):
+class ProductItemSerializer(BaseModelSerializer):
     """
         REST API serializer for ProductItem model
     """

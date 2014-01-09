@@ -40,15 +40,14 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     """
     def pre_save(self, obj):
         """
-            This is over-ridden to attach employee that created or modified an object to it before the object is saved.
+            This is over-ridden to attach user that created or modified an object to it before the object is saved.
         """
         if obj.uuid is None:
             obj.created_by = self.request.user
         obj.modified_by = self.request.user
-        print('pre save')
 
 
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductViewSet(BaseModelViewSet):
     """
         API end-point that allows list of all products to be view
     """
@@ -56,7 +55,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
 
-class ProductCategoryViewSet(viewsets.ModelViewSet):
+class ProductCategoryViewSet(BaseModelViewSet):
     """
         API end point for product category
     """
@@ -80,7 +79,7 @@ class UOMCategoryViewSet(BaseModelViewSet):
     serializer_class = UOMCategorySerializer
 
 
-class CompanyCategoryViewSet(viewsets.ModelViewSet):
+class CompanyCategoryViewSet(BaseModelViewSet):
     """
         API end point for Company Category
     """
@@ -88,7 +87,7 @@ class CompanyCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CompanyCategorySerializer
 
 
-class CompanyViewSet(viewsets.ModelViewSet):
+class CompanyViewSet(BaseModelViewSet):
     """
         API end point for Company
     """
@@ -96,7 +95,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
     serializer_class = CompanySerializer
 
 
-class CurrencyViewSet(viewsets.ModelViewSet):
+class CurrencyViewSet(BaseModelViewSet):
     """
         API end point for Currency model
     """
@@ -104,7 +103,7 @@ class CurrencyViewSet(viewsets.ModelViewSet):
     serializer_class = CurrencySerializer
 
 
-class RateViewSet(viewsets.ModelViewSet):
+class RateViewSet(BaseModelViewSet):
     """
         API end-point for Rate model
     """
@@ -112,7 +111,7 @@ class RateViewSet(viewsets.ModelViewSet):
     serializer_class = RateSerializer
 
 
-class ContactViewSet(viewsets.ModelViewSet):
+class ContactViewSet(BaseModelViewSet):
     """
         API end-point for Contact model
     """
@@ -120,7 +119,7 @@ class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
 
 
-class AddressViewSet(viewsets.ModelViewSet):
+class AddressViewSet(BaseModelViewSet):
     """
         API end point for Address Model
     """
@@ -128,7 +127,7 @@ class AddressViewSet(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
 
 
-class EmployeeCategoryViewSet(viewsets.ModelViewSet):
+class EmployeeCategoryViewSet(BaseModelViewSet):
     """
         API end point for EmployeeCategory model
     """
@@ -136,7 +135,7 @@ class EmployeeCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeCategorySerializer
 
 
-class EmployeeViewSet(viewsets.ModelViewSet):
+class EmployeeViewSet(BaseModelViewSet):
     """
         API end point for Employee model
     """
@@ -160,7 +159,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
     serializer_class = PermissionSerializer
 
 
-class FacilityTypeViewSet(viewsets.ModelViewSet):
+class FacilityTypeViewSet(BaseModelViewSet):
     """
         API end-point for FacilityType model.
     """
@@ -168,7 +167,7 @@ class FacilityTypeViewSet(viewsets.ModelViewSet):
     serializer_class = FacilityTypeSerializer
 
 
-class FacilityViewSet(viewsets.ModelViewSet):
+class FacilityViewSet(BaseModelViewSet):
     """
         API end-point for Facility model
     """
@@ -176,7 +175,7 @@ class FacilityViewSet(viewsets.ModelViewSet):
     serializer_class = FacilitySerializer
 
 
-class ProgramViewSet(viewsets.ModelViewSet):
+class ProgramViewSet(BaseModelViewSet):
     """
         API end-point for Program model
     """
@@ -184,7 +183,7 @@ class ProgramViewSet(viewsets.ModelViewSet):
     serializer_class = ProgramSerializer
 
 
-class ProgramProductViewSet(viewsets.ModelViewSet):
+class ProgramProductViewSet(BaseModelViewSet):
     """
         API end-point for ProgramProduct model
     """
@@ -192,7 +191,7 @@ class ProgramProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProgramProductSerializer
 
 
-class FacilitySupportedProgramViewSet(viewsets.ModelViewSet):
+class FacilitySupportedProgramViewSet(BaseModelViewSet):
     """
         API end-point for FacilitySupportedProgram model
     """
@@ -200,7 +199,7 @@ class FacilitySupportedProgramViewSet(viewsets.ModelViewSet):
     serializer_class = FacilitySupportedProgramSerializer
 
 
-class ProgramProductAllocationInfoViewSet(viewsets.ModelViewSet):
+class ProgramProductAllocationInfoViewSet(BaseModelViewSet):
     """
         API end-point for ProgramProductAllocationInfo model
     """
@@ -208,7 +207,7 @@ class ProgramProductAllocationInfoViewSet(viewsets.ModelViewSet):
     serializer_class = ProgramProductAllocationInfoSerializer
 
 
-class FacilitySupportedProgramProductViewSet(viewsets.ModelViewSet):
+class FacilitySupportedProgramProductViewSet(BaseModelViewSet):
     """
         API end-point for FacilitySupportedProgramProduct model
     """
@@ -216,7 +215,7 @@ class FacilitySupportedProgramProductViewSet(viewsets.ModelViewSet):
     serializer_class = FacilitySupportedProgramProductSerializer
 
 
-class SupervisoryNodeViewSet(viewsets.ModelViewSet):
+class SupervisoryNodeViewSet(BaseModelViewSet):
     """
         API end-point for SupervisoryNode model
     """
@@ -224,7 +223,7 @@ class SupervisoryNodeViewSet(viewsets.ModelViewSet):
     serializer_class = SupervisoryNodeSerializer
 
 
-class OrderGroupViewSet(viewsets.ModelViewSet):
+class OrderGroupViewSet(BaseModelViewSet):
     """
         API end-point for OrderGroup model
     """
@@ -232,7 +231,7 @@ class OrderGroupViewSet(viewsets.ModelViewSet):
     serializer_class = OrderGroupSerializer
 
 
-class ProductPresentationViewSet(viewsets.ModelViewSet):
+class ProductPresentationViewSet(BaseModelViewSet):
     """
         API end-point for ProductPresentation model
     """
@@ -240,7 +239,7 @@ class ProductPresentationViewSet(viewsets.ModelViewSet):
     serializer_class = ProductPresentationSerializer
 
 
-class ModeOfAdministrationViewSet(viewsets.ModelViewSet):
+class ModeOfAdministrationViewSet(BaseModelViewSet):
     """
         API end-point for ModeOfAdministration model
     """
@@ -248,7 +247,7 @@ class ModeOfAdministrationViewSet(viewsets.ModelViewSet):
     serializer_class = ModeOfAdministrationSerializer
 
 
-class WarehouseTypeViewSet(viewsets.ModelViewSet):
+class WarehouseTypeViewSet(BaseModelViewSet):
     """
         API end-point for WarehouseType model
     """
@@ -256,7 +255,7 @@ class WarehouseTypeViewSet(viewsets.ModelViewSet):
     serializer_class = WarehouseTypeSerializer
 
 
-class WarehouseViewSet(viewsets.ModelViewSet):
+class WarehouseViewSet(BaseModelViewSet):
     """
         API end-point for Warehouse model
     """
@@ -264,7 +263,7 @@ class WarehouseViewSet(viewsets.ModelViewSet):
     serializer_class = WarehouseSerializer
 
 
-class ProductItemViewSet(viewsets.ModelViewSet):
+class ProductItemViewSet(BaseModelViewSet):
     """
         API end-point for ProductItem model
     """
