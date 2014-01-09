@@ -33,7 +33,7 @@ class BaseModelSerializer(serializers.ModelSerializer):
     modified_by = UserSerializer(required=False, read_only=True)
 
 
-class ProductCategorySerializer(serializers.ModelSerializer):
+class ProductCategorySerializer(BaseModelSerializer):
     """
         REST API Serializer for ProductCategory model
     """
