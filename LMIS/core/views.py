@@ -60,10 +60,11 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             obj = None
         return obj
 
-    def update_obj_is_deleted(self, obj, is_deleted):
+    def update_obj_is_deleted(self, is_deleted):
         """
             updates given object is_deleted field
         """
+        obj = self.get_object(self.get_queryset())
         obj.is_deleted = is_deleted
         self.pre_save(obj)
         obj.save()
@@ -80,9 +81,9 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             This over-rides ModelViewSet.destroy() so that objects are not deleted (hard deleted) but it just turns the
             "is_deleted" flag on models to
         """
-        obj = self.get_object_or_none(pk)
+        obj = self.get_object(self.get_queryset())
         if obj:
-            self.update_obj_is_deleted(obj, is_deleted=True)
+            self.update_obj_is_deleted(is_deleted=True)
             return Response(data={'success': True})
         return Response(data={'detail': 'not found'})
 
@@ -92,9 +93,9 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             This ad-hoc functions turns off is_deleted flag of object it is called on. this redo soft delete on the
             object.
         """
-        obj = self.get_object_or_none(pk)
+        obj = self.get_object(self.get_queryset())
         if obj:
-            self.update_obj_is_deleted(obj, is_deleted=False)
+            self.update_obj_is_deleted(is_deleted=False)
             return Response(data={'success': True})
         return Response(data={'detail': 'not found'})
 
