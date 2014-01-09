@@ -86,18 +86,6 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             return Response(data={'success': True})
         return Response(data={'detail': 'not found'})
 
-    @action(methods=['GET'])
-    def list_deleted(self, request):
-        """
-            returns a collection of all deleted objects of the given model the view set represents.
-        """
-        print('show soft deleted objects')
-        model_class = self.get_view_model_class()
-        queryset = model_class.objects.filter(is_deleted=False)
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
-
-
     @action(methods=['POST', 'DELETE'])
     def recover(self, request, pk):
         """
