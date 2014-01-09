@@ -14,7 +14,7 @@ from rest_framework import viewsets
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
                      Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
                      FacilitySupportedProgram, ProgramProductAllocationInfo, FacilitySupportedProgramProduct,
-                     SupervisoryNode, OrderGroup, ProductPresentation
+                     SupervisoryNode, OrderGroup, ProductPresentation, ModeOfAdministration
                      )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
@@ -24,7 +24,7 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               FacilitySerializer, ProgramSerializer, ProgramProductSerializer,
                               FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer,
                               FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer,
-                              OrderGroupSerializer, ProductPresentationSerializer
+                              OrderGroupSerializer, ProductPresentationSerializer, ModeOfAdministrationSerializer
                               )
 
 
@@ -222,3 +222,11 @@ class ProductPresentationViewSet(viewsets.ModelViewSet):
     """
     queryset = ProductPresentation.objects.all()
     serializer_class = ProductPresentationSerializer
+
+
+class ModeOfAdministrationViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for ModeOfAdministration models.
+    """
+    queryset = ModeOfAdministration.objects.all()
+    serializer_class = ModeOfAdministrationSerializer
