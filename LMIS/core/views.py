@@ -34,6 +34,19 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
 #TODO: add view function that returns only deleted models and make normal query set to return only models not yet
 #TODO: deleted
 #TODO: over-ride ModelViewSet.destroy() to just turn on model is_deleted flag on(soft delete)
+class BaseModelViewSet(viewsets.ModelViewSet):
+    """
+        Base API end-point for other model view sets end-point.
+    """
+    def pre_save(self, obj):
+        """
+            This is over-ridden to attach employee that created or modified an object to it before the object is saved.
+        """
+        if obj.uuid is None:
+            obj.created_by = self.request.user
+        obj.modified_by = self.request.user
+        print('pre save')
+
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
@@ -51,7 +64,7 @@ class ProductCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = ProductCategorySerializer
 
 
-class UnitOfMeasurementViewSet(viewsets.ModelViewSet):
+class UnitOfMeasurementViewSet(BaseModelViewSet):
     """
        API end point for Unit of Measurement
     """
