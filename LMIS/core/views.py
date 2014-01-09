@@ -72,7 +72,7 @@ class UnitOfMeasurementViewSet(BaseModelViewSet):
     serializer_class = UnitOfMeasurementSerializer
 
 
-class UOMCategoryViewSet(viewsets.ModelViewSet):
+class UOMCategoryViewSet(BaseModelViewSet):
     """
         API end point for unit of measurement category
     """

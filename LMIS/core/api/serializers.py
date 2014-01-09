@@ -37,6 +37,8 @@ class UOMCategorySerializer(serializers.ModelSerializer):
     """
         REST API Serializer for UOMCategory model
     """
+    read_only_fields = ('created_by', 'modified_by',)
+
     class Meta:
         model = UOMCategory
 
