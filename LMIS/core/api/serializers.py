@@ -13,7 +13,7 @@ from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategor
                          Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType, Facility, Program,
                          ProgramProduct, FacilitySupportedProgram, ProgramProductAllocationInfo,
                          FacilitySupportedProgramProduct, SupervisoryNode, OrderGroup, ProductPresentation,
-                         ModeOfAdministration
+                         ModeOfAdministration, WarehouseType, Warehouse
                          )
 
 
@@ -215,3 +215,19 @@ class ModeOfAdministrationSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = ModeOfAdministration
+
+
+class WarehouseTypeSerializer(serializers.ModelSerializer):
+    """
+        REST API serializer for WarehouseType model
+    """
+    class Meta:
+        model = WarehouseType
+
+
+class WarehouseSerializer(serializers.ModelSerializer):
+    """
+        REST API serializer for Warehouse model
+    """
+    class Meta:
+        model = Warehouse

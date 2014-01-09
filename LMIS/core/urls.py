@@ -28,6 +28,8 @@ router.register(r'supervisory-node', views.SupervisoryNodeViewSet)
 router.register(r'order-group', views.OrderGroupViewSet)
 router.register(r'product-presentation', views.ProductPresentationViewSet)
 router.register(r'mode-of-administration', views.ModeOfAdministrationViewSet)
+router.register(r'warehouse-type', views.WarehouseTypeViewSet)
+router.register(r'warehouse', views.WarehouseViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',

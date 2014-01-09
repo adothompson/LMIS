@@ -1,7 +1,8 @@
 """
     core/views.py holds the API end-point for core models. it is used to define the API views from which external
     clients can interact with the models to perform operations such as Create, Retrieve, Update, Delete etc via
-    ModelViewSet functions such as list(), retrieve(), update(), partial_update(), destroy().
+    ModelViewSet functions such as list(), retrieve(), update(), partial_update(), destroy() and ad-hoc functions can
+    be added too.
 """
 
 #import from django core modules
@@ -14,7 +15,7 @@ from rest_framework import viewsets
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
                      Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
                      FacilitySupportedProgram, ProgramProductAllocationInfo, FacilitySupportedProgramProduct,
-                     SupervisoryNode, OrderGroup, ProductPresentation, ModeOfAdministration
+                     SupervisoryNode, OrderGroup, ProductPresentation, ModeOfAdministration, WarehouseType, Warehouse
                      )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
@@ -24,7 +25,8 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               FacilitySerializer, ProgramSerializer, ProgramProductSerializer,
                               FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer,
                               FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer,
-                              OrderGroupSerializer, ProductPresentationSerializer, ModeOfAdministrationSerializer
+                              OrderGroupSerializer, ProductPresentationSerializer, ModeOfAdministrationSerializer,
+                              WarehouseTypeSerializer, WarehouseSerializer
                               )
 
 
@@ -226,7 +228,23 @@ class ProductPresentationViewSet(viewsets.ModelViewSet):
 
 class ModeOfAdministrationViewSet(viewsets.ModelViewSet):
     """
-        API end-point for ModeOfAdministration models.
+        API end-point for ModeOfAdministration model
     """
     queryset = ModeOfAdministration.objects.all()
     serializer_class = ModeOfAdministrationSerializer
+
+
+class WarehouseTypeViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for WarehouseType model
+    """
+    queryset = WarehouseType.objects.all()
+    serializer_class = WarehouseTypeSerializer
+
+
+class WarehouseViewSet(viewsets.ModelViewSet):
+    """
+        API end-point for Warehouse model
+    """
+    queryset = Warehouse.objects.all()
+    serializer_class = WarehouseSerializer
