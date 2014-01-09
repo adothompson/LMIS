@@ -9,7 +9,8 @@
 from django.contrib.auth.models import User, Permission
 
 #import external modules
-from rest_framework import viewsets, status
+from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 #import project modules
@@ -47,17 +48,40 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             obj.created_by = self.request.user
         obj.modified_by = self.request.user
 
-    def pre_delete(self, obj):
-        print("pre delete called")
-        obj.is_deleted = True
-        self.pre_save(obj)
-        obj.save()
-
     def destroy(self, request, pk):
         """
-
+            This over-rides ModelViewSet.destroy() so that objects are not deleted (hard deleted) but it just turns the
+            "is_deleted" flag on models to
         """
-        return Response(data={'success': True})
+        model_class = self.serializer_class.Meta.model
+        try:
+            obj = model_class.objects.get(uuid=pk)
+        except model_class.DoesNotExist:
+            obj = None
+        if obj:
+            obj.is_deleted = True
+            self.pre_save(obj)
+            obj.save()
+            return Response(data={'success': True})
+        return Response(data={'detail': 'not found'})
+
+    @action(methods=['POST', 'DELETE'])
+    def recover(self, request, pk):
+        """
+            This ad-hoc functions turns off is_deleted flag of object it is called on. this redo soft delete on the
+            object.
+        """
+        model_class = self.serializer_class.Meta.model
+        try:
+            obj = model_class.objects.get(uuid=pk)
+        except model_class.DoesNotExist:
+            obj = None
+        if obj:
+            obj.is_deleted = False
+            self.pre_save(obj)
+            obj.save()
+            return Response(data={'success': True})
+        return Response(data={'detail': 'not found'})
 
 
 class ProductViewSet(BaseModelViewSet):
@@ -72,7 +96,7 @@ class ProductCategoryViewSet(BaseModelViewSet):
     """
         API end point for product category
     """
-    queryset = ProductCategory.objects.all()
+    queryset = ProductCategory.objects.filter()
     serializer_class = ProductCategorySerializer
 
 
@@ -90,27 +114,6 @@ class UOMCategoryViewSet(BaseModelViewSet):
     """
     queryset = UOMCategory.objects.all()
     serializer_class = UOMCategorySerializer
-
-    def destroy(self, request, pk):
-        """
-
-        """
-        try:
-            uom_category = UOMCategory.objects.get(uuid=pk)
-        except UOMCategory.DoesNotExist:
-            uom_category = None
-        if uom_category:
-            uom_category.is_deleted = True
-            serializer = UOMCategorySerializer(uom_category)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(data={'Unknown': 'no matching object found'})
-        # serializer = request.DATA
-        # if serializer.is_valid():
-        #
-        # return Response(data={'success': True})
 
 
 class CompanyCategoryViewSet(BaseModelViewSet):
