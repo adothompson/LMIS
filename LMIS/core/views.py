@@ -48,20 +48,34 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             obj.created_by = self.request.user
         obj.modified_by = self.request.user
 
-    def destroy(self, request, pk):
+    def get_object_or_none(self, pk):
         """
-            This over-rides ModelViewSet.destroy() so that objects are not deleted (hard deleted) but it just turns the
-            "is_deleted" flag on models to
+            @param pk : primary key that is uuid of object to be retrieved.
+            returns the object if found else returns None
         """
         model_class = self.serializer_class.Meta.model
         try:
             obj = model_class.objects.get(uuid=pk)
         except model_class.DoesNotExist:
             obj = None
+        return obj
+
+    def update_obj_is_deleted(self, obj, is_deleted):
+        """
+            updates given object is_deleted field
+        """
+        obj.is_deleted = is_deleted
+        self.pre_save(obj)
+        obj.save()
+
+    def destroy(self, request, pk):
+        """
+            This over-rides ModelViewSet.destroy() so that objects are not deleted (hard deleted) but it just turns the
+            "is_deleted" flag on models to
+        """
+        obj = self.get_object_or_none(pk)
         if obj:
-            obj.is_deleted = True
-            self.pre_save(obj)
-            obj.save()
+            self.update_obj_is_deleted(obj, is_deleted=True)
             return Response(data={'success': True})
         return Response(data={'detail': 'not found'})
 
@@ -71,15 +85,9 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             This ad-hoc functions turns off is_deleted flag of object it is called on. this redo soft delete on the
             object.
         """
-        model_class = self.serializer_class.Meta.model
-        try:
-            obj = model_class.objects.get(uuid=pk)
-        except model_class.DoesNotExist:
-            obj = None
+        obj = self.get_object_or_none(pk)
         if obj:
-            obj.is_deleted = False
-            self.pre_save(obj)
-            obj.save()
+            self.update_obj_is_deleted(obj, is_deleted=False)
             return Response(data={'success': True})
         return Response(data={'detail': 'not found'})
 
