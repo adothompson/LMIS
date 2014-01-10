@@ -2,12 +2,12 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>{% block title %}LMIS{% endblock title %}</title>
+		<title>LMIS ~ {% block title %}{% endblock title %}</title>
 
 		<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
         {% block css %}
         <!-- bootstrap framework-->
-            <link rel="stylesheet" href="{%static 'bootstrap/css/bootstrap.min.css' %}">
+            <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
         <!-- todc-bootstrap -->
             <link rel="stylesheet" href="{% static 'css/todc-bootstrap.min.css' %}">
         <!-- font awesome -->
