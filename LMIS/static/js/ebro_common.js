@@ -14,7 +14,7 @@
 		//* tooltips_popovers
 		ebro_tooltips_popovers.init();
 		//* main search autocomplete
-		ebro_autocomplete.init();
+		//* ebro_autocomplete.init();
 		
         //* ebro style switcher
         ebro_styleSwitcher.init();
@@ -299,6 +299,7 @@
 	}
 	
 	//* autocomplete
+    /**
 	ebro_autocomplete = {
 		init: function() {
 			$('.main_search .typeahead').typeahead({
@@ -313,6 +314,7 @@
 			});
 		}
 	}
+    */
 	
     //* style switcher
     ebro_styleSwitcher = {
