@@ -7,8 +7,8 @@
 
 #import project modules
 from core.views import BaseModelViewSet
-from .models import ColdChainEquipment
-from .api.serializers import CCESerializer
+from .models import ColdChainEquipment, ColdChainEquipmentType
+from .api.serializers import CCESerializer, CCETypeSerializer
 
 
 class CCEViewSet(BaseModelViewSet):
@@ -17,3 +17,12 @@ class CCEViewSet(BaseModelViewSet):
     """
     queryset = ColdChainEquipment.objects.all()
     serializer_class = CCESerializer
+
+
+class CCETypeViewSet(BaseModelViewSet):
+    """
+        REST API end-point for CCEType that allows CRUD operations etc to be performed on CCEType models via REST API
+        URL
+    """
+    queryset = ColdChainEquipmentType.objects.all()
+    serializer_class = CCETypeSerializer
