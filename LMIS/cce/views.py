@@ -7,8 +7,8 @@
 
 #import project modules
 from core.views import BaseModelViewSet
-from .models import ColdChainEquipment, ColdChainEquipmentType, CCETemperatureLog
-from .api.serializers import CCESerializer, CCETypeSerializer, CCETemperatureLogSerializer
+from .models import ColdChainEquipment, ColdChainEquipmentType, CCETemperatureLog, CCEProblemLog
+from .api.serializers import CCESerializer, CCETypeSerializer, CCETemperatureLogSerializer, CCEProblemLogSerializer
 
 
 class CCEViewSet(BaseModelViewSet):
@@ -35,3 +35,12 @@ class CCETemperatureLogViewSet(BaseModelViewSet):
     """
     queryset = CCETemperatureLog.objects.all()
     serializer_class = CCETemperatureLogSerializer
+
+
+class CCEProblemLogViewSet(BaseModelViewSet):
+    """
+        REST API end-point for CCEProblemLog that allows CRUD operations etc to be performed on CCEProblemLog
+        models via REST API URL
+    """
+    queryset = CCEProblemLog.objects.all()
+    serializer_class = CCEProblemLogSerializer
