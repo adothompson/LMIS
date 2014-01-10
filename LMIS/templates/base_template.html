@@ -1,0 +1,46 @@
+{% raw %}{% load staticfiles i18n %}<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>{% block title %}{% endraw %}LMIS{% raw %}{% endblock title %}</title>
+
+		<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        {% block css %}
+        <!-- bootstrap framework-->
+            <link rel="stylesheet" href="{%static 'css/bootstrap/css/bootstrap.min.css' %}">
+        <!-- todc-bootstrap -->
+            <link rel="stylesheet" href="{% static 'css/todc-bootstrap.min.css' %}">
+        <!-- font awesome -->
+            <link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+        <!-- flag icon set -->
+            <link rel="stylesheet" href="{% static 'img/flags/flags.css' %}">
+        <!-- retina ready -->
+            <link rel="stylesheet" href="{% static 'css/retina.css' %}">
+        <!-- bootstrap switch -->
+            <link rel="stylesheet" href="{% static 'js/lib/bootstrap-switch/stylesheets/bootstrap-switch.css' %}">
+            <link rel="stylesheet" href="{% static 'js/lib/bootstrap-switch/stylesheets/ebro_bootstrapSwitch.css' %}">
+
+        <!-- ebro styles -->
+            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!-- ebro theme -->
+            <link rel="stylesheet" href="{% static 'css/theme/color_1.css' %}" id="theme">
+
+        <!--[if lt IE 9]>
+            <link rel="stylesheet" href="{% static 'css/ie.css' %}">
+            <script src="{% static 'js/ie/html5shiv.js' %}"></script>
+            <script src="{% static 'js/ie/respond.min.js' %}"></script>
+            <script src="{% static 'js/ie/excanvas.min.js' %}"></script>
+        <![endif]-->
+
+        <!-- custom fonts -->
+            <link href='http://fonts.googleapis.com/css?family=Roboto:300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+        <!-- project css -->
+            <link href="{% static 'css/project.css' %}" rel="stylesheet">
+        {% endblock css %}
+	</head>
+    <body class="side_fixed">
+        
+    </body>
+</html>
+{% endraw %}
