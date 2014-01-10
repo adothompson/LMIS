@@ -1,0 +1,293 @@
+{% load staticfiles i18n %}<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>{% block title %}LMIS{% endblock title %}</title>
+
+		<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        {% block css %}
+        <!-- bootstrap framework-->
+            <link rel="stylesheet" href="{%static 'css/bootstrap/css/bootstrap.min.css' %}">
+        <!-- todc-bootstrap -->
+            <link rel="stylesheet" href="{% static 'css/todc-bootstrap.min.css' %}">
+        <!-- font awesome -->
+            <link rel="stylesheet" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}">
+        <!-- flag icon set -->
+            <link rel="stylesheet" href="{% static 'img/flags/flags.css' %}">
+        <!-- retina ready -->
+            <link rel="stylesheet" href="{% static 'css/retina.css' %}">
+        <!-- bootstrap switch -->
+            <link rel="stylesheet" href="{% static 'js/lib/bootstrap-switch/stylesheets/bootstrap-switch.css' %}">
+            <link rel="stylesheet" href="{% static 'js/lib/bootstrap-switch/stylesheets/ebro_bootstrapSwitch.css' %}">
+
+        <!-- ebro styles -->
+            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!-- ebro theme -->
+            <link rel="stylesheet" href="{% static 'css/theme/color_1.css' %}" id="theme">
+
+        <!--[if lt IE 9]>
+            <link rel="stylesheet" href="{% static 'css/ie.css' %}">
+            <script src="{% static 'js/ie/html5shiv.js' %}"></script>
+            <script src="{% static 'js/ie/respond.min.js' %}"></script>
+            <script src="{% static 'js/ie/excanvas.min.js' %}"></script>
+        <![endif]-->
+
+        <!-- custom fonts -->
+            <link href='http://fonts.googleapis.com/css?family=Roboto:300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+        <!-- project css -->
+            <link href="{% static 'css/project.css' %}" rel="stylesheet">
+        {% endblock css %}
+	</head>
+    <body class="side_fixed">
+        <div id="wrapper_all">
+			<header id="top_header">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-6 col-sm-2">
+							<a href="{% url 'index_dashboard' %}" class="logo_main" title="LMIS Office"><img src="{% static 'img/logo_main.png' %}" alt=""></a>
+						</div>
+						<div class="col-sm-push-4 col-sm-3 text-right hidden-xs">
+							<div class="notification_dropdown dropdown">
+								<a href="#" class="notification_icon dropdown-toggle" data-toggle="dropdown">
+									<span class="label label-danger">8</span>
+									<i class="icon-comment-alt icon-2x"></i>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<div class="dropdown_heading">Comments</div>
+										<div class="dropdown_content">
+											<ul class="dropdown_items">
+												<li>
+													<h3><span class="small_info">fu:43</span><a href="#">lalalala&hellip;</a></h3>
+													<p>Lorem ipsum dolor sit amet&hellip;</p>
+												</li>
+												<li>
+													<h3><span class="small_info">Today</span><a href="#">Lorem ipsum dolor&hellip;</a></h3>
+													<p>Lorem ipsum dolor sit amet&hellip;</p>
+												</li>
+												<li>
+													<h3><span class="small_info">14 Aug</span><a href="#">Lorem ipsum dolor&hellip;</a></h3>
+													<p>Lorem ipsum dolor sit amet&hellip;</p>
+												</li>
+											</ul>
+										</div>
+										<div class="dropdown_footer"><a href="#" class="btn btn-sm btn-default">Show all</a></div>
+									</li>
+								</ul>
+							</div>
+							<div class="notification_separator"></div>
+							<div class="notification_dropdown dropdown">
+								<a href="#" class="notification_icon dropdown-toggle" data-toggle="dropdown">
+									<span class="label label-danger">12</span>
+									<i class="icon-envelope-alt icon-2x"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-menu-wide">
+									<li>
+										<div class="dropdown_heading">Messages</div>
+										<div class="dropdown_content">
+											<ul class="dropdown_items">
+												<li>
+													<h3><a href="#">Lorem ipsum dolor sit amet</a></h3>
+													<p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+													<p class="large_info">Sean Walter, 24.05.2014</p>
+													<i class="icon-exclamation-sign indicator"></i>
+												</li>
+												<li>
+													<h3><a href="#">Lorem ipsum dolor&hellip;</a></h3>
+													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aliquam assumenda&hellip;</p>
+													<p class="large_info">Sean Walter, 24.05.2014</p>
+												</li>
+												<li>
+													<h3><a href="#">Lorem ipsum dolor&hellip;</a></h3>
+													<p>Lorem ipsum dolor sit amet, consectetur&hellip;</p>
+													<p class="large_info">Sean Walter, 24.05.2014</p>
+													<i class="icon-exclamation-sign indicator"></i>
+												</li>
+											</ul>
+										</div>
+										<div class="dropdown_footer">
+											<a href="#" class="btn btn-sm btn-default">Show all</a>
+											<div class="pull-right dropdown_actions">
+												<a href="#"><i class="icon-refresh"></i></a>
+												<a href="#"><i class="icon-cog"></i></a>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-push-4 col-sm-3">
+							<div class="pull-right dropdown">
+                                <!-- change title attr -->
+								<a href="#" class="user_info dropdown-toggle" title="username" data-toggle="dropdown">
+									<img src="{% static 'img/user_avatar.png' %}" alt="">
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a href="{% static 'user_profile.html' %}">Profile</a></li>
+									<li><a href="javascript:void(0)">Another action</a></li>
+									<li><a href="{% static 'login_page.html' %}">Log Out</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-pull-6 col-sm-4">
+							<form class="main_search">
+								<input type="text" id="search_query" name="search_query" class="typeahead form-control">
+								<button type="submit" class="btn btn-primary btn-xs"><i class="icon-search icon-white"></i></button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</header>
+			<nav id="top_navigation">
+				<div class="container">
+					<ul id="icon_nav_h" class="top_ico_nav clearfix">
+						<li>
+							<a href="#">
+								<i class="icon-home icon-2x"></i>
+								<span class="menu_label">Home</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="icon-edit icon-2x"></i>
+								<span class="menu_label">Content</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="icon-group icon-2x"></i>
+								<span class="menu_label">Users</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="label label-danger">12</span>
+								<i class="icon-tasks icon-2x"></i>
+								<span class="menu_label">Tasks</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="icon-beaker icon-2x"></i>
+								<span class="menu_label">Plugins</span>
+							</a>
+						</li>
+						<li class="active">
+							<a href="#">
+								<i class="icon-book icon-2x"></i>
+								<span class="menu_label">Help</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="label label-success">$2 347</span>
+								<i class="icon-tags icon-2x"></i>
+								<span class="menu_label">E-Commerce</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="icon-wrench icon-2x"></i>
+								<span class="menu_label">Settings</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- mobile navigation -->
+			<nav id="mobile_navigation"></nav>
+			<section class="container clearfix main_section">
+				<div id="main_content_outer" class="clearfix">
+					<div id="main_content">
+                        {% block main_content %}
+                        {% endblock main_content %}
+                    </div>
+				</div>
+			</section>
+			<div id="footer_space"></div>
+		</div>
+
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        &copy; 2013 eHealth Africa (eHealthAfrica.org)
+                    </div>
+                    <div class="col-sm-8">
+                        <ul>
+                            <li><a href="#">Dashboard</a></li>
+                            <li>&middot;</li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li>&middot;</li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li>&middot;</li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-1 text-right">
+                        <small class="text-muted">v0.1a</small>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <nav id="side_fixed_nav">
+			<div class="slim_scroll">
+				<div class="side_nav_actions">
+					<a href="javascript:void(0)" id="side_fixed_nav_toggle"><span class="icon-align-justify"></span></a>
+					<div id="toogle_nav_visible" class="make-switch switch-mini" data-on="success" data-on-label="<i class='icon-lock'></i>" data-off-label="<i class='icon-unlock-alt'></i>">
+						<input id="nav_visible_input" type="checkbox">
+					</div>
+				</div>
+				<ul id="text_nav_side_fixed">
+					{% block sidebar %}
+                    {% endblock sidebar %}
+				</ul>
+			</div>
+		</nav>
+
+	<!--[[ common plugins ]]-->
+
+	<!-- jQuery -->
+		<script src="{% static 'js/jquery.min.js' %}"></script>
+	<!-- bootstrap framework -->
+		<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- jQuery resize event -->
+		<script src="{% static 'js/jquery.ba-resize.min.js' %}"></script>
+	<!-- jquery cookie -->
+		<script src="{% static 'js/jquery_cookie.min.js' %}"></script>
+	<!-- retina ready -->
+		<script src="{% static 'js/retina.min.js' %}"></script>
+	<!-- typeahead -->
+		<script src="{% static 'js/lib/typeahead.js/typeahead.min.js' %}"></script>
+		<script src="{% static 'js/lib/typeahead.js/hogan-2.0.0.js' %}"></script>
+
+	<!-- tinyNav -->
+		<script src="{% static 'js/tinynav.js' %}"></script>
+	<!-- slimscroll -->
+		<script src="{% static 'js/lib/jQuery-slimScroll/jquery.slimscroll.min.js' %}"></script>
+
+	<!-- bootstrap switch -->
+		<script src="{% static 'js/lib/bootstrap-switch/js/bootstrap-switch.min.js' %}"></script>
+
+	<!-- touchSwipe -->
+		<script src="{% static 'js/lib/TouchSwipe/jquery.touchSwipe.min.js' %}"></script>
+
+	<!-- Navgoco -->
+		<script src="{% static 'js/lib/navgoco/jquery.navgoco.min.js' %}"></script>
+
+	<!-- ebro common scripts/functions -->
+		<script src="{% static 'js/ebro_common.js' %}"></script>
+
+	<!--[if lte IE 9]>
+		<script src="{% static 'js/ie/jquery.placeholder.js"></script>
+		<script>
+			$(function() {
+				$('input, textarea').placeholder();
+			});
+		</script>
+	<![endif]-->
+    </body>
+</html>

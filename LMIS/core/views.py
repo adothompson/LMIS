@@ -7,6 +7,7 @@
 
 #import from django core modules
 from django.contrib.auth.models import User, Permission
+from django.views.generic import TemplateView
 
 #import external modules
 from rest_framework import viewsets
@@ -323,3 +324,7 @@ class ProductItemViewSet(BaseModelViewSet):
     """
     queryset = ProductItem.objects.all()
     serializer_class = ProductItemSerializer
+
+
+class DashboardIndex(TemplateView):
+    template_name = 'dashboard.html'
