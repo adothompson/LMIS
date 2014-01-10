@@ -10,6 +10,7 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'cce', views.CCEViewSet)
 router.register(r'cce-type', views.CCETypeViewSet)
+router.register(r'cce-temp-log', views.CCETemperatureLogViewSet)
 
 
 # Wire up our API using automatic URL routing.
