@@ -10,6 +10,9 @@ from django.contrib.auth.models import User, Permission
 
 #import external modules
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import filters
 
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
@@ -31,11 +34,74 @@ from .api.serializers import (ProductSerializer, ProductCategorySerializer, Unit
                               )
 
 
-#TODO: add view function that returns only deleted models and make normal query set to return only models not yet
-#TODO: deleted
-#TODO: over-ride ModelViewSet.destroy() to just turn on model is_deleted flag on(soft delete)
+class BaseModelViewSet(viewsets.ModelViewSet):
+    """
+        Base API end-point for other model view sets end-point.
+    """
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('is_deleted',)
 
-class ProductViewSet(viewsets.ModelViewSet):
+    def pre_save(self, obj):
+        """
+            This is over-ridden to attach user that created or modified an object to it before the object is saved.
+        """
+        if obj.uuid is None:
+            obj.created_by = self.request.user
+        obj.modified_by = self.request.user
+
+    def get_object_or_none(self, pk):
+        """
+            @param pk : primary key that is uuid of object to be retrieved.
+            returns the object if found else returns None
+        """
+        model_class = self.get_view_model_class()
+        try:
+            obj = model_class.objects.get(uuid=pk)
+        except model_class.DoesNotExist:
+            obj = None
+        return obj
+
+    def update_obj_is_deleted(self, is_deleted):
+        """
+            updates given object is_deleted field
+        """
+        obj = self.get_object(self.get_queryset())
+        obj.is_deleted = is_deleted
+        self.pre_save(obj)
+        obj.save()
+
+    def get_view_model_class(self):
+        """
+            return the class of the model attribute of the ViewSet Serializer class e.g for ProductViewSet, it returns
+            Product which is the model specified on ProductSerializer model attribute
+        """
+        return self.serializer_class.Meta.model
+
+    def destroy(self, request, pk):
+        """
+            This over-rides ModelViewSet.destroy() so that objects are not deleted (hard deleted) but it just turns the
+            "is_deleted" flag on models to
+        """
+        obj = self.get_object(self.get_queryset())
+        if obj:
+            self.update_obj_is_deleted(is_deleted=True)
+            return Response(data={'success': True})
+        return Response(data={'detail': 'not found'})
+
+    @action(methods=['POST', 'DELETE'])
+    def recover(self, request, pk):
+        """
+            This ad-hoc functions turns off is_deleted flag of object it is called on. this redo soft delete on the
+            object.
+        """
+        obj = self.get_object(self.get_queryset())
+        if obj:
+            self.update_obj_is_deleted(is_deleted=False)
+            return Response(data={'success': True})
+        return Response(data={'detail': 'not found'})
+
+
+class ProductViewSet(BaseModelViewSet):
     """
         API end-point that allows list of all products to be view
     """
@@ -43,15 +109,15 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
 
-class ProductCategoryViewSet(viewsets.ModelViewSet):
+class ProductCategoryViewSet(BaseModelViewSet):
     """
         API end point for product category
     """
-    queryset = ProductCategory.objects.all()
+    queryset = ProductCategory.objects.filter()
     serializer_class = ProductCategorySerializer
 
 
-class UnitOfMeasurementViewSet(viewsets.ModelViewSet):
+class UnitOfMeasurementViewSet(BaseModelViewSet):
     """
        API end point for Unit of Measurement
     """
@@ -59,7 +125,7 @@ class UnitOfMeasurementViewSet(viewsets.ModelViewSet):
     serializer_class = UnitOfMeasurementSerializer
 
 
-class UOMCategoryViewSet(viewsets.ModelViewSet):
+class UOMCategoryViewSet(BaseModelViewSet):
     """
         API end point for unit of measurement category
     """
@@ -67,7 +133,7 @@ class UOMCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = UOMCategorySerializer
 
 
-class CompanyCategoryViewSet(viewsets.ModelViewSet):
+class CompanyCategoryViewSet(BaseModelViewSet):
     """
         API end point for Company Category
     """
@@ -75,7 +141,7 @@ class CompanyCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CompanyCategorySerializer
 
 
-class CompanyViewSet(viewsets.ModelViewSet):
+class CompanyViewSet(BaseModelViewSet):
     """
         API end point for Company
     """
@@ -83,7 +149,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
     serializer_class = CompanySerializer
 
 
-class CurrencyViewSet(viewsets.ModelViewSet):
+class CurrencyViewSet(BaseModelViewSet):
     """
         API end point for Currency model
     """
@@ -91,7 +157,7 @@ class CurrencyViewSet(viewsets.ModelViewSet):
     serializer_class = CurrencySerializer
 
 
-class RateViewSet(viewsets.ModelViewSet):
+class RateViewSet(BaseModelViewSet):
     """
         API end-point for Rate model
     """
@@ -99,7 +165,7 @@ class RateViewSet(viewsets.ModelViewSet):
     serializer_class = RateSerializer
 
 
-class ContactViewSet(viewsets.ModelViewSet):
+class ContactViewSet(BaseModelViewSet):
     """
         API end-point for Contact model
     """
@@ -107,7 +173,7 @@ class ContactViewSet(viewsets.ModelViewSet):
     serializer_class = ContactSerializer
 
 
-class AddressViewSet(viewsets.ModelViewSet):
+class AddressViewSet(BaseModelViewSet):
     """
         API end point for Address Model
     """
@@ -115,7 +181,7 @@ class AddressViewSet(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
 
 
-class EmployeeCategoryViewSet(viewsets.ModelViewSet):
+class EmployeeCategoryViewSet(BaseModelViewSet):
     """
         API end point for EmployeeCategory model
     """
@@ -123,7 +189,7 @@ class EmployeeCategoryViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeCategorySerializer
 
 
-class EmployeeViewSet(viewsets.ModelViewSet):
+class EmployeeViewSet(BaseModelViewSet):
     """
         API end point for Employee model
     """
@@ -147,7 +213,7 @@ class PermissionViewSet(viewsets.ModelViewSet):
     serializer_class = PermissionSerializer
 
 
-class FacilityTypeViewSet(viewsets.ModelViewSet):
+class FacilityTypeViewSet(BaseModelViewSet):
     """
         API end-point for FacilityType model.
     """
@@ -155,7 +221,7 @@ class FacilityTypeViewSet(viewsets.ModelViewSet):
     serializer_class = FacilityTypeSerializer
 
 
-class FacilityViewSet(viewsets.ModelViewSet):
+class FacilityViewSet(BaseModelViewSet):
     """
         API end-point for Facility model
     """
@@ -163,7 +229,7 @@ class FacilityViewSet(viewsets.ModelViewSet):
     serializer_class = FacilitySerializer
 
 
-class ProgramViewSet(viewsets.ModelViewSet):
+class ProgramViewSet(BaseModelViewSet):
     """
         API end-point for Program model
     """
@@ -171,7 +237,7 @@ class ProgramViewSet(viewsets.ModelViewSet):
     serializer_class = ProgramSerializer
 
 
-class ProgramProductViewSet(viewsets.ModelViewSet):
+class ProgramProductViewSet(BaseModelViewSet):
     """
         API end-point for ProgramProduct model
     """
@@ -179,7 +245,7 @@ class ProgramProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProgramProductSerializer
 
 
-class FacilitySupportedProgramViewSet(viewsets.ModelViewSet):
+class FacilitySupportedProgramViewSet(BaseModelViewSet):
     """
         API end-point for FacilitySupportedProgram model
     """
@@ -187,7 +253,7 @@ class FacilitySupportedProgramViewSet(viewsets.ModelViewSet):
     serializer_class = FacilitySupportedProgramSerializer
 
 
-class ProgramProductAllocationInfoViewSet(viewsets.ModelViewSet):
+class ProgramProductAllocationInfoViewSet(BaseModelViewSet):
     """
         API end-point for ProgramProductAllocationInfo model
     """
@@ -195,7 +261,7 @@ class ProgramProductAllocationInfoViewSet(viewsets.ModelViewSet):
     serializer_class = ProgramProductAllocationInfoSerializer
 
 
-class FacilitySupportedProgramProductViewSet(viewsets.ModelViewSet):
+class FacilitySupportedProgramProductViewSet(BaseModelViewSet):
     """
         API end-point for FacilitySupportedProgramProduct model
     """
@@ -203,7 +269,7 @@ class FacilitySupportedProgramProductViewSet(viewsets.ModelViewSet):
     serializer_class = FacilitySupportedProgramProductSerializer
 
 
-class SupervisoryNodeViewSet(viewsets.ModelViewSet):
+class SupervisoryNodeViewSet(BaseModelViewSet):
     """
         API end-point for SupervisoryNode model
     """
@@ -211,7 +277,7 @@ class SupervisoryNodeViewSet(viewsets.ModelViewSet):
     serializer_class = SupervisoryNodeSerializer
 
 
-class OrderGroupViewSet(viewsets.ModelViewSet):
+class OrderGroupViewSet(BaseModelViewSet):
     """
         API end-point for OrderGroup model
     """
@@ -219,7 +285,7 @@ class OrderGroupViewSet(viewsets.ModelViewSet):
     serializer_class = OrderGroupSerializer
 
 
-class ProductPresentationViewSet(viewsets.ModelViewSet):
+class ProductPresentationViewSet(BaseModelViewSet):
     """
         API end-point for ProductPresentation model
     """
@@ -227,7 +293,7 @@ class ProductPresentationViewSet(viewsets.ModelViewSet):
     serializer_class = ProductPresentationSerializer
 
 
-class ModeOfAdministrationViewSet(viewsets.ModelViewSet):
+class ModeOfAdministrationViewSet(BaseModelViewSet):
     """
         API end-point for ModeOfAdministration model
     """
@@ -235,7 +301,7 @@ class ModeOfAdministrationViewSet(viewsets.ModelViewSet):
     serializer_class = ModeOfAdministrationSerializer
 
 
-class WarehouseTypeViewSet(viewsets.ModelViewSet):
+class WarehouseTypeViewSet(BaseModelViewSet):
     """
         API end-point for WarehouseType model
     """
@@ -243,7 +309,7 @@ class WarehouseTypeViewSet(viewsets.ModelViewSet):
     serializer_class = WarehouseTypeSerializer
 
 
-class WarehouseViewSet(viewsets.ModelViewSet):
+class WarehouseViewSet(BaseModelViewSet):
     """
         API end-point for Warehouse model
     """
@@ -251,7 +317,7 @@ class WarehouseViewSet(viewsets.ModelViewSet):
     serializer_class = WarehouseSerializer
 
 
-class ProductItemViewSet(viewsets.ModelViewSet):
+class ProductItemViewSet(BaseModelViewSet):
     """
         API end-point for ProductItem model
     """

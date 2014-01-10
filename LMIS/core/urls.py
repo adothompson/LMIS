@@ -1,7 +1,17 @@
+"""
+    This module defines URL routing for Core REST API
+"""
+#import core Django modules
 from django.conf.urls import patterns, url, include
+
+#import external modules
 from rest_framework import routers
+
+#import lmis modules
 from . import views
 
+
+#create core REST API routers
 router = routers.DefaultRouter()
 router.register(r'^product', views.ProductViewSet)
 router.register(r'^product-category', views.ProductCategoryViewSet)

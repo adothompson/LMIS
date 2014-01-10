@@ -25,10 +25,10 @@ class BaseModel(TimeStampedModel):
         inherits from it.
 
     """
-    #TODO: introduce new field is_deleted, default to false.
     uuid = UUIDField(version=4, primary_key=True)
-    created_by = models.ForeignKey('Employee', blank=True, null=True, related_name='%(app_label)s_%(class)s_created_by')
-    modified_by = models.ForeignKey('Employee', blank=True, null=True,
+    is_deleted = models.BooleanField(default=False)
+    created_by = models.ForeignKey(User, blank=True, null=True, related_name='%(app_label)s_%(class)s_created_by')
+    modified_by = models.ForeignKey(User, blank=True, null=True,
                                     related_name='%(app_label)s_%(class)s_modified_by')
 
     class Meta:
