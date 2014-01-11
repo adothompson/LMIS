@@ -76,7 +76,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     def recover(self, request, pk):
         """
             This ad-hoc functions turns off is_deleted flag of object it is called on. this redo soft delete on the
-            object.
+            object. it can only be accessed via POST and DELETE methods
         """
         obj = self.get_object(self.get_queryset())
         if obj:
