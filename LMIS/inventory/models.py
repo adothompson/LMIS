@@ -13,8 +13,9 @@ from model_utils import Choices
 
 #import project modules
 from cce.models import ColdChainEquipment
-from core.models import Warehouse, BaseModel, ProductItem, UnitOfMeasurement, Facility, Employee, VVMStage
+from core.models import BaseModel, ProductItem, UnitOfMeasurement, Employee, VVMStage
 from orders.models import Voucher
+from facilities.models import Warehouse, Facility
 
 
 class Inventory(BaseModel):

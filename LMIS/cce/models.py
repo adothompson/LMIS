@@ -11,7 +11,8 @@ import reversion
 from model_utils import Choices
 
 #import project app modules
-from core.models import BaseModel, UnitOfMeasurement, Facility, Warehouse
+from core.models import BaseModel, UnitOfMeasurement
+from facilities.models import Facility, Warehouse
 
 
 class ColdChainEquipmentType(BaseModel):

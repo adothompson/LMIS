@@ -5,7 +5,7 @@ from django.conf.urls import patterns, url, include
 from rest_framework import routers
 
 #import LMIS modules
-from .api import views
+from . import views
 
 router = routers.DefaultRouter()
 router.register(r'facility-supported-program-product', views.FacilitySupportedProgramProductViewSet)

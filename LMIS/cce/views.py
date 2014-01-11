@@ -6,7 +6,7 @@
 """
 
 #import project modules
-from core.views import BaseModelViewSet
+from core.api.views import BaseModelViewSet
 from .models import ColdChainEquipment, ColdChainEquipmentType, CCETemperatureLog, CCEProblemLog
 from .api.serializers import CCESerializer, CCETypeSerializer, CCETemperatureLogSerializer, CCEProblemLogSerializer
 

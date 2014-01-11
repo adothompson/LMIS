@@ -41,6 +41,7 @@ class Common(Configuration):
     LOCAL_APPS = (
         'core',
         'cce',
+        'facilities',
         'inventory',
         'locations',
         'orders'

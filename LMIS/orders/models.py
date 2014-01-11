@@ -15,7 +15,6 @@ from core.models import BaseModel, Program, Product, UnitOfMeasurement, ProductI
 from facilities.models import Facility, Warehouse
 
 
-
 class PurchaseOrder(BaseModel):
     """
         PurchaseOrder: is used to place a formal request for supply of products listed in the purchase order lines by

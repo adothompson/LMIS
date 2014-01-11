@@ -8,7 +8,7 @@ from django.conf.urls import patterns, url, include
 from rest_framework import routers
 
 #create core REST API routers
-from .api import views
+from . import views
 
 router = routers.DefaultRouter()
 router.register(r'^product', views.ProductViewSet)

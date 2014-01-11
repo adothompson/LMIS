@@ -15,18 +15,16 @@ from rest_framework.response import Response
 from rest_framework import filters
 
 #import project modules
-from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
-                     Address, EmployeeCategory, Employee, Program, ProgramProduct, ProgramProductAllocationInfo,
-                     ProductPresentation, ModeOfAdministration, ProductItem
-                     )
+from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate,
+                         Contact, Address, EmployeeCategory, Employee, Program, ProgramProduct,
+                         ProgramProductAllocationInfo, ProductPresentation, ModeOfAdministration, ProductItem)
 
-from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
-                              UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
-                              RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
-                              EmployeeSerializer, UserSerializer, PermissionSerializer,ProgramSerializer,
-                              ProgramProductSerializer, ProgramProductAllocationInfoSerializer,
-                              ProductPresentationSerializer, ModeOfAdministrationSerializer, ProductItemSerializer
-                              )
+from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
+                          UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
+                          RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
+                          EmployeeSerializer, UserSerializer, PermissionSerializer,ProgramSerializer,
+                          ProgramProductSerializer, ProgramProductAllocationInfoSerializer,
+                          ProductPresentationSerializer, ModeOfAdministrationSerializer, ProductItemSerializer)
 
 
 class BaseModelViewSet(viewsets.ModelViewSet):
