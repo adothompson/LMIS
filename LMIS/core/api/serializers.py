@@ -10,10 +10,9 @@ from rest_framework import serializers
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
-                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, FacilityType, Facility, Program,
-                         ProgramProduct, FacilitySupportedProgram, ProgramProductAllocationInfo,
-                         FacilitySupportedProgramProduct, SupervisoryNode, OrderGroup, ProductPresentation,
-                         ModeOfAdministration, WarehouseType, Warehouse, ProductItem
+                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, Program,
+                         ProgramProduct, ProgramProductAllocationInfo, ProductPresentation, ModeOfAdministration,
+                         ProductItem
                          )
 
 
@@ -137,22 +136,6 @@ class PermissionSerializer(BaseModelSerializer):
         model = Permission
 
 
-class FacilityTypeSerializer(BaseModelSerializer):
-    """
-        REST API serializer for FacilityType model
-    """
-    class Meta:
-        model = FacilityType
-
-
-class FacilitySerializer(BaseModelSerializer):
-    """
-        REST API serializer for Facility model
-    """
-    class Meta:
-        model = Facility
-
-
 class ProgramSerializer(BaseModelSerializer):
     """
         REST API serializer for Program model
@@ -167,14 +150,6 @@ class ProgramProductSerializer(BaseModelSerializer):
     """
     class Meta:
         model = ProgramProduct
-
-
-class FacilitySupportedProgramSerializer(BaseModelSerializer):
-    """
-        REST API serializer for FacilitySupportedProgram model
-    """
-    class Meta:
-        model = FacilitySupportedProgram
 
 
 class ProgramProductAllocationInfoSerializer(BaseModelSerializer):

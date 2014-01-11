@@ -11,8 +11,9 @@ import reversion
 from model_utils import Choices
 
 #import project modules
-from core.models import BaseModel, Facility, Program, Product, UnitOfMeasurement, ProductItem, Currency, Employee, \
-    Warehouse, VVMStage
+from core.models import BaseModel, Program, Product, UnitOfMeasurement, ProductItem, Currency, Employee, VVMStage
+from facilities.models import Facility, Warehouse
+
 
 
 class PurchaseOrder(BaseModel):
