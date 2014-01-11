@@ -163,8 +163,8 @@ class OutgoingShipment(BaseModel):
     """
         This is used to track stock movements out to recipient or receiving facility
 
-        output_warehouse is the storage location the product item will be shipped from and it belongs to the supplying facility.
-        from the output_warehouse: we can get the facility that made the supply.
+        output_warehouse is the storage location the product item will be shipped from and it belongs to the supplying
+        facility from the output_warehouse: we can get the facility that made the supply.
     """
     STATUS = Choices((0, 'draft', ('Draft')), (1, 'assigned', ('Assigned')), (2, 'done', ('Done')),
                      (3, 'cancelled', ('Cancelled'))
