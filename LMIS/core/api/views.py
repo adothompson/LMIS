@@ -34,34 +34,16 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('is_deleted',)
 
-    def get_user_or_none(self, user_id):
-        try:
-            return User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            return None
-
     def pre_save(self, obj):
         """
             This is over-ridden to attach user that created or modified an object to it before the object is saved.
 
             i did this here cause the model doesn't have access to request object
         """
-        if self.get_user_or_none(self.request.user.id):
+        if Employee.get_user_or_none(self.request.user.id):
             if obj.uuid is None:
                 obj.created_by = self.request.user
             obj.modified_by = self.request.user
-
-    def get_object_or_none(self, pk):
-        """
-            @param pk : primary key that is uuid of object to be retrieved.
-            returns the object if found else returns None
-        """
-        model_class = self.get_view_model_class()
-        try:
-            obj = model_class.objects.get(uuid=pk)
-        except model_class.DoesNotExist:
-            obj = None
-        return obj
 
     def update_obj_is_deleted(self, is_deleted):
         """
