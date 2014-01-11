@@ -3,10 +3,11 @@
 """
 from django.conf.urls import patterns, url, include
 from rest_framework import routers
-from . import views
 
 
 #create cce app REST API routers and urls
+from . import views
+
 router = routers.DefaultRouter()
 router.register(r'cce', views.CCEViewSet)
 router.register(r'cce-type', views.CCETypeViewSet)

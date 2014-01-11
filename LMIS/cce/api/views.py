@@ -7,8 +7,8 @@
 
 #import project modules
 from core.api.views import BaseModelViewSet
-from .models import ColdChainEquipment, ColdChainEquipmentType, CCETemperatureLog, CCEProblemLog
-from .api.serializers import CCESerializer, CCETypeSerializer, CCETemperatureLogSerializer, CCEProblemLogSerializer
+from cce.models import ColdChainEquipment, ColdChainEquipmentType, CCETemperatureLog, CCEProblemLog
+from .serializers import CCESerializer, CCETypeSerializer, CCETemperatureLogSerializer, CCEProblemLogSerializer
 
 
 class CCEViewSet(BaseModelViewSet):
