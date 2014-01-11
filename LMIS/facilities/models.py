@@ -21,11 +21,11 @@ class FacilityType(MPTTModel, BaseModel):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_facility_types')
     active = models.BooleanField()
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'facilities'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class Facility(MPTTModel, Company):
@@ -52,11 +52,11 @@ class Facility(MPTTModel, Company):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='child_facilities')
     virtual_facility = models.BooleanField(default=False, blank=True)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'facilities'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class WarehouseType(BaseModel):
@@ -67,11 +67,11 @@ class WarehouseType(BaseModel):
     code = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=100, blank=True)
 
-    def __str__(self):
-        return '{code}'.format(code=self.code)
-
     class Meta:
         app_label = 'facilities'
+
+    def __str__(self):
+        return '{code}'.format(code=self.code)
 
 
 class Warehouse(BaseModel):
@@ -87,11 +87,11 @@ class Warehouse(BaseModel):
     ambient_storage_gross_capacity = models.FloatField(blank=True, null=True)
     ambient_storage_net_capacity = models.FloatField(blank=True, null=True)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'facilities'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class FacilitySupportedProgram(BaseModel):
@@ -136,11 +136,11 @@ class SupervisoryNode(MPTTModel, BaseModel):
     parent = TreeForeignKey('self', blank=True, null=True, related_name='parent_supervisory_node')
     facility = models.ForeignKey(Facility)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'facilities'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class OrderGroup(BaseModel):
@@ -157,11 +157,11 @@ class OrderGroup(BaseModel):
     supervisory_node = models.ForeignKey('SupervisoryNode')
     member_facilities = models.ManyToManyField(Facility, blank=True, null=True, verbose_name='member facilities')
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'facilities'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 reversion.register(FacilityType)

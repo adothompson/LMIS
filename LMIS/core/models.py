@@ -54,11 +54,11 @@ class UOMCategory(MPTTModel, BaseModel):
     description = models.CharField(max_length=50, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='%(app_label)s_%(class)s_sub_uom_categories')
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class MPTTMeta:
         order_insertion_by = ['name']
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class UnitOfMeasurement(BaseModel):
@@ -72,11 +72,11 @@ class UnitOfMeasurement(BaseModel):
     factor = models.FloatField(null=True, blank=True)
     rounding_precision = models.IntegerField(max_length=2, blank=True, null=True)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class Rate(BaseModel):
@@ -90,11 +90,11 @@ class Rate(BaseModel):
     date = models.DateField(null=True, blank=True, verbose_name='effective date')
     currency = models.ForeignKey('Currency')
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class Currency(BaseModel):
@@ -114,11 +114,11 @@ class Currency(BaseModel):
     code = models.CharField(max_length=15, unique=True)
     symbol_position = models.CharField(choices=SYMBOL_POSITION, default=SYMBOL_POSITION.before, max_length=20)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class Contact(BaseModel):
@@ -137,11 +137,11 @@ class Contact(BaseModel):
     jabber = models.CharField(max_length=35, blank=True)
     comment = models.CharField(max_length=200, blank=True)
 
-    def __str__(self):
-        return '{tag}'.format(tag=self.tag)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{tag}'.format(tag=self.tag)
 
 
 class Address(BaseModel):
@@ -157,11 +157,11 @@ class Address(BaseModel):
     subdivision = models.CharField(max_length=10, blank=True, null=True)
     country = models.CharField(max_length=5, blank=True, null=True)
 
-    def __str__(self):
-        return '{street}'.format(street=self.street)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{street}'.format(street=self.street)
 
 
 class Party(BaseModel):
@@ -187,11 +187,11 @@ class Company(Party):
     category = models.ForeignKey('CompanyCategory')
     footer = models.CharField(max_length=100, blank=True, null=True)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class CompanyCategory(MPTTModel, BaseModel):
@@ -202,11 +202,11 @@ class CompanyCategory(MPTTModel, BaseModel):
     parent = TreeForeignKey('self', null=True, blank=True,
                             related_name='%(app_label)s_%(class)s_sub_company_categories')
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class MPTTMeta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class EmployeeCategory(MPTTModel, BaseModel):
@@ -217,12 +217,12 @@ class EmployeeCategory(MPTTModel, BaseModel):
     parent = TreeForeignKey('self', null=True, blank=True,
                             related_name='%(app_label)s_%(class)s_sub_employee_categories')
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class MPTTMeta:
         order_insertion_by = ['name']
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class Employee(Party):
@@ -242,11 +242,18 @@ class Employee(Party):
     category = models.ForeignKey(EmployeeCategory)
     user = models.OneToOneField(User, blank=True, null=True)
 
+    class Meta:
+        app_label = 'core'
+
     def __str__(self):
         return '{name}'.format(name=self.name)
 
-    class Meta:
-        app_label = 'core'
+    @classmethod
+    def get_user_or_none(cls, user_id):
+        try:
+            return User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return None
 
 
 class Program(BaseModel):
@@ -259,11 +266,11 @@ class Program(BaseModel):
     active = models.BooleanField()
     partners = models.ManyToManyField(Company)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class ProgramProductAllocationInfo(BaseModel):
@@ -304,11 +311,11 @@ class ProgramProduct(BaseModel):
     funding_source = models.ManyToManyField(Company)
     is_active = models.BooleanField()
 
-    def __str__(self):
-        return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
 
 
 class ProcessingPeriod(BaseModel):
@@ -319,11 +326,11 @@ class ProcessingPeriod(BaseModel):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class ProductCategory(MPTTModel, BaseModel):
@@ -333,12 +340,12 @@ class ProductCategory(MPTTModel, BaseModel):
     name = models.CharField(max_length=50, unique=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_product_categories')
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class MPTTMeta:
         order_insertion_by = ['name']
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class Product(BaseModel):
@@ -354,11 +361,11 @@ class Product(BaseModel):
     description = models.CharField(max_length=100, blank=True)
     active = models.BooleanField(default=True)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class ProductPresentation(BaseModel):
@@ -374,11 +381,11 @@ class ProductPresentation(BaseModel):
     uom = models.ForeignKey(UnitOfMeasurement, verbose_name='presentation unit of measurement')
     description = models.CharField(max_length=100, blank=True)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class ModeOfAdministration(BaseModel):
@@ -392,11 +399,11 @@ class ModeOfAdministration(BaseModel):
     name = models.CharField(max_length=55)
     description = models.CharField(max_length=100, blank=True)
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 class ProductItem(BaseModel):
@@ -428,11 +435,11 @@ class ProductItem(BaseModel):
     volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='product_item_volume_uom')
     active = models.BooleanField()
 
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
     class Meta:
         app_label = 'core'
+
+    def __str__(self):
+        return '{name}'.format(name=self.name)
 
 
 #register models to be tracked via Reversion
