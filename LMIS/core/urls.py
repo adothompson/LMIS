@@ -7,7 +7,7 @@ from django.conf.urls import patterns, url, include
 #import external modules
 from rest_framework import routers
 
-#import lmis modules
+#import LMIS modules
 from . import views
 
 
@@ -33,9 +33,6 @@ router.register(r'program', views.ProgramViewSet)
 router.register(r'program-products', views.ProgramProductViewSet)
 router.register(r'facility-supported-program', views.FacilitySupportedProgramViewSet)
 router.register(r'program-product-allocation-info', views.ProgramProductAllocationInfoViewSet)
-router.register(r'facility-supported-program-product', views.FacilitySupportedProgramProductViewSet)
-router.register(r'supervisory-node', views.SupervisoryNodeViewSet)
-router.register(r'order-group', views.OrderGroupViewSet)
 router.register(r'product-presentation', views.ProductPresentationViewSet)
 router.register(r'mode-of-administration', views.ModeOfAdministrationViewSet)
 router.register(r'warehouse-type', views.WarehouseTypeViewSet)

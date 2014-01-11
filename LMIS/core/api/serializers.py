@@ -160,30 +160,6 @@ class ProgramProductAllocationInfoSerializer(BaseModelSerializer):
         model = ProgramProductAllocationInfo
 
 
-class FacilitySupportedProgramProductSerializer(BaseModelSerializer):
-    """
-        REST API serializer for FacilitySupportedProgramProduct model
-    """
-    class Meta:
-        model = FacilitySupportedProgramProduct
-
-
-class SupervisoryNodeSerializer(BaseModelSerializer):
-    """
-       REST API serializer for SupervisoryNode model
-    """
-    class Meta:
-        model = SupervisoryNode
-
-
-class OrderGroupSerializer(BaseModelSerializer):
-    """
-        REST API serializer for OrderGroup model
-    """
-    class Meta:
-        model = OrderGroup
-
-
 class ProductPresentationSerializer(BaseModelSerializer):
     """
         REST API serializer for ProductPresentation model
@@ -198,22 +174,6 @@ class ModeOfAdministrationSerializer(BaseModelSerializer):
     """
     class Meta:
         model = ModeOfAdministration
-
-
-class WarehouseTypeSerializer(BaseModelSerializer):
-    """
-        REST API serializer for WarehouseType model
-    """
-    class Meta:
-        model = WarehouseType
-
-
-class WarehouseSerializer(BaseModelSerializer):
-    """
-        REST API serializer for Warehouse model
-    """
-    class Meta:
-        model = Warehouse
 
 
 class ProductItemSerializer(BaseModelSerializer):

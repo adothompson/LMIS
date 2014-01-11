@@ -16,21 +16,16 @@ from rest_framework import filters
 
 #import project modules
 from .models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate, Contact,
-                     Address, EmployeeCategory, Employee, FacilityType, Facility, Program, ProgramProduct,
-                     FacilitySupportedProgram, ProgramProductAllocationInfo, FacilitySupportedProgramProduct,
-                     SupervisoryNode, OrderGroup, ProductPresentation, ModeOfAdministration, WarehouseType, Warehouse,
-                     ProductItem
+                     Address, EmployeeCategory, Employee, Program, ProgramProduct, ProgramProductAllocationInfo,
+                     ProductPresentation, ModeOfAdministration, ProductItem
                      )
 
 from .api.serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                               UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
                               RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
-                              EmployeeSerializer, UserSerializer, PermissionSerializer, FacilityTypeSerializer,
-                              FacilitySerializer, ProgramSerializer, ProgramProductSerializer,
-                              FacilitySupportedProgramSerializer, ProgramProductAllocationInfoSerializer,
-                              FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer,
-                              OrderGroupSerializer, ProductPresentationSerializer, ModeOfAdministrationSerializer,
-                              WarehouseTypeSerializer, WarehouseSerializer, ProductItemSerializer
+                              EmployeeSerializer, UserSerializer, PermissionSerializer,ProgramSerializer,
+                              ProgramProductSerializer, ProgramProductAllocationInfoSerializer,
+                              ProductPresentationSerializer, ModeOfAdministrationSerializer, ProductItemSerializer
                               )
 
 
@@ -213,22 +208,6 @@ class PermissionViewSet(viewsets.ModelViewSet):
     serializer_class = PermissionSerializer
 
 
-class FacilityTypeViewSet(BaseModelViewSet):
-    """
-        API end-point for FacilityType model.
-    """
-    queryset = FacilityType.objects.all()
-    serializer_class = FacilityTypeSerializer
-
-
-class FacilityViewSet(BaseModelViewSet):
-    """
-        API end-point for Facility model
-    """
-    queryset = Facility.objects.all()
-    serializer_class = FacilitySerializer
-
-
 class ProgramViewSet(BaseModelViewSet):
     """
         API end-point for Program model
@@ -245,44 +224,12 @@ class ProgramProductViewSet(BaseModelViewSet):
     serializer_class = ProgramProductSerializer
 
 
-class FacilitySupportedProgramViewSet(BaseModelViewSet):
-    """
-        API end-point for FacilitySupportedProgram model
-    """
-    queryset = FacilitySupportedProgram.objects.all()
-    serializer_class = FacilitySupportedProgramSerializer
-
-
 class ProgramProductAllocationInfoViewSet(BaseModelViewSet):
     """
         API end-point for ProgramProductAllocationInfo model
     """
     queryset = ProgramProductAllocationInfo.objects.all()
     serializer_class = ProgramProductAllocationInfoSerializer
-
-
-class FacilitySupportedProgramProductViewSet(BaseModelViewSet):
-    """
-        API end-point for FacilitySupportedProgramProduct model
-    """
-    queryset = FacilitySupportedProgramProduct.objects.all()
-    serializer_class = FacilitySupportedProgramProductSerializer
-
-
-class SupervisoryNodeViewSet(BaseModelViewSet):
-    """
-        API end-point for SupervisoryNode model
-    """
-    queryset = SupervisoryNode.objects.all()
-    serializer_class = SupervisoryNodeSerializer
-
-
-class OrderGroupViewSet(BaseModelViewSet):
-    """
-        API end-point for OrderGroup model
-    """
-    queryset = OrderGroup.objects.all()
-    serializer_class = OrderGroupSerializer
 
 
 class ProductPresentationViewSet(BaseModelViewSet):
@@ -299,22 +246,6 @@ class ModeOfAdministrationViewSet(BaseModelViewSet):
     """
     queryset = ModeOfAdministration.objects.all()
     serializer_class = ModeOfAdministrationSerializer
-
-
-class WarehouseTypeViewSet(BaseModelViewSet):
-    """
-        API end-point for WarehouseType model
-    """
-    queryset = WarehouseType.objects.all()
-    serializer_class = WarehouseTypeSerializer
-
-
-class WarehouseViewSet(BaseModelViewSet):
-    """
-        API end-point for Warehouse model
-    """
-    queryset = Warehouse.objects.all()
-    serializer_class = WarehouseSerializer
 
 
 class ProductItemViewSet(BaseModelViewSet):
