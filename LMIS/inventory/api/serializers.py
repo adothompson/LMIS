@@ -4,7 +4,8 @@
 
 #import LMIS project modules
 from core.api.serializers import BaseModelSerializer
-from inventory.models import Inventory, InventoryLine, ConsumptionRecord, ConsumptionRecordLine, IncomingShipment
+from inventory.models import (Inventory, InventoryLine, ConsumptionRecord, ConsumptionRecordLine, IncomingShipment,
+                              IncomingShipmentLine, OutgoingShipment)
 
 
 class InventorySerializer(BaseModelSerializer):
@@ -17,7 +18,7 @@ class InventorySerializer(BaseModelSerializer):
 
 class InventoryLineSerializer(BaseModelSerializer):
     """
-        Inventory Line serializer for Inventory model
+        Inventory Line serializer for Inventory records
     """
     class Meta:
         model = InventoryLine
@@ -25,7 +26,7 @@ class InventoryLineSerializer(BaseModelSerializer):
 
 class ConsumptionRecordSerializer(BaseModelSerializer):
     """
-        Consumption Record Serializer used by the API endpoint to serialize Consumption record
+        Consumption Record Serializer used by the API endpoint to serialize Consumption records
     """
     class Meta:
         model = ConsumptionRecord
@@ -33,7 +34,7 @@ class ConsumptionRecordSerializer(BaseModelSerializer):
 
 class ConsumptionRecordLineSerializer(BaseModelSerializer):
     """
-        ConsumptionRecordLine Serializer used by the API end-point to serialize ConsumptionRecordLine record
+        ConsumptionRecordLine Serializer used by the API end-point to serialize ConsumptionRecordLine records
     """
     class Meta:
         model = ConsumptionRecordLine
@@ -45,3 +46,19 @@ class IncomingShipmentSerializer(BaseModelSerializer):
     """
     class Meta:
         model = IncomingShipment
+
+
+class IncomingShipmentLineSerializer(BaseModelSerializer):
+    """
+        IncomingShipmentSerializer used by the API end-point
+    """
+    class Meta:
+        model = IncomingShipmentLine
+
+
+class OutgoingShipmentSerializer(BaseModelSerializer):
+    """
+        OutgoingShipmentSerializer is used by the API end-point to serialize OutgoingShipment records
+    """
+    class Meta:
+        model = OutgoingShipment

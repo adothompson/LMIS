@@ -173,6 +173,7 @@ class OutgoingShipment(BaseModel):
                      (3, 'cancelled', ('Cancelled'))
                      )
     recipient = models.ForeignKey(Facility)
+    #TODO: decide if stock entry field id needed for OutgoingShipment
     stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     output_warehouse = models.ForeignKey(Warehouse)
     status = models.IntegerField(choices=STATUS)
