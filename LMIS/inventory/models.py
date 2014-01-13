@@ -13,7 +13,7 @@ from model_utils import Choices
 
 #import project modules
 from cce.models import ColdChainEquipment
-from core.models import BaseModel, ProductItem, UnitOfMeasurement, Employee, VVMStage
+from core.models import BaseModel, ProductItem, UnitOfMeasurement, Employee, VVMStage, Program
 from orders.models import Voucher
 from facilities.models import Warehouse, Facility
 
@@ -40,6 +40,7 @@ class InventoryLine(BaseModel):
         a product at a facility etc.
     """
     product_item = models.ForeignKey(ProductItem)
+    program = models.ForeignKey(Program)
     inventory = models.ForeignKey(Inventory)
     adjustments = models.ForeignKey('Adjustment', blank=True, null=True)
     quantity = models.IntegerField()
@@ -77,6 +78,7 @@ class PhysicalStockCountLine(BaseModel):
         This is used to record each unique product item counted during physical stock count
     """
     product_item = models.ForeignKey(ProductItem)
+    program = models.ForeignKey(Program)
     physical_stock_count = models.ForeignKey(PhysicalStockCount)
     physical_quantity = models.IntegerField(verbose_name='%(app_label)s_%(class)s_counted_quantity')
     inventory_quantity = models.IntegerField()
@@ -95,10 +97,11 @@ class ConsumptionRecord(FacilityActivity):
 
 class ConsumptionRecordLine(BaseModel):
     """
-        ConsumptionRecordLine represents the quantity of each product item consumed at a facility within the ConsumptionRecord
-        start and end date
+        ConsumptionRecordLine represents the quantity of each product item consumed at a facility within the
+        ConsumptionRecord start and end date
     """
     product_item = models.ForeignKey(ProductItem)
+    program = models.ForeignKey(Program)
     consumption_record = models.ForeignKey(ConsumptionRecord)
     quantity_dispensed = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
