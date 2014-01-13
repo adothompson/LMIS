@@ -11,6 +11,10 @@ import reversion
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+#import project app modules
+from locations.models import Location
+
+
 class FacilityType(MPTTModel, BaseModel):
     """
         This models different types of facilities, each country should have their different types of facilities.
@@ -40,7 +44,7 @@ class Facility(MPTTModel, Company):
     facility_operators = models.ManyToManyField(Company, blank=True, null=True, related_name='facility_operators')
     global_location_no = models.CharField(max_length=55, blank=True)
     catchment_population = models.IntegerField(blank=True, null=True)
-    #location = models.ForeignKey(Location, null=True)
+    location = models.ForeignKey(Location, null=True)
     has_electricity = models.NullBooleanField(blank=True)
     is_online = models.NullBooleanField(blank=True, null=True)
     has_electronic_scc = models.NullBooleanField(blank=True, null=False)

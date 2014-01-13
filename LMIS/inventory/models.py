@@ -41,6 +41,7 @@ class InventoryLine(BaseModel):
     """
     product_item = models.ForeignKey(ProductItem)
     inventory = models.ForeignKey(Inventory)
+    adjustments = models.ForeignKey('Adjustment', blank=True, null=True)
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
@@ -107,6 +108,8 @@ class StockEntry(BaseModel):
     """
         This is used to indicate different types of stock entry.
 
+            Previous Balance: balance from previous year.
+
             New Arrival: stock entry type used to record quantity received from supplier
 
             Surplus: stock entry type used to record excess quantity recorded from physical stock count.
@@ -116,9 +119,8 @@ class StockEntry(BaseModel):
             Other Sources: stock entry type used to record stock received from other sources
 
     """
-    TYPES = Choices((0, 'new_arrival', ('New Arrival')), (1, 'surplus', ('Surplus')), (2, 'return', ('Return')),
-
-                    (3, 'others', ('Other Sources')))
+    TYPES = Choices((0, 'previous_balance', ('Previous Balance')), (1, 'new_arrival', ('New Arrival')),
+                    (2, 'surplus', ('Surplus')), (3, 'return', ('Return')), (4, 'others', ('Other Sources')))
 
     class Meta:
             managed = False
@@ -129,7 +131,10 @@ class IncomingShipment(BaseModel):
         This is used to record stock arrival from supplier or supplying facility.
 
         input_warehouse - is the storage location of the recipient, where the product item will be kept.
-        from the input_warehouse.facility we can get the facility that received the shipment
+        from the input_warehouse.facility we can get the facility that received the shipment.
+
+        This can also be used to record excess quantity recorded during physical stock count by recording the exact
+        product-item and the excess quantity
     """
     supplier = models.ForeignKey(Facility)
     stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
@@ -143,14 +148,9 @@ class IncomingShipmentLine(BaseModel):
         This is used to record the detail of each unique item of an IncomingShipment
     """
     product_item = models.ForeignKey(ProductItem)
-    quantity_received = models.IntegerField()
+    quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement,
                                      related_name='%(app_label)s_%(class)s_quantity_uom')
-    stock_before = models.IntegerField()
-    stock_after = models.IntegerField()
-    stock_balance = models.IntegerField(blank=True, null=True)
-    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
-                                          related_name='%(app_label)s_%(class)s_stock_balance_uom')
     weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_weight_uom')
     packed_volume = models.FloatField(blank=True, null=True)
@@ -188,12 +188,26 @@ class OutgoingShipmentLine(BaseModel):
     volume = models.FloatField(blank=True, null=True)
     volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
                                    related_name='%(app_label)s_%(class)s_volume_uom')
-    stock_before = models.IntegerField()
-    stock_after = models.IntegerField()
-    stock_balance = models.IntegerField(blank=True, null=True)
-    stock_balance_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
-                                          related_name='%(app_label)s_%(class)s_stock_balance_uom')
+    quantity_before = models.IntegerField()
+    quantity_after = models.IntegerField()
     remark = models.CharField(max_length=55, blank=True, null=True)
+
+
+class AdjustmentType(BaseModel):
+    """
+        Adjustment Types:
+            Broken: this is adjustment type for quantity discarded due to breakage.
+            Expired: this is adjustment type for quantity discarded due to expiration.
+            Frozen: this is adjustment type for quantity discarded due to freezing.
+            VVM: this is adjustment type for quantity discarded due to VVM change.
+            Missing: this is adjustment type for missing quantity recorded during physical stock count.
+            Others: this is adjustment type for quantity distributed to others.
+    """
+    TYPES = Choices((0, 'broken', ('Broken')), (1, 'expired', ('Expired')), (2, 'frozen', ('Frozen')),
+                    (3, 'vvm', ('VVM')), (4, 'missing', ('Missing')), (5, 'others', ('Others')))
+
+    class Meta:
+        managed = False
 
 
 class Adjustment(BaseModel):
@@ -203,9 +217,11 @@ class Adjustment(BaseModel):
         item.
         the physical stock count line is the physical stock count line the adjustment is for.
     """
+
     physical_stock_line = models.ForeignKey('PhysicalStockCountLine')
     previous_quantity = models.IntegerField()
     revised_quantity = models.IntegerField()
+    adjustment_type = models.IntegerField(choices=AdjustmentType.TYPES)
     reason = models.CharField(max_length=55, verbose_name='reason for adjustment')
     date_time = models.DateTimeField()
 

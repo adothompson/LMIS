@@ -13,9 +13,6 @@ from django_extensions.db.fields import UUIDField
 from model_utils.models import TimeStampedModel
 from model_utils import Choices
 
-#import project app modules
-#from locations.models import Location
-
 
 class BaseModel(TimeStampedModel):
     """
@@ -40,7 +37,8 @@ class VVMStage(BaseModel):
         This is used to represent possible stages of vaccine vial monitor attached to vaccines to  which gives a visual
         indication of whether the vaccine has been kept at a temperature which preserves its potency.
     """
-    STAGES = Choices('Stage 1', 'Stage 2', 'Stage 3', 'Stage 4')
+    STAGES = Choices(('stage_one', 'Stage 1'), ('stage_two', 'Stage 2'), ('stage_three', 'Stage 3'),
+                     ('stage_four', 'Stage 4'))
 
     class Meta:
         managed = False
