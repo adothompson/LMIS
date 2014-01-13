@@ -16,6 +16,7 @@ router.register(r'^inventory', views.InventoryViewSet)
 router.register(r'^inventory-lines', views.InventoryLineViewSet)
 router.register(r'consumption-record', views.ConsumptionRecordViewSet)
 router.register(r'consumption-record-line', views.ConsumptionRecordLineViewSet)
+router.register(r'incoming-shipment', views.IncomingShipmentViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
