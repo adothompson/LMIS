@@ -87,7 +87,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
 
 class ProductViewSet(BaseModelViewSet):
     """
-        API end-point that allows list of all products to be view
+        API end-point for product model
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
