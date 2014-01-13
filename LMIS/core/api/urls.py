@@ -35,6 +35,4 @@ router.register(r'product-item', views.ProductItemViewSet)
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
-    # Additionally, we include login URLs for the browse-able API.
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 )

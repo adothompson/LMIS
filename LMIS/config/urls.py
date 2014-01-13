@@ -9,4 +9,8 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'api/v1/core/', include('core.api.urls')),
                        url(r'api/v1/cce/', include('cce.api.urls')),
-                       url(r'api/v1/facilities/', include('facilities.api.urls')))
+                       url(r'api/v1/facilities/', include('facilities.api.urls')),
+
+                       # DRF browsable API urls
+                       url(r'^api-web/', include('rest_framework.urls', namespace='rest_framework'))
+)
