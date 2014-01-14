@@ -42,7 +42,6 @@ class InventoryLine(BaseModel):
     product_item = models.ForeignKey(ProductItem)
     program = models.ForeignKey(Program)
     inventory = models.ForeignKey(Inventory)
-    adjustments = models.ForeignKey('Adjustment', blank=True, null=True)
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
@@ -51,6 +50,14 @@ class InventoryLine(BaseModel):
     volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
                                    related_name='%(app_label)s_%(class)s_volume_uom')
     active = models.BooleanField()
+
+
+class InventoryLineAdjustment(BaseModel):
+    """
+        A one-to-many model for linking an inventory line to adjustments
+    """
+    inventory_line = models.ForeignKey(InventoryLine)
+    adjustment = models.OneToOneField('Adjustment')
 
 
 class FacilityActivity(BaseModel):
@@ -85,6 +92,14 @@ class PhysicalStockCountLine(BaseModel):
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     comment = models.CharField(max_length=35, blank=True)
+
+
+class PhysicalStockCountLineAdjustment(BaseModel):
+    """
+        This is used to model the one-to-many relationship between Physical Stock Count Line and Adjustments
+    """
+    physical_stock_line = models.ForeignKey(PhysicalStockCountLine)
+    adjustment = models.OneToOneField('Adjustment')
 
 
 class ConsumptionRecord(FacilityActivity):
@@ -173,8 +188,6 @@ class OutgoingShipment(BaseModel):
                      (3, 'cancelled', ('Cancelled'))
                      )
     recipient = models.ForeignKey(Facility)
-    #TODO: decide if stock entry field id needed for OutgoingShipment
-    stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     output_warehouse = models.ForeignKey(Warehouse)
     status = models.IntegerField(choices=STATUS)
 
@@ -219,15 +232,11 @@ class Adjustment(BaseModel):
         Adjustment is used to account for difference between physical stock count quantities and inventory quantity.
         It is used to reconcile the difference between Physical stock count quantity and inventory quantity for an
         item.
-        the physical stock count line is the physical stock count line the adjustment is for.
     """
-
-    physical_stock_line = models.ForeignKey('PhysicalStockCountLine')
     previous_quantity = models.IntegerField()
     revised_quantity = models.IntegerField()
     adjustment_type = models.IntegerField(choices=AdjustmentType.TYPES)
     reason = models.CharField(max_length=55, verbose_name='reason for adjustment')
-    date_time = models.DateTimeField()
 
 
 #register models that will be tracked by Reversion
