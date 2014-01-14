@@ -5,7 +5,7 @@
 #import LMIS project modules
 from core.api.serializers import BaseModelSerializer
 from inventory.models import (Inventory, InventoryLine, ConsumptionRecord, ConsumptionRecordLine, IncomingShipment,
-                              IncomingShipmentLine, OutgoingShipment)
+                              IncomingShipmentLine, OutgoingShipment, OutgoingShipmentLine)
 
 
 class InventorySerializer(BaseModelSerializer):
@@ -62,3 +62,11 @@ class OutgoingShipmentSerializer(BaseModelSerializer):
     """
     class Meta:
         model = OutgoingShipment
+
+
+class OutgoingShipmentLineSerializer(BaseModelSerializer):
+    """
+        OutgoingShipmentLineSerializer is used by the API end-points to serialize OutgoingShipmentLine records
+    """
+    class Meta:
+        model = OutgoingShipmentLine

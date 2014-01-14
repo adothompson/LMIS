@@ -5,10 +5,10 @@
 #import LMIS project modules
 from core.api.views import BaseModelViewSet
 from inventory.models import (Inventory, InventoryLine, ConsumptionRecord, ConsumptionRecordLine, IncomingShipment,
-                              IncomingShipmentLine, OutgoingShipment)
+                              IncomingShipmentLine, OutgoingShipment, OutgoingShipmentLine)
 from .serializers import (InventorySerializer, InventoryLineSerializer, ConsumptionRecordSerializer,
                           ConsumptionRecordLineSerializer, IncomingShipmentSerializer, IncomingShipmentLineSerializer,
-                          OutgoingShipmentSerializer)
+                          OutgoingShipmentSerializer, OutgoingShipmentLineSerializer)
 
 
 class InventoryViewSet(BaseModelViewSet):
@@ -65,3 +65,11 @@ class OutgoingShipmentViewSet(BaseModelViewSet):
     """
     queryset = OutgoingShipment.objects.all()
     serializer_class = OutgoingShipmentSerializer
+
+
+class OutgoingShipmentLineViewSet(BaseModelViewSet):
+    """
+        API end-point for OutgoingShipmentLine model
+    """
+    queryset = OutgoingShipmentLine.objects.all()
+    serializer_class = OutgoingShipmentLineSerializer

@@ -19,6 +19,7 @@ router.register(r'consumption-record-line', views.ConsumptionRecordLineViewSet)
 router.register(r'incoming-shipment', views.IncomingShipmentViewSet)
 router.register(r'incoming-shipment-line', views.IncomingShipmentLineViewSet)
 router.register(r'outgoing-shipment', views.OutgoingShipmentViewSet)
+router.register(r'outgoing-shipment-line', views.OutgoingShipmentLineViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
