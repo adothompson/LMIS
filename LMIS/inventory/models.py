@@ -29,6 +29,13 @@ class Inventory(BaseModel):
     warehouse = models.ForeignKey(Warehouse)
     cce = models.ForeignKey(ColdChainEquipment, blank=True, null=True)
 
+    @classmethod
+    def get_inventory_line(cls, uuid):
+        """
+            This return list of inventory lines that belongs to the given inventory uuid
+        """
+        return InventoryLine.objects.filter(inventory__uuid = uuid)
+
 
 class InventoryLine(BaseModel):
     """
