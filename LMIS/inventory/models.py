@@ -13,7 +13,7 @@ from model_utils import Choices
 
 #import project modules
 from cce.models import ColdChainEquipment
-from core.models import BaseModel, ProductItem, UnitOfMeasurement, Employee, VVMStage
+from core.models import BaseModel, ProductItem, UnitOfMeasurement, Employee, VVMStage, Program
 from orders.models import Voucher
 from facilities.models import Warehouse, Facility
 
@@ -40,8 +40,8 @@ class InventoryLine(BaseModel):
         a product at a facility etc.
     """
     product_item = models.ForeignKey(ProductItem)
+    program = models.ForeignKey(Program)
     inventory = models.ForeignKey(Inventory)
-    adjustments = models.ForeignKey('Adjustment', blank=True, null=True)
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
@@ -50,6 +50,14 @@ class InventoryLine(BaseModel):
     volume_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
                                    related_name='%(app_label)s_%(class)s_volume_uom')
     active = models.BooleanField()
+
+
+class InventoryLineAdjustment(BaseModel):
+    """
+        A one-to-many model for linking an inventory line to adjustments
+    """
+    inventory_line = models.ForeignKey(InventoryLine)
+    adjustment = models.OneToOneField('Adjustment')
 
 
 class FacilityActivity(BaseModel):
@@ -77,12 +85,21 @@ class PhysicalStockCountLine(BaseModel):
         This is used to record each unique product item counted during physical stock count
     """
     product_item = models.ForeignKey(ProductItem)
+    program = models.ForeignKey(Program)
     physical_stock_count = models.ForeignKey(PhysicalStockCount)
     physical_quantity = models.IntegerField(verbose_name='%(app_label)s_%(class)s_counted_quantity')
     inventory_quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
     comment = models.CharField(max_length=35, blank=True)
+
+
+class PhysicalStockCountLineAdjustment(BaseModel):
+    """
+        This is used to model the one-to-many relationship between Physical Stock Count Line and Adjustments
+    """
+    physical_stock_line = models.ForeignKey(PhysicalStockCountLine)
+    adjustment = models.OneToOneField('Adjustment')
 
 
 class ConsumptionRecord(FacilityActivity):
@@ -95,10 +112,11 @@ class ConsumptionRecord(FacilityActivity):
 
 class ConsumptionRecordLine(BaseModel):
     """
-        ConsumptionRecordLine represents the quantity of each product item consumed at a facility within the ConsumptionRecord
-        start and end date
+        ConsumptionRecordLine represents the quantity of each product item consumed at a facility within the
+        ConsumptionRecord start and end date
     """
     product_item = models.ForeignKey(ProductItem)
+    program = models.ForeignKey(Program)
     consumption_record = models.ForeignKey(ConsumptionRecord)
     quantity_dispensed = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
@@ -170,7 +188,6 @@ class OutgoingShipment(BaseModel):
                      (3, 'cancelled', ('Cancelled'))
                      )
     recipient = models.ForeignKey(Facility)
-    stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     output_warehouse = models.ForeignKey(Warehouse)
     status = models.IntegerField(choices=STATUS)
 
@@ -215,15 +232,11 @@ class Adjustment(BaseModel):
         Adjustment is used to account for difference between physical stock count quantities and inventory quantity.
         It is used to reconcile the difference between Physical stock count quantity and inventory quantity for an
         item.
-        the physical stock count line is the physical stock count line the adjustment is for.
     """
-
-    physical_stock_line = models.ForeignKey('PhysicalStockCountLine')
     previous_quantity = models.IntegerField()
     revised_quantity = models.IntegerField()
     adjustment_type = models.IntegerField(choices=AdjustmentType.TYPES)
     reason = models.CharField(max_length=55, verbose_name='reason for adjustment')
-    date_time = models.DateTimeField()
 
 
 #register models that will be tracked by Reversion

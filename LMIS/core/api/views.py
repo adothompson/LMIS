@@ -13,6 +13,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate,
@@ -30,9 +31,14 @@ from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMe
 class BaseModelViewSet(viewsets.ModelViewSet):
     """
         Base API end-point for other model view sets end-point.
+
+        permission_class:
+            IsAuthenticated : ensures that only authenticated users can access the API
     """
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('is_deleted',)
+    #permission class
+    permission_classes = (IsAuthenticated,)
 
     def pre_save(self, obj):
         """

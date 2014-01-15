@@ -14,6 +14,12 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'^inventory', views.InventoryViewSet)
 router.register(r'^inventory-lines', views.InventoryLineViewSet)
+router.register(r'consumption-record', views.ConsumptionRecordViewSet)
+router.register(r'consumption-record-line', views.ConsumptionRecordLineViewSet)
+router.register(r'incoming-shipment', views.IncomingShipmentViewSet)
+router.register(r'incoming-shipment-line', views.IncomingShipmentLineViewSet)
+router.register(r'outgoing-shipment', views.OutgoingShipmentViewSet)
+router.register(r'outgoing-shipment-line', views.OutgoingShipmentLineViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
