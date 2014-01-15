@@ -4,7 +4,6 @@
 
 #import core django modules
 from django.db import models
-from core.models import BaseModel, Company, ProgramProduct, Program, ProgramProductAllocationInfo
 
 #import external modules
 import reversion
@@ -13,6 +12,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 #import project app modules
 from locations.models import Location
+from core.models import BaseModel, Company
+from partners.models import ProgramProduct, Program, ProgramProductAllocationInfo
 
 
 class FacilityType(MPTTModel, BaseModel):

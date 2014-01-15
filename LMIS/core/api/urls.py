@@ -25,9 +25,6 @@ router.register(r'employee-category', views.EmployeeCategoryViewSet)
 router.register(r'employee', views.EmployeeViewSet)
 router.register(r'user', views.UserViewSet)
 router.register(r'permission', views.PermissionViewSet)
-router.register(r'program', views.ProgramViewSet)
-router.register(r'program-products', views.ProgramProductViewSet)
-router.register(r'program-product-allocation-info', views.ProgramProductAllocationInfoViewSet)
 router.register(r'product-presentation', views.ProductPresentationViewSet)
 router.register(r'mode-of-administration', views.ModeOfAdministrationViewSet)
 router.register(r'product-item', views.ProductItemViewSet)
@@ -35,6 +32,4 @@ router.register(r'product-item', views.ProductItemViewSet)
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
-    # Additionally, we include login URLs for the browse-able API.
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 )

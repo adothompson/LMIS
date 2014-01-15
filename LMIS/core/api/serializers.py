@@ -10,10 +10,8 @@ from rest_framework import serializers
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
-                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, Program,
-                         ProgramProduct, ProgramProductAllocationInfo, ProductPresentation, ModeOfAdministration,
-                         ProductItem
-                         )
+                         Currency, Rate, Contact, Address, EmployeeCategory, Employee, ProductPresentation,
+                         ModeOfAdministration, ProductItem)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -134,30 +132,6 @@ class PermissionSerializer(BaseModelSerializer):
     """
     class Meta:
         model = Permission
-
-
-class ProgramSerializer(BaseModelSerializer):
-    """
-        REST API serializer for Program model
-    """
-    class Meta:
-        model = Program
-
-
-class ProgramProductSerializer(BaseModelSerializer):
-    """
-        REST API serializer for ProgramProduct model
-    """
-    class Meta:
-        model = ProgramProduct
-
-
-class ProgramProductAllocationInfoSerializer(BaseModelSerializer):
-    """
-        REST API  serializer for ProgramProductAllocationInfo model
-    """
-    class Meta:
-        model = ProgramProductAllocationInfo
 
 
 class ProductPresentationSerializer(BaseModelSerializer):
