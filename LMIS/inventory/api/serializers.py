@@ -48,6 +48,8 @@ class IncomingShipmentSerializer(BaseModelSerializer):
     """
     class Meta:
         model = IncomingShipment
+        fields = ('supplier', 'stock_entry_type', 'input_warehouse', 'other', 'other_source', 'is_deleted',
+                  'incoming_shipment_lines',)
 
 
 class IncomingShipmentLineSerializer(BaseModelSerializer):

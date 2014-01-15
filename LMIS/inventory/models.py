@@ -171,14 +171,16 @@ class IncomingShipment(BaseModel):
     supplier = models.ForeignKey(Facility)
     stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     input_warehouse = models.ForeignKey(Warehouse)
-    others = models.BooleanField(default=False)
-    other_source = models.CharField(max_length=35, blank=True)
+    other = models.BooleanField(default=False)
+    other_source = models.CharField(max_length=35, blank=True, help_text='Enter source of shipment if stock entry type '
+                                                                        'is "Other".')
 
 
 class IncomingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique item of an IncomingShipment
     """
+    incoming_shipment = models.ForeignKey(IncomingShipment, related_name='incoming_shipment_lines')
     product_item = models.ForeignKey(ProductItem)
     quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement,
