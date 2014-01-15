@@ -8,20 +8,22 @@ from inventory.models import (Inventory, InventoryLine, ConsumptionRecord, Consu
                               IncomingShipmentLine, OutgoingShipment, OutgoingShipmentLine)
 
 
+class InventoryLineSerializer(BaseModelSerializer):
+    """
+        Inventory Line serializer for Inventory records
+    """
+
+    class Meta:
+        model = InventoryLine
+
+
 class InventorySerializer(BaseModelSerializer):
     """
         Inventory Model serializer
     """
     class Meta:
         model = Inventory
-
-
-class InventoryLineSerializer(BaseModelSerializer):
-    """
-        Inventory Line serializer for Inventory records
-    """
-    class Meta:
-        model = InventoryLine
+        fields = ('warehouse', 'cce', 'inventory_lines', 'is_deleted',)
 
 
 class ConsumptionRecordSerializer(BaseModelSerializer):

@@ -29,13 +29,6 @@ class Inventory(BaseModel):
     warehouse = models.ForeignKey(Warehouse)
     cce = models.ForeignKey(ColdChainEquipment, blank=True, null=True)
 
-    @classmethod
-    def get_inventory_line(cls, uuid):
-        """
-            This return list of inventory lines that belongs to the given inventory uuid
-        """
-        return InventoryLine.objects.filter(inventory__uuid = uuid)
-
 
 class InventoryLine(BaseModel):
     """
@@ -48,7 +41,7 @@ class InventoryLine(BaseModel):
     """
     product_item = models.ForeignKey(ProductItem)
     program = models.ForeignKey(Program)
-    inventory = models.ForeignKey(Inventory)
+    inventory = models.ForeignKey(Inventory, related_name='inventory_lines')
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
@@ -121,12 +114,26 @@ class ConsumptionRecordLine(BaseModel):
     """
         ConsumptionRecordLine represents the quantity of each product item consumed at a facility within the
         ConsumptionRecord start and end date
+
+        previous_balance = stock balance before start date
     """
     product_item = models.ForeignKey(ProductItem)
     program = models.ForeignKey(Program)
+    previous_balance = models.IntegerField()
+    quantity_used = models.IntegerField()
+    current_balance = models.IntegerField()
+    quantity_received = models.IntegerField()
     consumption_record = models.ForeignKey(ConsumptionRecord)
-    quantity_dispensed = models.IntegerField()
+    total_discarded = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
+
+
+class ConsumptionRecordLineAdjustment(BaseModel):
+    """
+        This is used to link ConsumptionRecordLine to adjustments
+    """
+    consumption_record_line = models.ForeignKey(ConsumptionRecordLine)
+    adjustment = models.OneToOneField('Adjustment')
 
 
 class StockEntry(BaseModel):
