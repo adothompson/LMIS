@@ -17,15 +17,14 @@ from rest_framework.permissions import IsAuthenticated
 
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate,
-                         Contact, Address, EmployeeCategory, Employee, Program, ProgramProduct,
-                         ProgramProductAllocationInfo, ProductPresentation, ModeOfAdministration, ProductItem)
+                         Contact, Address, EmployeeCategory, Employee, ProductPresentation, ModeOfAdministration,
+                         ProductItem)
 
 from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                           UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
                           RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
-                          EmployeeSerializer, UserSerializer, PermissionSerializer,ProgramSerializer,
-                          ProgramProductSerializer, ProgramProductAllocationInfoSerializer,
-                          ProductPresentationSerializer, ModeOfAdministrationSerializer, ProductItemSerializer)
+                          EmployeeSerializer, UserSerializer, PermissionSerializer, ProductPresentationSerializer,
+                          ModeOfAdministrationSerializer, ProductItemSerializer)
 
 
 class BaseModelViewSet(viewsets.ModelViewSet):
@@ -201,30 +200,6 @@ class PermissionViewSet(viewsets.ModelViewSet):
     """
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
-
-
-class ProgramViewSet(BaseModelViewSet):
-    """
-        API end-point for Program model
-    """
-    queryset = Program.objects.all()
-    serializer_class = ProgramSerializer
-
-
-class ProgramProductViewSet(BaseModelViewSet):
-    """
-        API end-point for ProgramProduct model
-    """
-    queryset = ProgramProduct.objects.all()
-    serializer_class = ProgramProductSerializer
-
-
-class ProgramProductAllocationInfoViewSet(BaseModelViewSet):
-    """
-        API end-point for ProgramProductAllocationInfo model
-    """
-    queryset = ProgramProductAllocationInfo.objects.all()
-    serializer_class = ProgramProductAllocationInfoSerializer
 
 
 class ProductPresentationViewSet(BaseModelViewSet):

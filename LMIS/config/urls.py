@@ -10,6 +10,7 @@ urlpatterns = patterns('',
                        url(r'api/v1/cce/', include('cce.api.urls')),
                        url(r'api/v1/facilities/', include('facilities.api.urls')),
                        url(r'api/v1/inventory/', include('inventory.api.urls')),
+                       url(r'api/v1/partners/', include('partners.urls')),
 
                        # DRF browsable API urls
                        url(r'^api-web/', include('rest_framework.urls', namespace='rest_framework'))
