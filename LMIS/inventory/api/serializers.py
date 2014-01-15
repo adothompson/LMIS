@@ -66,6 +66,7 @@ class OutgoingShipmentSerializer(BaseModelSerializer):
     """
     class Meta:
         model = OutgoingShipment
+        fields = ('recipient', 'output_warehouse', 'status', 'is_deleted', 'outgoing_shipment_lines')
 
 
 class OutgoingShipmentLineSerializer(BaseModelSerializer):

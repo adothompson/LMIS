@@ -212,6 +212,7 @@ class OutgoingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique product item of an OutgoingShipment
     """
+    outgoing_shipment = models.ForeignKey(OutgoingShipment, related_name='outgoing_shipment_lines')
     product_item = models.ForeignKey(ProductItem)
     quantity_issued = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
