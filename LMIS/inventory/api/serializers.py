@@ -8,20 +8,22 @@ from inventory.models import (Inventory, InventoryLine, ConsumptionRecord, Consu
                               IncomingShipmentLine, OutgoingShipment, OutgoingShipmentLine)
 
 
+class InventoryLineSerializer(BaseModelSerializer):
+    """
+        Inventory Line serializer for Inventory records
+    """
+
+    class Meta:
+        model = InventoryLine
+
+
 class InventorySerializer(BaseModelSerializer):
     """
         Inventory Model serializer
     """
     class Meta:
         model = Inventory
-
-
-class InventoryLineSerializer(BaseModelSerializer):
-    """
-        Inventory Line serializer for Inventory records
-    """
-    class Meta:
-        model = InventoryLine
+        fields = ('warehouse', 'cce', 'inventory_lines', 'is_deleted',)
 
 
 class ConsumptionRecordSerializer(BaseModelSerializer):
@@ -46,6 +48,8 @@ class IncomingShipmentSerializer(BaseModelSerializer):
     """
     class Meta:
         model = IncomingShipment
+        fields = ('supplier', 'stock_entry_type', 'input_warehouse', 'other', 'other_source', 'is_deleted',
+                  'incoming_shipment_lines',)
 
 
 class IncomingShipmentLineSerializer(BaseModelSerializer):
@@ -62,6 +66,7 @@ class OutgoingShipmentSerializer(BaseModelSerializer):
     """
     class Meta:
         model = OutgoingShipment
+        fields = ('recipient', 'output_warehouse', 'status', 'is_deleted', 'outgoing_shipment_lines')
 
 
 class OutgoingShipmentLineSerializer(BaseModelSerializer):

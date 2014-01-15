@@ -42,7 +42,7 @@ class InventoryLine(BaseModel):
     """
     product_item = models.ForeignKey(ProductItem)
     program = models.ForeignKey(Program)
-    inventory = models.ForeignKey(Inventory)
+    inventory = models.ForeignKey(Inventory, related_name='inventory_lines')
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
@@ -115,12 +115,26 @@ class ConsumptionRecordLine(BaseModel):
     """
         ConsumptionRecordLine represents the quantity of each product item consumed at a facility within the
         ConsumptionRecord start and end date
+
+        previous_balance = stock balance before start date
     """
     product_item = models.ForeignKey(ProductItem)
     program = models.ForeignKey(Program)
+    previous_balance = models.IntegerField()
+    quantity_used = models.IntegerField()
+    current_balance = models.IntegerField()
+    quantity_received = models.IntegerField()
     consumption_record = models.ForeignKey(ConsumptionRecord)
-    quantity_dispensed = models.IntegerField()
+    total_discarded = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
+
+
+class ConsumptionRecordLineAdjustment(BaseModel):
+    """
+        This is used to link ConsumptionRecordLine to adjustments
+    """
+    consumption_record_line = models.ForeignKey(ConsumptionRecordLine)
+    adjustment = models.OneToOneField('Adjustment')
 
 
 class StockEntry(BaseModel):
@@ -158,14 +172,16 @@ class IncomingShipment(BaseModel):
     supplier = models.ForeignKey(Facility)
     stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
     input_warehouse = models.ForeignKey(Warehouse)
-    others = models.BooleanField(default=False)
-    other_source = models.CharField(max_length=35, blank=True)
+    other = models.BooleanField(default=False)
+    other_source = models.CharField(max_length=35, blank=True, help_text='Enter source of shipment if stock entry type '
+                                                                        'is "Other".')
 
 
 class IncomingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique item of an IncomingShipment
     """
+    incoming_shipment = models.ForeignKey(IncomingShipment, related_name='incoming_shipment_lines')
     product_item = models.ForeignKey(ProductItem)
     quantity = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement,
@@ -197,6 +213,7 @@ class OutgoingShipmentLine(BaseModel):
     """
         This is used to record the detail of each unique product item of an OutgoingShipment
     """
+    outgoing_shipment = models.ForeignKey(OutgoingShipment, related_name='outgoing_shipment_lines')
     product_item = models.ForeignKey(ProductItem)
     quantity_issued = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
