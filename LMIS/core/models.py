@@ -12,6 +12,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django_extensions.db.fields import UUIDField
 from model_utils.models import TimeStampedModel
 from model_utils import Choices
+from django_countries.fields import CountryField
 
 
 class BaseModel(TimeStampedModel):
@@ -153,7 +154,7 @@ class Address(BaseModel):
     zip = models.CharField(max_length=15, blank=True, null=True)
     city = models.CharField(max_length=35, blank=True, null=True)
     subdivision = models.CharField(max_length=10, blank=True, null=True)
-    country = models.CharField(max_length=5, blank=True, null=True)
+    country = CountryField()
 
     class Meta:
         app_label = 'core'
