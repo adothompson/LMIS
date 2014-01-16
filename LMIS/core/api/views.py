@@ -166,7 +166,7 @@ class AddressViewSet(BaseModelViewSet):
     """
         API end point for Address Model
     """
-    queryset = Address.objects.order_by('name')
+    queryset = Address.objects.order_by('-tag')
     serializer_class = AddressSerializer
 
 
