@@ -2,18 +2,19 @@ from rest_framework import serializers
 
 
 from .models import Program, ProgramProduct, ProgramProductAllocationInfo
+from core.api.serializers import BaseModelSerializer
 
 
-class ProgramSerializer(serializers.ModelSerializer):
+class ProgramSerializer(BaseModelSerializer):
     class Meta:
         model = Program
 
 
-class ProgramProductSerializer(serializers.ModelSerializer):
+class ProgramProductSerializer(BaseModelSerializer):
     class Meta:
         model = ProgramProduct
 
 
-class ProgramProductAllocationInfoSerializer(serializers.ModelSerializer):
+class ProgramProductAllocationInfoSerializer(BaseModelSerializer):
     class Meta:
         model = ProgramProductAllocationInfo

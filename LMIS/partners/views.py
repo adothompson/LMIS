@@ -5,18 +5,19 @@ from rest_framework import status
 
 from .serializers import ProgramSerializer, ProgramProductSerializer, ProgramProductAllocationInfoSerializer
 from .models import Program, ProgramProduct, ProgramProductAllocationInfo
+from core.api.views import BaseModelViewSet
 
 
-class ProgramViewSet(viewsets.ModelViewSet):
+class ProgramViewSet(BaseModelViewSet):
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
 
 
-class ProgramProductListViewSet(viewsets.ModelViewSet):
+class ProgramProductListViewSet(BaseModelViewSet):
     queryset = ProgramProduct.objects.all()
     serializer_class = ProgramProductSerializer
 
 
-class ProgramProductAllocationInfoViewSet(viewsets.ModelViewSet):
+class ProgramProductAllocationInfoViewSet(BaseModelViewSet):
     queryset = ProgramProductAllocationInfo.objects.all()
     serializer_class = ProgramProductAllocationInfoSerializer
