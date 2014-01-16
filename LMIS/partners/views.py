@@ -13,7 +13,7 @@ class ProgramViewSet(BaseModelViewSet):
     serializer_class = ProgramSerializer
 
 
-class ProgramProductListViewSet(BaseModelViewSet):
+class ProgramProductViewSet(BaseModelViewSet):
     queryset = ProgramProduct.objects.all()
     serializer_class = ProgramProductSerializer
 

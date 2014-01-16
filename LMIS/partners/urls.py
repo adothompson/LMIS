@@ -7,7 +7,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'^program', views.ProgramViewSet)
-router.register(r'^program-product', views.ProgramProductAllocationInfoViewSet)
+router.register(r'^program-product', views.ProgramProductViewSet)
 router.register(r'program-product-allocation-info', views.ProgramProductAllocationInfoViewSet)
 
 
