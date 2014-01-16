@@ -149,18 +149,18 @@ class Address(BaseModel):
             tag : used to refer to the address, could be Head Office Address, Branch Office Address, etc
             country : This is used to hold the country code.
     """
-    tag = models.CharField(max_length=35, blank=True, null=True)
-    street = models.CharField(max_length=35, blank=True, null=True)
-    zip = models.CharField(max_length=15, blank=True, null=True)
-    city = models.CharField(max_length=35, blank=True, null=True)
-    subdivision = models.CharField(max_length=10, blank=True, null=True)
+    tag = models.CharField(max_length=35)
+    street = models.CharField(max_length=35, blank=True)
+    zip = models.CharField(max_length=15, blank=True)
+    city = models.CharField(max_length=35, blank=True)
+    subdivision = models.CharField(max_length=10, blank=True)
     country = CountryField()
 
     class Meta:
         app_label = 'core'
 
     def __str__(self):
-        return '{street}'.format(street=self.street)
+        return '{tag}'.format(tag=self.tag)
 
 
 class Party(BaseModel):
