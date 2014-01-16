@@ -84,6 +84,7 @@ class CurrencySerializer(BaseModelSerializer):
     """
     class Meta:
         model = Currency
+        fields = ('code', 'name', 'symbol', 'symbol_position', 'rates',)
 
 
 class RateSerializer(BaseModelSerializer):

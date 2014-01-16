@@ -87,7 +87,7 @@ class Rate(BaseModel):
     name = models.CharField(max_length=35)
     value = models.DecimalField(max_digits=21, decimal_places=2)
     date = models.DateField(null=True, blank=True, verbose_name='effective date')
-    currency = models.ForeignKey('Currency')
+    currency = models.ForeignKey('Currency', related_name='rates')
 
     class Meta:
         app_label = 'core'

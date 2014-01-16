@@ -18,7 +18,7 @@ from rest_framework.permissions import IsAuthenticated
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate,
                          Contact, Address, EmployeeCategory, Employee, ProductPresentation, ModeOfAdministration,
-                         ProductItem)
+                         ProductItem, Currency)
 
 from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                           UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
@@ -142,7 +142,7 @@ class CurrencyViewSet(BaseModelViewSet):
     """
         API end point for Currency model
     """
-    queryset = Company.objects.all()
+    queryset = Currency.objects.all()
     serializer_class = CurrencySerializer
 
 
