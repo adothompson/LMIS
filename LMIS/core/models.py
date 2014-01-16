@@ -149,7 +149,7 @@ class Address(BaseModel):
             tag : used to refer to the address, could be Head Office Address, Branch Office Address, etc
             country : This is used to hold the country code.
     """
-    tag = models.CharField(max_length=35)
+    tag = models.CharField(max_length=35, blank=True)
     street = models.CharField(max_length=35, blank=True)
     zip = models.CharField(max_length=15, blank=True)
     city = models.CharField(max_length=35, blank=True)
