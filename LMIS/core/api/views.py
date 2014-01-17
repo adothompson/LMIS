@@ -39,7 +39,6 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     """
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('is_deleted',)
-    #permission class
     permission_classes = (IsAuthenticated,)
 
     def pre_save(self, obj):
