@@ -32,4 +32,5 @@ router.register(r'product-item', views.ProductItemViewSet)
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
     url(r'^', include(router.urls)),
+    url(r'user-facility', views.UserFacilityView.as_view()),
 )

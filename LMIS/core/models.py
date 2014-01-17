@@ -43,6 +43,7 @@ class VVMStage(BaseModel):
 
     class Meta:
         managed = False
+        abstract = True
 
 
 class UOMCategory(MPTTModel, BaseModel):
@@ -55,6 +56,7 @@ class UOMCategory(MPTTModel, BaseModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -73,6 +75,7 @@ class UnitOfMeasurement(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -91,6 +94,7 @@ class Rate(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -115,6 +119,7 @@ class Currency(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -138,6 +143,7 @@ class Contact(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['tag']
 
     def __str__(self):
         return '{tag}'.format(tag=self.tag)
@@ -158,6 +164,7 @@ class Address(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['tag']
 
     def __str__(self):
         return '{tag}'.format(tag=self.tag)
@@ -188,6 +195,7 @@ class Company(Party):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -203,6 +211,7 @@ class CompanyCategory(MPTTModel, BaseModel):
 
     class MPTTMeta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -218,6 +227,7 @@ class EmployeeCategory(MPTTModel, BaseModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+        ordering = ['name']
         app_label = 'core'
 
     def __str__(self):
@@ -243,6 +253,7 @@ class Employee(Party):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -252,6 +263,17 @@ class Employee(Party):
         try:
             return User.objects.get(id=user_id)
         except User.DoesNotExist:
+            return None
+
+    @classmethod
+    def get_user_facility_or_none(cls, user):
+        """
+            This class method returns the Facility this given user belongs to and None if there is no facility.
+        """
+        try:
+            employee = Employee.objects.get(user__id=user.id)
+            return employee.current_company.facility
+        except (Employee.DoesNotExist, Exception, ):
             return None
 
 
@@ -279,6 +301,7 @@ class ProductCategory(MPTTModel, BaseModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+        ordering = ['name']
         app_label = 'core'
 
     def __str__(self):
@@ -299,6 +322,7 @@ class Product(BaseModel):
     active = models.BooleanField(default=True)
 
     class Meta:
+        ordering = ['code']
         app_label = 'core'
 
     def __str__(self):
@@ -320,6 +344,7 @@ class ProductPresentation(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -338,6 +363,7 @@ class ModeOfAdministration(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -374,6 +400,7 @@ class ProductItem(BaseModel):
 
     class Meta:
         app_label = 'core'
+        ordering = ['name']
 
     def __str__(self):
         return '{name}'.format(name=self.name)

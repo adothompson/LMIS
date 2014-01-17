@@ -1,0 +1,2539 @@
+[
+{
+    "model": "core.uomcategory", 
+    "fields": {
+        "created_by": null, 
+        "name": "Weight", 
+        "is_deleted": false, 
+        "created": "2014-01-11T11:03:36.629Z", 
+        "parent": "cfa527af-105c-46f1-a105-4366a220e9e0", 
+        "modified_by": 2, 
+        "level": 1, 
+        "lft": 2, 
+        "tree_id": 2, 
+        "description": "used to group weight uom", 
+        "rght": 3, 
+        "modified": "2014-01-15T14:11:20.633Z"
+    }, 
+    "pk": "217e255d-0dd0-4bcf-aefc-3d7668ba7487"
+},
+{
+    "model": "core.uomcategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "unit", 
+        "is_deleted": false, 
+        "created": "2014-01-15T14:14:08.934Z", 
+        "parent": null, 
+        "modified_by": 1, 
+        "level": 0, 
+        "lft": 1, 
+        "tree_id": 1, 
+        "description": "used to group amount unit of measurement", 
+        "rght": 2, 
+        "modified": "2014-01-17T08:13:46.545Z"
+    }, 
+    "pk": "67855ff4-6897-425b-a3e8-08ff542f2194"
+},
+{
+    "model": "core.uomcategory", 
+    "fields": {
+        "created_by": null, 
+        "name": "Volume", 
+        "is_deleted": false, 
+        "created": "2014-01-11T10:53:46.678Z", 
+        "parent": null, 
+        "modified_by": null, 
+        "level": 0, 
+        "lft": 1, 
+        "tree_id": 2, 
+        "description": "used to group volume uom", 
+        "rght": 4, 
+        "modified": "2014-01-11T10:53:46.863Z"
+    }, 
+    "pk": "cfa527af-105c-46f1-a105-4366a220e9e0"
+},
+{
+    "model": "core.unitofmeasurement", 
+    "fields": {
+        "rounding_precision": 0, 
+        "created_by": 1, 
+        "name": "Pieces", 
+        "is_deleted": false, 
+        "factor": 0.0, 
+        "created": "2014-01-16T16:00:32.775Z", 
+        "modified_by": 1, 
+        "symbol": "pcs", 
+        "rate": 0.0, 
+        "modified": "2014-01-16T16:00:32.804Z", 
+        "uom_category": "67855ff4-6897-425b-a3e8-08ff542f2194"
+    }, 
+    "pk": "6240f4fb-1416-4d16-b124-f1641d541dcb"
+},
+{
+    "model": "core.unitofmeasurement", 
+    "fields": {
+        "rounding_precision": 2, 
+        "created_by": 2, 
+        "name": "Cubic Centimetres", 
+        "is_deleted": false, 
+        "factor": 0.0, 
+        "created": "2014-01-15T14:22:02.130Z", 
+        "modified_by": 2, 
+        "symbol": "cm3", 
+        "rate": 0.0, 
+        "modified": "2014-01-15T14:22:02.147Z", 
+        "uom_category": "cfa527af-105c-46f1-a105-4366a220e9e0"
+    }, 
+    "pk": "6e2a882b-eeeb-4caf-96e2-46167c0c1aac"
+},
+{
+    "model": "core.unitofmeasurement", 
+    "fields": {
+        "rounding_precision": 2, 
+        "created_by": 2, 
+        "name": "Vial", 
+        "is_deleted": false, 
+        "factor": 0.0, 
+        "created": "2014-01-15T14:20:02.098Z", 
+        "modified_by": 2, 
+        "symbol": "vial", 
+        "rate": 0.0, 
+        "modified": "2014-01-15T14:23:06.756Z", 
+        "uom_category": "67855ff4-6897-425b-a3e8-08ff542f2194"
+    }, 
+    "pk": "82cc6fac-d0f6-43da-b0c6-07dc58669431"
+},
+{
+    "model": "core.unitofmeasurement", 
+    "fields": {
+        "rounding_precision": 2, 
+        "created_by": 2, 
+        "name": "Kilogram", 
+        "is_deleted": false, 
+        "factor": 0.0, 
+        "created": "2014-01-15T14:18:39.125Z", 
+        "modified_by": 2, 
+        "symbol": "kg", 
+        "rate": 0.0, 
+        "modified": "2014-01-15T14:18:39.141Z", 
+        "uom_category": "217e255d-0dd0-4bcf-aefc-3d7668ba7487"
+    }, 
+    "pk": "9264a068-4062-40da-bb3e-fec0d02ad51f"
+},
+{
+    "model": "core.unitofmeasurement", 
+    "fields": {
+        "rounding_precision": 2, 
+        "created_by": 2, 
+        "name": "Dose", 
+        "is_deleted": false, 
+        "factor": 0.0, 
+        "created": "2014-01-15T14:14:48.785Z", 
+        "modified_by": 1, 
+        "symbol": "dose", 
+        "rate": 0.0, 
+        "modified": "2014-01-17T08:05:24.522Z", 
+        "uom_category": "67855ff4-6897-425b-a3e8-08ff542f2194"
+    }, 
+    "pk": "e5def927-b173-44b6-9112-3103a473a65c"
+},
+{
+    "model": "core.rate", 
+    "fields": {
+        "created_by": 2, 
+        "name": "USD-Naira", 
+        "is_deleted": false, 
+        "currency": "a98c81e5-fac9-4bb4-847c-8de33110615a", 
+        "created": "2014-01-16T12:53:15.836Z", 
+        "modified_by": 2, 
+        "value": "159.00", 
+        "modified": "2014-01-16T12:53:15.938Z", 
+        "date": null
+    }, 
+    "pk": "6553eb0d-cc3b-4e75-890e-3b43a9de2b8e"
+},
+{
+    "model": "core.currency", 
+    "fields": {
+        "created_by": 2, 
+        "name": "US Dollar", 
+        "is_deleted": false, 
+        "symbol_position": "before", 
+        "created": "2014-01-16T12:52:27.476Z", 
+        "modified_by": 2, 
+        "symbol": "$", 
+        "code": "USD", 
+        "modified": "2014-01-16T12:52:27.757Z"
+    }, 
+    "pk": "a98c81e5-fac9-4bb4-847c-8de33110615a"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Halfkine India", 
+        "tag": "Halfkine-Bio-India", 
+        "created": "2014-01-16T10:21:23.336Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T14:31:28.860Z", 
+        "subdivision": ""
+    }, 
+    "pk": "06dd0d02-6ca5-4d86-a60b-9a35523eb838"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Wyeth", 
+        "tag": "Wyeth", 
+        "created": "2014-01-16T10:40:59.568Z", 
+        "modified_by": 2, 
+        "country": "US", 
+        "zip": "", 
+        "modified": "2014-01-16T10:40:59.586Z", 
+        "subdivision": ""
+    }, 
+    "pk": "130bdf55-44db-4122-abef-4af12841f3af"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "SBL Vaccin", 
+        "created": "2014-01-16T10:37:08.117Z", 
+        "modified_by": 2, 
+        "country": "SE", 
+        "zip": "", 
+        "modified": "2014-01-16T10:37:08.135Z", 
+        "subdivision": ""
+    }, 
+    "pk": "22014056-f993-4a50-8c15-8ce9dac655cf"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Merck Sharp and Dohme Corp", 
+        "tag": "Merck", 
+        "created": "2014-01-16T10:27:21.282Z", 
+        "modified_by": 2, 
+        "country": "US", 
+        "zip": "", 
+        "modified": "2014-01-16T10:27:21.299Z", 
+        "subdivision": ""
+    }, 
+    "pk": "2d6bee76-1345-49c1-ae3e-a5c2d3da88e8"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Sanofi", 
+        "created": "2014-01-16T10:35:41.639Z", 
+        "modified_by": 2, 
+        "country": "FR", 
+        "zip": "", 
+        "modified": "2014-01-16T10:35:41.657Z", 
+        "subdivision": ""
+    }, 
+    "pk": "30858821-cc2c-4cec-bf35-763fa0e1aa4b"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Sanofi Pasteur", 
+        "created": "2014-01-16T10:36:16.889Z", 
+        "modified_by": 2, 
+        "country": "FR", 
+        "zip": "", 
+        "modified": "2014-01-16T10:36:16.906Z", 
+        "subdivision": ""
+    }, 
+    "pk": "4db52fee-e9c4-4bf7-b44f-21911095fb2f"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Japan BCG", 
+        "created": "2014-01-16T10:24:45.098Z", 
+        "modified_by": 2, 
+        "country": "JP", 
+        "zip": "", 
+        "modified": "2014-01-16T10:24:45.115Z", 
+        "subdivision": ""
+    }, 
+    "pk": "597899d8-c542-412f-9bfd-39ba2a6fde6a"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Bharat Biotech", 
+        "tag": "Bharat Biotech Address", 
+        "created": "2014-01-16T10:10:52.111Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T10:10:52.136Z", 
+        "subdivision": ""
+    }, 
+    "pk": "6c86bc9b-20a5-4e51-8d17-beb3662115c2"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Biological E", 
+        "tag": "Biological E", 
+        "created": "2014-01-16T13:06:34.642Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T13:06:34.660Z", 
+        "subdivision": ""
+    }, 
+    "pk": "79daf985-7df7-43af-b493-d2f0f84c42c1"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Novartis Italy", 
+        "created": "2014-01-16T10:18:43.573Z", 
+        "modified_by": 2, 
+        "country": "IT", 
+        "zip": "", 
+        "modified": "2014-01-16T10:18:43.591Z", 
+        "subdivision": ""
+    }, 
+    "pk": "89a23ad6-3624-4acf-8856-4469b1f85901"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Zydus Cadila", 
+        "tag": "Zydus Cadila", 
+        "created": "2014-01-16T10:40:39.359Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T10:40:39.376Z", 
+        "subdivision": ""
+    }, 
+    "pk": "8d282981-7e9e-430f-b6dd-004bf5d1951c"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Institut Pasteur Dakar", 
+        "created": "2014-01-16T10:22:31.268Z", 
+        "modified_by": 2, 
+        "country": "SN", 
+        "zip": "", 
+        "modified": "2014-01-16T10:23:25.759Z", 
+        "subdivision": ""
+    }, 
+    "pk": "914ad6d6-83ef-42a0-ba9d-5dc7d91173aa"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "LG Life", 
+        "created": "2014-01-16T10:26:19.663Z", 
+        "modified_by": 2, 
+        "country": "KR", 
+        "zip": "", 
+        "modified": "2014-01-16T10:26:19.681Z", 
+        "subdivision": ""
+    }, 
+    "pk": "946d2af5-9a5e-4c21-92a0-33d53afc5764"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Staten SerumInstitut", 
+        "tag": "Staten SerumInstitut", 
+        "created": "2014-01-16T10:39:40.048Z", 
+        "modified_by": 2, 
+        "country": "DK", 
+        "zip": "", 
+        "modified": "2014-01-16T10:39:40.065Z", 
+        "subdivision": ""
+    }, 
+    "pk": "a120bf1e-2f23-4caa-b04d-0a58ff9f7001"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "GBO-MBP", 
+        "tag": "Chumakov", 
+        "created": "2014-01-16T10:43:06.193Z", 
+        "modified_by": 2, 
+        "country": "RU", 
+        "zip": "", 
+        "modified": "2014-01-16T10:43:06.209Z", 
+        "subdivision": ""
+    }, 
+    "pk": "a17f3ea4-2613-4212-8075-7382b11f44e8"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Panacea Tech", 
+        "tag": "Panacea", 
+        "created": "2014-01-16T10:31:59.279Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T10:31:59.296Z", 
+        "subdivision": ""
+    }, 
+    "pk": "a5517ec2-329c-4afb-9f1e-e4e5cfe5238f"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "BB-NCIPD LTD", 
+        "created": "2014-01-16T10:30:59.842Z", 
+        "modified_by": 2, 
+        "country": "BG", 
+        "zip": "", 
+        "modified": "2014-01-16T10:30:59.859Z", 
+        "subdivision": ""
+    }, 
+    "pk": "abac9716-9f07-4a9a-9b36-f1e2d7ffa9e7"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Novartis Germany", 
+        "created": "2014-01-16T10:17:57.974Z", 
+        "modified_by": 2, 
+        "country": "DE", 
+        "zip": "", 
+        "modified": "2014-01-16T10:17:57.991Z", 
+        "subdivision": ""
+    }, 
+    "pk": "b9391beb-c92c-4964-b142-691df0e333c7"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Novartis India", 
+        "created": "2014-01-16T10:18:25.476Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T10:18:25.493Z", 
+        "subdivision": ""
+    }, 
+    "pk": "c1bcdee5-0112-4fbe-8e34-02dd851b767f"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Biomanguinhos", 
+        "created": "2014-01-16T10:13:55.163Z", 
+        "modified_by": 2, 
+        "country": "BR", 
+        "zip": "", 
+        "modified": "2014-01-16T10:13:55.181Z", 
+        "subdivision": ""
+    }, 
+    "pk": "c5df5f52-d4a4-4424-a246-eb32ac737b8a"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Serum Institute of India", 
+        "created": "2014-01-16T10:37:34.660Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T10:37:34.677Z", 
+        "subdivision": ""
+    }, 
+    "pk": "c7f736a8-6140-4fe7-bd6a-b46bac859fd1"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "", 
+        "tag": "Berna Biotech", 
+        "created": "2014-01-16T13:14:39.373Z", 
+        "modified_by": 2, 
+        "country": "KR", 
+        "zip": "", 
+        "modified": "2014-01-16T13:14:39.390Z", 
+        "subdivision": ""
+    }, 
+    "pk": "cbba1fb3-0022-4478-bfde-aa7d660a7223"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Netherland Vaccine Institute", 
+        "tag": "NVI", 
+        "created": "2014-01-16T10:41:38.495Z", 
+        "modified_by": 2, 
+        "country": "NL", 
+        "zip": "", 
+        "modified": "2014-01-16T10:41:38.512Z", 
+        "subdivision": ""
+    }, 
+    "pk": "ce08979b-2a2e-4251-9970-ef51e1eca1ab"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "GBO-MBP", 
+        "tag": "GBO-MBP", 
+        "created": "2014-01-16T10:42:13.838Z", 
+        "modified_by": 2, 
+        "country": "RU", 
+        "zip": "", 
+        "modified": "2014-01-16T10:42:13.856Z", 
+        "subdivision": ""
+    }, 
+    "pk": "d07a5e7d-40bd-4ace-a0f5-1d791ab16515"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "BioFarm ", 
+        "tag": "BioFarm", 
+        "created": "2014-01-16T10:12:28.285Z", 
+        "modified_by": 2, 
+        "country": "ID", 
+        "zip": "", 
+        "modified": "2014-01-16T10:12:28.302Z", 
+        "subdivision": ""
+    }, 
+    "pk": "d73e6382-784c-41b9-a37a-13f19eb3d850"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "GlaxoSmithKline", 
+        "tag": "GSK-Belgium", 
+        "created": "2014-01-16T10:20:40.427Z", 
+        "modified_by": 2, 
+        "country": "BE", 
+        "zip": "", 
+        "modified": "2014-01-16T10:20:40.445Z", 
+        "subdivision": ""
+    }, 
+    "pk": "e73f4d4b-4d5f-4ddc-ad5e-3a795b165a0f"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Agnary China", 
+        "tag": "Agnary China", 
+        "created": "2014-01-16T13:03:44.896Z", 
+        "modified_by": 2, 
+        "country": "CN", 
+        "zip": "", 
+        "modified": "2014-01-16T13:03:44.916Z", 
+        "subdivision": ""
+    }, 
+    "pk": "f73bf0fa-574a-4737-9d5a-6679a0d203c9"
+},
+{
+    "model": "core.address", 
+    "fields": {
+        "city": "", 
+        "created_by": 2, 
+        "is_deleted": false, 
+        "street": "Shantha Biotechnics LTD", 
+        "tag": "Shantha Biotechnics", 
+        "created": "2014-01-16T10:38:39.948Z", 
+        "modified_by": 2, 
+        "country": "IN", 
+        "zip": "", 
+        "modified": "2014-01-16T10:38:39.966Z", 
+        "subdivision": ""
+    }, 
+    "pk": "fde275a8-1afd-4bef-9013-54373b513032"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Sanofi Pasteur", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "4db52fee-e9c4-4bf7-b44f-21911095fb2f", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "Sanofi-Pasteur", 
+        "footer": "", 
+        "modified_by": 1, 
+        "created": "2014-01-16T15:39:21.555Z", 
+        "products": [
+            "e55e1452-b0ab-4046-9d7e-3a98f1f968d0", 
+            "abe41e88-ab4a-4c6f-b7a4-4549e13fb758", 
+            "f96946be-7dac-438e-9220-efc386276481", 
+            "6c96fe02-c345-47ff-8bf3-9cdbbabe3701", 
+            "7a274913-1ce5-45d2-b438-a62bc9c373c2", 
+            "f03be189-4a2b-42ed-b624-822555ada6a6", 
+            "f7675c7e-856a-45e8-b2af-d50f42950ac1", 
+            "939d5e05-2aa4-4883-9246-35c60dfa06a5"
+        ], 
+        "modified": "2014-01-16T15:46:16.889Z"
+    }, 
+    "pk": "032404e3-3ac0-46c6-80c3-8471294c0c04"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Chumakov", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "a17f3ea4-2613-4212-8075-7382b11f44e8", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "Chumakov", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T13:28:02.178Z", 
+        "products": [
+            "111fbb51-0c5a-492a-97f6-2c7664e23d01", 
+            "19e16c20-04b7-4e06-a679-7f7b60d976be"
+        ], 
+        "modified": "2014-01-16T13:28:02.201Z"
+    }, 
+    "pk": "09a3d06d-f1f7-4a99-bb1a-d82e8cae0c11"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "LG-Life", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "946d2af5-9a5e-4c21-92a0-33d53afc5764", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "LG-Life", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T14:48:28.168Z", 
+        "products": [
+            "7a274913-1ce5-45d2-b438-a62bc9c373c2"
+        ], 
+        "modified": "2014-01-16T14:48:28.190Z"
+    }, 
+    "pk": "267db2b3-70a1-49e4-ba41-866ff39a74e1"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Berna Biotech", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "cbba1fb3-0022-4478-bfde-aa7d660a7223", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "Berna-B", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T13:18:03.967Z", 
+        "products": [
+            "1a48640e-5eca-46ad-b3e8-e15e913fa5b8", 
+            "9a2b7576-860d-45c7-87ae-9d1fd1ec39f2"
+        ], 
+        "modified": "2014-01-16T13:18:04.034Z"
+    }, 
+    "pk": "396716a4-22af-4df4-a0a6-fc1162327303"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Halfkine Bio India", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "06dd0d02-6ca5-4d86-a60b-9a35523eb838", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "Halfkine-Bio-IN", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T14:33:12.156Z", 
+        "products": [
+            "db513859-4491-4db7-9343-4980a16c8b04"
+        ], 
+        "modified": "2014-01-16T14:33:12.180Z"
+    }, 
+    "pk": "5ab168f0-2c89-4cf6-963f-35dc6d126f94"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "GlaxoSmithKline-Belgium", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "e73f4d4b-4d5f-4ddc-ad5e-3a795b165a0f", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "GSK-Bel", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T14:22:50.204Z", 
+        "products": [
+            "73b21b94-4f3f-47aa-8089-0aacdbbe8643", 
+            "06c300db-cd21-401d-9bba-71d0b0b0b3b2", 
+            "296a7a40-5ae8-4479-b3d9-6baea4800a7f", 
+            "db513859-4491-4db7-9343-4980a16c8b04"
+        ], 
+        "modified": "2014-01-16T14:22:50.239Z"
+    }, 
+    "pk": "7049fd5a-dbf9-4e89-a8ec-f02e5c2d0013"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "BioFarm", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "d73e6382-784c-41b9-a37a-13f19eb3d850", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "BioFarm", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T13:24:17.003Z", 
+        "products": [
+            "1203c362-b7a8-499a-b7ba-b842bace7920", 
+            "db513859-4491-4db7-9343-4980a16c8b04", 
+            "939d5e05-2aa4-4883-9246-35c60dfa06a5"
+        ], 
+        "modified": "2014-01-16T13:24:17.022Z"
+    }, 
+    "pk": "7e052c79-61d5-4b32-8aec-fc4d31567832"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Norvatis Italy", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "89a23ad6-3624-4acf-8856-4469b1f85901", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "Novartis-IT", 
+        "footer": "", 
+        "modified_by": 1, 
+        "created": "2014-01-16T15:33:45.794Z", 
+        "products": [
+            "db513859-4491-4db7-9343-4980a16c8b04"
+        ], 
+        "modified": "2014-01-16T15:33:45.822Z"
+    }, 
+    "pk": "834952ee-e04a-47b2-b1c7-19ad37a881e9"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Statens Serum Institute", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "a120bf1e-2f23-4caa-b04d-0a58ff9f7001", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "SSI", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T15:24:15.403Z", 
+        "products": [
+            "e55e1452-b0ab-4046-9d7e-3a98f1f968d0", 
+            "abe41e88-ab4a-4c6f-b7a4-4549e13fb758"
+        ], 
+        "modified": "2014-01-16T15:24:15.433Z"
+    }, 
+    "pk": "a52231ab-f053-486c-8a3f-1c883b919556"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Biological E", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "79daf985-7df7-43af-b493-d2f0f84c42c1", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "Bio-E", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T15:14:55.452Z", 
+        "products": [
+            "1203c362-b7a8-499a-b7ba-b842bace7920"
+        ], 
+        "modified": "2014-01-16T15:14:55.485Z"
+    }, 
+    "pk": "e1b5260d-8d2a-4ada-bfb4-089bd2947294"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Japan BCG", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": "597899d8-c542-412f-9bfd-39ba2a6fde6a", 
+        "category": "02ab03c2-2770-444a-83ee-4e989b4f31ab", 
+        "code": "JP-BCG", 
+        "footer": "", 
+        "modified_by": 2, 
+        "created": "2014-01-16T14:42:41.333Z", 
+        "products": [
+            "e55e1452-b0ab-4046-9d7e-3a98f1f968d0", 
+            "abe41e88-ab4a-4c6f-b7a4-4549e13fb758"
+        ], 
+        "modified": "2014-01-16T14:42:41.362Z"
+    }, 
+    "pk": "e3f15251-1d56-40c3-90bf-f2dda783d7f9"
+},
+{
+    "model": "core.company", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Test Health Facility", 
+        "is_deleted": false, 
+        "header": "", 
+        "contact": null, 
+        "address": null, 
+        "category": "e276a4b5-694a-4f03-94e0-c28ca4894410", 
+        "code": "THF", 
+        "footer": "", 
+        "modified_by": 1, 
+        "created": "2014-01-17T08:18:40.349Z", 
+        "products": [], 
+        "modified": "2014-01-17T08:18:40.408Z"
+    }, 
+    "pk": "fa3fdb8e-24bb-4ba6-b598-050c6285d08e"
+},
+{
+    "model": "core.companycategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Manufacturer", 
+        "is_deleted": false, 
+        "tree_id": 1, 
+        "created": "2014-01-16T11:04:36.752Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-16T11:04:36.924Z", 
+        "level": 0
+    }, 
+    "pk": "02ab03c2-2770-444a-83ee-4e989b4f31ab"
+},
+{
+    "model": "core.companycategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Partners", 
+        "is_deleted": false, 
+        "tree_id": 3, 
+        "created": "2014-01-16T11:04:53.828Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-16T11:04:53.850Z", 
+        "level": 0
+    }, 
+    "pk": "ac2c0f0a-fce8-43cf-9d81-cf6b6085f0f2"
+},
+{
+    "model": "core.companycategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Facility", 
+        "is_deleted": false, 
+        "tree_id": 2, 
+        "created": "2014-01-16T11:04:45.328Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-16T11:04:45.342Z", 
+        "level": 0
+    }, 
+    "pk": "e276a4b5-694a-4f03-94e0-c28ca4894410"
+},
+{
+    "model": "core.employeecategory", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Partner Staff", 
+        "is_deleted": false, 
+        "tree_id": 1, 
+        "created": "2014-01-17T08:07:15.948Z", 
+        "modified_by": 1, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-17T08:07:16.077Z", 
+        "level": 0
+    }, 
+    "pk": "c4471904-3f50-43a5-b644-0c27793024b3"
+},
+{
+    "model": "core.employee", 
+    "fields": {
+        "created_by": 1, 
+        "name": "jideobi ofomah", 
+        "is_deleted": false, 
+        "contact": null, 
+        "current_company": "fa3fdb8e-24bb-4ba6-b598-050c6285d08e", 
+        "address": null, 
+        "category": "c4471904-3f50-43a5-b644-0c27793024b3", 
+        "code": "KN-FAC1-JF", 
+        "user": 1, 
+        "main_company": null, 
+        "modified_by": 1, 
+        "created": "2014-01-17T08:07:52.084Z", 
+        "modified": "2014-01-17T08:19:44.718Z"
+    }, 
+    "pk": "47a85503-d753-4f86-966e-dedf4d4871cb"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Bednets", 
+        "is_deleted": false, 
+        "tree_id": 4, 
+        "created": "2014-01-16T20:10:03.622Z", 
+        "modified_by": 1, 
+        "parent": "1c761db0-d7f3-4abf-8c12-6c678f862851", 
+        "rght": 3, 
+        "lft": 2, 
+        "modified": "2014-01-16T20:10:04.437Z", 
+        "level": 1
+    }, 
+    "pk": "12901ecf-b2be-4ebc-b27e-bd72e198926d"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Supplies", 
+        "is_deleted": false, 
+        "tree_id": 4, 
+        "created": "2014-01-15T14:33:49.266Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 4, 
+        "lft": 1, 
+        "modified": "2014-01-15T14:33:49.317Z", 
+        "level": 0
+    }, 
+    "pk": "1c761db0-d7f3-4abf-8c12-6c678f862851"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Vaccines", 
+        "is_deleted": false, 
+        "tree_id": 6, 
+        "created": "2014-01-15T14:27:28.936Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-15T14:27:29.044Z", 
+        "level": 0
+    }, 
+    "pk": "66e1bc4f-1dab-4842-80c5-49f626bde74e"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Deworming", 
+        "is_deleted": false, 
+        "tree_id": 2, 
+        "created": "2014-01-17T11:13:13.034Z", 
+        "modified_by": 1, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-17T11:13:13.104Z", 
+        "level": 0
+    }, 
+    "pk": "7f3a08f8-fc01-43f6-b198-51ed9f5a0d75"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents", 
+        "is_deleted": false, 
+        "tree_id": 3, 
+        "created": "2014-01-15T14:29:25.530Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-15T14:29:25.591Z", 
+        "level": 0
+    }, 
+    "pk": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Devices", 
+        "is_deleted": false, 
+        "tree_id": 1, 
+        "created": "2014-01-15T14:33:17.409Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-15T14:33:17.457Z", 
+        "level": 0
+    }, 
+    "pk": "99fde088-7ff2-4545-b0c1-8f2c36911f01"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Vitamins", 
+        "is_deleted": false, 
+        "tree_id": 7, 
+        "created": "2014-01-17T11:12:39.631Z", 
+        "modified_by": 1, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-17T11:12:39.765Z", 
+        "level": 0
+    }, 
+    "pk": "a0f10e2e-cffa-42c4-832b-1ba0e48caa64"
+},
+{
+    "model": "core.productcategory", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Syringes", 
+        "is_deleted": false, 
+        "tree_id": 5, 
+        "created": "2014-01-15T14:29:08.142Z", 
+        "modified_by": 2, 
+        "parent": null, 
+        "rght": 2, 
+        "lft": 1, 
+        "modified": "2014-01-15T14:29:08.182Z", 
+        "level": 0
+    }, 
+    "pk": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Measles-Rubella Freeze Dried", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:08:13.541Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "MR", 
+        "modified": "2014-01-15T15:08:13.564Z", 
+        "active": true
+    }, 
+    "pk": "00f987e4-54e1-46f0-820b-b249a6d38759"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Meningococcal Conjugate A", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:10:45.075Z", 
+        "modified_by": 2, 
+        "description": "diluent for Diluents Meningococcal Conjugate A vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "dil-Men-Conj-A", 
+        "modified": "2014-01-16T08:10:45.100Z", 
+        "active": true
+    }, 
+    "pk": "0119b3c7-cc17-43c2-a23d-7801ab5fca53"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Rotavirus Vaccine", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:17:10.823Z", 
+        "modified_by": 2, 
+        "description": "diluent for Rotavirus vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-RV", 
+        "modified": "2014-01-16T08:17:10.860Z", 
+        "active": true
+    }, 
+    "pk": "03c82364-2f11-4247-8e85-0a253bd2acf3"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Bednet Rectangular ITN 160x180x150", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:05:33.343Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "1c761db0-d7f3-4abf-8c12-6c678f862851", 
+        "code": "ITN-Large-Rectangular", 
+        "modified": "2014-01-16T20:05:33.368Z", 
+        "active": true
+    }, 
+    "pk": "064477a8-e36d-480d-bffa-56ce8079ea2c"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluent Meningococcal A/C/W/Y", 
+        "is_deleted": false, 
+        "created": "2014-01-16T13:41:09.609Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-MV-A/C/W/Y", 
+        "modified": "2014-01-16T13:44:46.507Z", 
+        "active": true
+    }, 
+    "pk": "06c300db-cd21-401d-9bba-71d0b0b0b3b2"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Human Papilomavirus Vaccine", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:59:30.999Z", 
+        "modified_by": 2, 
+        "description": "it is a protection against cervical cancer.", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "HPV", 
+        "modified": "2014-01-15T15:59:31.031Z", 
+        "active": true
+    }, 
+    "pk": "0930b906-4802-4a65-8516-057bd839db3e"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Mebendazole Tablet", 
+        "is_deleted": false, 
+        "created": "2014-01-17T11:29:38.835Z", 
+        "modified_by": 1, 
+        "description": "an antiworm medication, kills parasites.", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "7f3a08f8-fc01-43f6-b198-51ed9f5a0d75", 
+        "code": "Mebendazole-Tab", 
+        "modified": "2014-01-17T11:29:38.870Z", 
+        "active": true
+    }, 
+    "pk": "0a6b42bc-2f1c-4c17-b917-5d5dcc4b5a84"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Measles-Mumps-Rubella Freeze Dried", 
+        "is_deleted": false, 
+        "created": "2014-01-15T14:58:05.292Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "MMR", 
+        "modified": "2014-01-15T15:06:47.869Z", 
+        "active": true
+    }, 
+    "pk": "10c39d68-b29f-48c5-9453-af58e63016ad"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Yellow fever", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:31:06.444Z", 
+        "modified_by": 2, 
+        "description": "diluent for Yellow Fever vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-YF", 
+        "modified": "2014-01-16T08:31:06.466Z", 
+        "active": true
+    }, 
+    "pk": "111fbb51-0c5a-492a-97f6-2c7664e23d01"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diphtheria-Tetanus-Pertussis", 
+        "is_deleted": false, 
+        "created": "2014-01-15T14:45:41.187Z", 
+        "modified_by": 2, 
+        "description": "combination vaccines against diphtheria, pertussis (whooping cough) and tetanus. ", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "DTP", 
+        "modified": "2014-01-15T14:47:19.121Z", 
+        "active": true
+    }, 
+    "pk": "1203c362-b7a8-499a-b7ba-b842bace7920"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Yellow Fever", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:20:22.030Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "YF", 
+        "modified": "2014-01-15T15:20:22.053Z", 
+        "active": true
+    }, 
+    "pk": "19e16c20-04b7-4e06-a679-7f7b60d976be"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Haemophilus Influenzae Type B  Freeze-dried", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:30:28.376Z", 
+        "modified_by": 2, 
+        "description": "diluent for Haemophilus Influenzae Type B  Freeze-dried vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-HIB", 
+        "modified": "2014-01-16T08:30:28.397Z", 
+        "active": true
+    }, 
+    "pk": "1a48640e-5eca-46ad-b3e8-e15e913fa5b8"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Japanese Encephalitis", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:16:17.834Z", 
+        "modified_by": 2, 
+        "description": "diluent for Japanese Encephalitis Vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-JE", 
+        "modified": "2014-01-16T08:16:17.852Z", 
+        "active": true
+    }, 
+    "pk": "1c3b448b-ab16-4f6e-8274-8141c7941e5f"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Re-Use Prevention Syringes 2ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:50:24.916Z", 
+        "modified_by": 1, 
+        "description": "2ml syringe for dilution", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "S-RUP-2ml", 
+        "modified": "2014-01-16T19:50:24.945Z", 
+        "active": true
+    }, 
+    "pk": "1ca13038-955a-4f20-82f4-8f0aabd5cd36"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "DTP-HIB Combined Liquid", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:33:44.467Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "DTP-HIB", 
+        "modified": "2014-01-15T15:33:44.494Z", 
+        "active": true
+    }, 
+    "pk": "24272e47-f0a5-40cd-9d67-657cc766f0b3"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Auto-Disable Syringes 0.05ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:39:58.044Z", 
+        "modified_by": 1, 
+        "description": "auto disable 0.05ml syringe for injection", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "ADS-0.05ml", 
+        "modified": "2014-01-16T19:39:58.062Z", 
+        "active": true
+    }, 
+    "pk": "251fc8c2-0273-423f-a519-4ea20fc74832"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Insectide Treated Net Circular 850x56x220", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:07:24.146Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "12901ecf-b2be-4ebc-b27e-bd72e198926d", 
+        "code": "ITN-Small-Circular", 
+        "modified": "2014-01-16T20:10:44.410Z", 
+        "active": true
+    }, 
+    "pk": "28cfb1aa-a2e9-4283-8854-5bdd81aeb00c"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Meningococcal A/C/W/Y", 
+        "is_deleted": false, 
+        "created": "2014-01-16T14:20:49.188Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "MV-A/C/W/Y", 
+        "modified": "2014-01-16T14:20:49.217Z", 
+        "active": true
+    }, 
+    "pk": "296a7a40-5ae8-4479-b3d9-6baea4800a7f"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Vitamin A Capsule 100,000 UL", 
+        "is_deleted": false, 
+        "created": "2014-01-17T11:19:48.225Z", 
+        "modified_by": 1, 
+        "description": "for child suppliments", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "a0f10e2e-cffa-42c4-832b-1ba0e48caa64", 
+        "code": "Vit-A-Cap-100000-UL", 
+        "modified": "2014-01-17T11:19:48.269Z", 
+        "active": true
+    }, 
+    "pk": "2d7bb63c-ebbc-474c-a2bc-685245241e73"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "DTP-HepB-Liquid-Hib-Freeze-Dried", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:35:10.482Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "DTP-HepB-Liq+Hib-FD", 
+        "modified": "2014-01-15T15:35:10.508Z", 
+        "active": true
+    }, 
+    "pk": "332dba42-88c8-42bf-873c-3f177bd494ae"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Safety Boxes 2.5 Litres", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:55:24.948Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "1c761db0-d7f3-4abf-8c12-6c678f862851", 
+        "code": "SB-2.5L", 
+        "modified": "2014-01-16T19:55:24.971Z", 
+        "active": true
+    }, 
+    "pk": "367f3f7f-a1cc-4266-8a0a-020722576cc9"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Re-Use Prevention Syringes 5ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:51:13.607Z", 
+        "modified_by": 1, 
+        "description": "5ml RUP syringe for dilution", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "S-RUP-5ml", 
+        "modified": "2014-01-16T19:51:13.630Z", 
+        "active": true
+    }, 
+    "pk": "3e18a95b-b958-4ab0-bb5f-ed8ad60bca32"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Dilution Syringe 2ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:44:37.023Z", 
+        "modified_by": 1, 
+        "description": "2ml syringe for dilution", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "Syr-Dil-2ml", 
+        "modified": "2014-01-16T19:44:37.053Z", 
+        "active": true
+    }, 
+    "pk": "401f8608-e232-4c5a-b32d-032d632abf88"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Measles-Mumps-Rubella Freeze Dried", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:27:19.221Z", 
+        "modified_by": 2, 
+        "description": "diluent for Measles-Mumps-Rubella Freeze Dried", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-MMRFD", 
+        "modified": "2014-01-16T08:27:19.243Z", 
+        "active": true
+    }, 
+    "pk": "422f8a96-bbe2-4adb-b745-7bda4f0a2b82"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Tetanus-Diphtheria", 
+        "is_deleted": false, 
+        "created": "2014-01-15T14:50:07.853Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "TD", 
+        "modified": "2014-01-15T14:53:04.867Z", 
+        "active": true
+    }, 
+    "pk": "469f8300-50f7-4e10-beb2-4c86e075d18c"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Re-Use Prevention Syringes 10ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:53:44.572Z", 
+        "modified_by": 1, 
+        "description": "10ml RUP syringe for dilution", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "S-RUP-10ml", 
+        "modified": "2014-01-16T19:53:44.597Z", 
+        "active": true
+    }, 
+    "pk": "4e29e129-c58f-4fd3-84d4-90a53dc0554c"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Bednet Rectangular ITN 70x180x150", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:03:04.203Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "1c761db0-d7f3-4abf-8c12-6c678f862851", 
+        "code": "ITN-X-SMall-Rectangular", 
+        "modified": "2014-01-16T20:03:04.234Z", 
+        "active": true
+    }, 
+    "pk": "4e693c02-32f5-45da-9c7e-5a3f22a38815"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Meningitis A/C", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:39:25.150Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "MV-A/C", 
+        "modified": "2014-01-15T15:39:25.171Z", 
+        "active": true
+    }, 
+    "pk": "50d90253-26e2-47cf-9977-b9f943bdf8de"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Meningitis W135", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:44:53.875Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "MV-W135", 
+        "modified": "2014-01-15T15:44:53.900Z", 
+        "active": true
+    }, 
+    "pk": "52878d53-88f2-45dd-ac1e-d86ceaf2dc06"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Insecticide Treated Net Rectangular ITN 190x180x150", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:05:57.388Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "12901ecf-b2be-4ebc-b27e-bd72e198926d", 
+        "code": "ITN-X-Large-Rectangular", 
+        "modified": "2014-01-16T20:12:42.585Z", 
+        "active": true
+    }, 
+    "pk": "55a77730-05f5-4167-9c8d-d412bb9787ac"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Safety Boxes 5 Litres", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:55:51.646Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "1c761db0-d7f3-4abf-8c12-6c678f862851", 
+        "code": "SB-5L", 
+        "modified": "2014-01-16T19:55:51.669Z", 
+        "active": true
+    }, 
+    "pk": "5a4f4fc1-b5e8-4968-8825-79be6076d838"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Measles-Rubella Freeze Dried", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:26:42.885Z", 
+        "modified_by": 2, 
+        "description": "diluent for Measles-Rubella freeze dried", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-MRFD", 
+        "modified": "2014-01-16T08:26:42.906Z", 
+        "active": true
+    }, 
+    "pk": "5cb765d7-9df2-42c1-9b3c-f329a836dbc8"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Influenza A Vaccine", 
+        "is_deleted": false, 
+        "created": "2014-01-15T16:08:34.659Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "H1N1", 
+        "modified": "2014-01-15T16:08:34.681Z", 
+        "active": true
+    }, 
+    "pk": "5d5ccfba-16c3-495b-b6ba-377d8b3919a3"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Meningococcal A/C/W/", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:08:37.175Z", 
+        "modified_by": 2, 
+        "description": "diluent for Meningococcal A/C/W vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "dil-MV-A/C/W", 
+        "modified": "2014-01-16T08:08:37.199Z", 
+        "active": true
+    }, 
+    "pk": "60b658b4-592f-4d38-803e-2338d55917b3"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Insectide Treated Net Circular 1050x56x220", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:39:33.797Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "12901ecf-b2be-4ebc-b27e-bd72e198926d", 
+        "code": "ITN-Medium-Circular", 
+        "modified": "2014-01-16T20:39:34.011Z", 
+        "active": true
+    }, 
+    "pk": "6577e57c-8532-42a2-bc18-41145df545cc"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "DTP-HepB-HIB-Liquid", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:36:06.032Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "DTP-HepB-HIB-Liq", 
+        "modified": "2014-01-15T15:36:06.058Z", 
+        "active": true
+    }, 
+    "pk": "6c96fe02-c345-47ff-8bf3-9cdbbabe3701"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Meningococcal W136", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:09:29.107Z", 
+        "modified_by": 2, 
+        "description": "diluent forMeningococcal W136 vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "dil-MV-W136", 
+        "modified": "2014-01-16T08:09:29.129Z", 
+        "active": true
+    }, 
+    "pk": "6dabf142-5645-4c27-ae48-0b4ecb9cf7b4"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "VPO Bivalent 1-3", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:01:57.324Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "BOPV-1-3", 
+        "modified": "2014-01-16T08:01:57.500Z", 
+        "active": false
+    }, 
+    "pk": "73b21b94-4f3f-47aa-8089-0aacdbbe8643"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Inactivated  Polio Vaccine", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:53:55.319Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "IPV", 
+        "modified": "2014-01-15T15:53:55.342Z", 
+        "active": true
+    }, 
+    "pk": "73ee1a6e-f18f-4bb5-a0bf-c619e443a19e"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Dilution Syringe 5ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:46:42.573Z", 
+        "modified_by": 1, 
+        "description": "5ml syringe for dilution", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "Syr-Dil-5ml", 
+        "modified": "2014-01-16T19:46:42.597Z", 
+        "active": true
+    }, 
+    "pk": "79dc30f3-3151-4a9c-85f2-0ebb94382f99"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Hepatitis B", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:25:17.900Z", 
+        "modified_by": 2, 
+        "description": "vaccine for the prevention of hepatitis B virus infection.", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "HepB", 
+        "modified": "2014-01-15T15:25:17.927Z", 
+        "active": true
+    }, 
+    "pk": "7a274913-1ce5-45d2-b438-a62bc9c373c2"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Safety Boxes 15 Litres", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:56:24.155Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "1c761db0-d7f3-4abf-8c12-6c678f862851", 
+        "code": "SB-15L", 
+        "modified": "2014-01-16T19:56:24.177Z", 
+        "active": true
+    }, 
+    "pk": "80e85104-31e9-42e6-ba08-76404b38b997"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Rotavirus Vaccine", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:52:08.112Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "RVV", 
+        "modified": "2014-01-15T15:52:08.139Z", 
+        "active": true
+    }, 
+    "pk": "82e014a8-9713-479e-a561-9b6fc1110ee3"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Auto-Disable Syringe 0.5ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:42:25.937Z", 
+        "modified_by": 1, 
+        "description": "auto disable 0.5ml syringe for injection", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "ADS-0.5ml", 
+        "modified": "2014-01-16T19:42:25.961Z", 
+        "active": true
+    }, 
+    "pk": "90ed3308-2b64-44c9-a1f4-c5fd82b14cc1"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Tetanus Toxoid", 
+        "is_deleted": false, 
+        "created": "2014-01-16T13:21:59.115Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "TT", 
+        "modified": "2014-01-16T13:21:59.177Z", 
+        "active": true
+    }, 
+    "pk": "939d5e05-2aa4-4883-9246-35c60dfa06a5"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Haemophilus Influenzae Type B", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:30:45.225Z", 
+        "modified_by": 2, 
+        "description": " conjugate vaccine for Haemophilus influenzae type b bacteria.", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "HIB", 
+        "modified": "2014-01-15T15:30:45.258Z", 
+        "active": true
+    }, 
+    "pk": "9a2b7576-860d-45c7-87ae-9d1fd1ec39f2"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Dilution Syringe 10ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:47:18.662Z", 
+        "modified_by": 1, 
+        "description": "10ml syringe for dilution", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "Syr-Dil-10ml", 
+        "modified": "2014-01-16T19:47:18.681Z", 
+        "active": true
+    }, 
+    "pk": "9c9e5898-d351-4591-bd2a-0ac3afab79f8"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Albendazole Tablet", 
+        "is_deleted": false, 
+        "created": "2014-01-17T11:28:10.658Z", 
+        "modified_by": 1, 
+        "description": "used for treating worm infections", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "7f3a08f8-fc01-43f6-b198-51ed9f5a0d75", 
+        "code": "Albendazole-Tab", 
+        "modified": "2014-01-17T11:28:10.694Z", 
+        "active": true
+    }, 
+    "pk": "a256df01-6e2a-4efc-9ed7-83578bec6fa2"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Meningococcal A/C/W/", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:42:16.449Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "MV_A/C/W", 
+        "modified": "2014-01-15T15:42:16.486Z", 
+        "active": true
+    }, 
+    "pk": "a5b921a2-ced6-4c8e-8903-20b94f80c2fc"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Bacillus Calmette\u2013Gu\u00e9rin", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:22:44.387Z", 
+        "modified_by": 2, 
+        "description": "diluent for Bacillus Calmette\u2013Gu\u00e9rin", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-BCG", 
+        "modified": "2014-01-16T08:22:44.426Z", 
+        "active": true
+    }, 
+    "pk": "abe41e88-ab4a-4c6f-b7a4-4549e13fb758"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Safety Boxes 10 Litres", 
+        "is_deleted": false, 
+        "created": "2014-01-16T19:56:08.267Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "1c761db0-d7f3-4abf-8c12-6c678f862851", 
+        "code": "SB-10L", 
+        "modified": "2014-01-16T19:56:08.287Z", 
+        "active": true
+    }, 
+    "pk": "b7c68692-3ee5-46cf-bb71-8700c819a35d"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Insecticide Treated Net Rectangular ITN 100x180x150", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:04:11.270Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "12901ecf-b2be-4ebc-b27e-bd72e198926d", 
+        "code": "ITN-Small-Rectangular", 
+        "modified": "2014-01-16T20:17:21.134Z", 
+        "active": true
+    }, 
+    "pk": "ba2d4ae2-b82d-43df-9a58-368cb3cac55f"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Auto-Disable Syringes 0.1ml", 
+        "is_deleted": false, 
+        "created": "2014-01-16T16:04:53.321Z", 
+        "modified_by": 1, 
+        "description": "auto disable 0.1ml syringe for injection", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "d5ffa6bd-58d2-41b5-a688-6a9d6894c5ae", 
+        "code": "ADS-0.1ml", 
+        "modified": "2014-01-16T19:37:49.928Z", 
+        "active": true
+    }, 
+    "pk": "bb88e194-9167-4a4b-b3b0-b76fa3d14d0e"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Japanese Encephalitis Lyophilized", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:50:46.026Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "JE-Lyo", 
+        "modified": "2014-01-15T15:50:46.048Z", 
+        "active": true
+    }, 
+    "pk": "c543968d-85be-4ecc-a229-da588b2b311d"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Vitamin A Capsule 200,000 UL", 
+        "is_deleted": false, 
+        "created": "2014-01-17T11:21:15.646Z", 
+        "modified_by": 1, 
+        "description": "for suppliments", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "a0f10e2e-cffa-42c4-832b-1ba0e48caa64", 
+        "code": "Vit-A-Cap-200000-UL", 
+        "modified": "2014-01-17T11:21:15.713Z", 
+        "active": true
+    }, 
+    "pk": "d1df9d0d-9364-4da9-bca9-400631310e78"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Oral Polio Vaccine ", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:18:42.925Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "OPV", 
+        "modified": "2014-01-15T15:18:42.951Z", 
+        "active": true
+    }, 
+    "pk": "db513859-4491-4db7-9343-4980a16c8b04"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Meningitis A/C", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:04:37.917Z", 
+        "modified_by": 2, 
+        "description": "diluent for MV-A vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "dil-MV-A/C", 
+        "modified": "2014-01-16T08:04:37.940Z", 
+        "active": false
+    }, 
+    "pk": "dcd39603-a606-4d49-b72f-ce902c57e689"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Monovalent OPV-1", 
+        "is_deleted": false, 
+        "created": "2014-01-15T16:03:30.515Z", 
+        "modified_by": 2, 
+        "description": "it consists of live, attenuated (weakened) poliovirus strains of Type 1", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "M-OPV1", 
+        "modified": "2014-01-15T16:03:30.541Z", 
+        "active": true
+    }, 
+    "pk": "de686858-088b-40c7-b22f-727ec8856374"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Bacille Calmette-Gu\u00e9rin", 
+        "is_deleted": false, 
+        "created": "2014-01-15T14:40:44.434Z", 
+        "modified_by": 2, 
+        "description": "A vaccine against tuberculosis, prepared from a strain of the attenuated live Mycobacterium bovis", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "BCG", 
+        "modified": "2014-01-15T14:47:38.346Z", 
+        "active": true
+    }, 
+    "pk": "e55e1452-b0ab-4046-9d7e-3a98f1f968d0"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Rabies Vaccine", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:52:26.636Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "Rabies", 
+        "modified": "2014-01-15T15:52:26.669Z", 
+        "active": true
+    }, 
+    "pk": "ec8dd6cc-e670-4fb5-9b31-8e116915869b"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Monovalent OPV-3", 
+        "is_deleted": false, 
+        "created": "2014-01-15T16:03:51.681Z", 
+        "modified_by": 2, 
+        "description": "it consists of live, attenuated (weakened) poliovirus strains of Type 3", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "M-OPV3", 
+        "modified": "2014-01-15T16:03:51.705Z", 
+        "active": true
+    }, 
+    "pk": "ed711099-cb68-40f3-ae9c-2de3340fd7ff"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "DTP-Hepatitis B", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:22:05.436Z", 
+        "modified_by": 2, 
+        "description": "combination of DTP and Hepatitis B vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "DTP-HepB", 
+        "modified": "2014-01-15T15:22:05.466Z", 
+        "active": true
+    }, 
+    "pk": "ef0cbdbc-86b4-47b8-bfc8-69e1efee7eb1"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Insecticide Treated Net Rectangular ITN 130x180x150", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:05:04.733Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "12901ecf-b2be-4ebc-b27e-bd72e198926d", 
+        "code": "ITN-Medium-Rectangular", 
+        "modified": "2014-01-16T20:16:35.402Z", 
+        "active": true
+    }, 
+    "pk": "f009e20a-03e3-4fb0-be63-b023b9df93d1"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Japanese Encephalitis Liquid", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:50:18.891Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "JE-Liq", 
+        "modified": "2014-01-15T15:50:18.915Z", 
+        "active": true
+    }, 
+    "pk": "f0337e17-6b5f-440d-9305-4b54d8a729b4"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Measles", 
+        "is_deleted": false, 
+        "created": "2014-01-15T14:50:39.480Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "Measles", 
+        "modified": "2014-01-15T14:50:39.510Z", 
+        "active": true
+    }, 
+    "pk": "f03be189-4a2b-42ed-b624-822555ada6a6"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Insectide Treated Net Circular 1250x65x250", 
+        "is_deleted": false, 
+        "created": "2014-01-16T20:40:56.507Z", 
+        "modified_by": 1, 
+        "description": "", 
+        "base_uom": "6240f4fb-1416-4d16-b124-f1641d541dcb", 
+        "category": "12901ecf-b2be-4ebc-b27e-bd72e198926d", 
+        "code": "ITN-Large-Circular", 
+        "modified": "2014-01-16T20:40:56.527Z", 
+        "active": true
+    }, 
+    "pk": "f081a319-5acb-4fb5-a6fc-974c00900c7b"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diphtheria-Tetanus", 
+        "is_deleted": false, 
+        "created": "2014-01-15T14:49:39.541Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "DT", 
+        "modified": "2014-01-15T14:52:25.674Z", 
+        "active": true
+    }, 
+    "pk": "f28035e9-68fc-485b-83e2-c1f4e5532b6d"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Meningitis A Conjugate", 
+        "is_deleted": false, 
+        "created": "2014-01-15T15:49:20.755Z", 
+        "modified_by": 2, 
+        "description": "", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "66e1bc4f-1dab-4842-80c5-49f626bde74e", 
+        "code": "Men-A", 
+        "modified": "2014-01-15T15:49:20.777Z", 
+        "active": true
+    }, 
+    "pk": "f7675c7e-856a-45e8-b2af-d50f42950ac1"
+},
+{
+    "model": "core.product", 
+    "fields": {
+        "created_by": 2, 
+        "name": "Diluents Measles", 
+        "is_deleted": false, 
+        "created": "2014-01-16T08:23:10.175Z", 
+        "modified_by": 2, 
+        "description": "diluent for Measles Vaccine", 
+        "base_uom": "e5def927-b173-44b6-9112-3103a473a65c", 
+        "category": "87a63faf-b035-4ed7-ac59-9d62f3cc4b74", 
+        "code": "Dil-Measles", 
+        "modified": "2014-01-16T08:23:10.194Z", 
+        "active": true
+    }, 
+    "pk": "f96946be-7dac-438e-9220-efc386276481"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "500 Units Per Box", 
+        "is_deleted": false, 
+        "created": "2014-01-17T11:05:03.613Z", 
+        "modified_by": 1, 
+        "description": "supplies product presentation", 
+        "value": 500, 
+        "code": "500-Pcs-PB", 
+        "modified": "2014-01-17T11:05:03.641Z", 
+        "uom": "6240f4fb-1416-4d16-b124-f1641d541dcb"
+    }, 
+    "pk": "0b3c2b22-7719-488d-b74e-b75124e3c68f"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "20 Doses per Vial", 
+        "is_deleted": false, 
+        "created": "2014-01-17T10:40:48.140Z", 
+        "modified_by": 1, 
+        "description": "vaccine product presentation ", 
+        "value": 20, 
+        "code": "20-DPV", 
+        "modified": "2014-01-17T10:40:48.185Z", 
+        "uom": "82cc6fac-d0f6-43da-b0c6-07dc58669431"
+    }, 
+    "pk": "299939e1-94d7-4e8e-bfb7-c008af1692af"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "200 Units Per Box", 
+        "is_deleted": false, 
+        "created": "2014-01-17T11:05:18.048Z", 
+        "modified_by": 1, 
+        "description": "supplies product presentation", 
+        "value": 200, 
+        "code": "200-Pcs-PB", 
+        "modified": "2014-01-17T11:05:18.080Z", 
+        "uom": "6240f4fb-1416-4d16-b124-f1641d541dcb"
+    }, 
+    "pk": "441e1be5-ce61-465c-8b72-8c0bd8ee9749"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "50 Doses per Vial", 
+        "is_deleted": false, 
+        "created": "2014-01-17T10:41:17.198Z", 
+        "modified_by": 1, 
+        "description": "vaccine product presentation ", 
+        "value": 50, 
+        "code": "50-DPV", 
+        "modified": "2014-01-17T10:41:17.242Z", 
+        "uom": "82cc6fac-d0f6-43da-b0c6-07dc58669431"
+    }, 
+    "pk": "623ad47f-a4da-4723-a350-d39bc6b02171"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "400 Units Per Box", 
+        "is_deleted": false, 
+        "created": "2014-01-17T11:05:32.855Z", 
+        "modified_by": 1, 
+        "description": "supplies product presentation", 
+        "value": 400, 
+        "code": "400-Pcs-PB", 
+        "modified": "2014-01-17T11:05:32.887Z", 
+        "uom": "6240f4fb-1416-4d16-b124-f1641d541dcb"
+    }, 
+    "pk": "842aa1d1-9ff5-4aa2-866b-d2c073cc9913"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "100 Units Per Box", 
+        "is_deleted": false, 
+        "created": "2014-01-17T10:55:22.686Z", 
+        "modified_by": 1, 
+        "description": "supplies product presentation", 
+        "value": 100, 
+        "code": "100-Pcs-PB", 
+        "modified": "2014-01-17T10:55:22.713Z", 
+        "uom": "6240f4fb-1416-4d16-b124-f1641d541dcb"
+    }, 
+    "pk": "8ee9ff30-a9f5-41f9-8054-8257920adf2d"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "25 Units Per Box", 
+        "is_deleted": false, 
+        "created": "2014-01-17T10:55:39.544Z", 
+        "modified_by": 1, 
+        "description": "supplies product presentation", 
+        "value": 25, 
+        "code": "25-Pcs-PB", 
+        "modified": "2014-01-17T10:55:39.583Z", 
+        "uom": "6240f4fb-1416-4d16-b124-f1641d541dcb"
+    }, 
+    "pk": "bb67c3a1-6719-49d0-832a-16a85f6562e2"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "10 Doses per Vial", 
+        "is_deleted": false, 
+        "created": "2014-01-17T10:39:47.674Z", 
+        "modified_by": 1, 
+        "description": "vaccine product presentation ", 
+        "value": 10, 
+        "code": "10-dpv", 
+        "modified": "2014-01-17T10:39:47.971Z", 
+        "uom": "82cc6fac-d0f6-43da-b0c6-07dc58669431"
+    }, 
+    "pk": "c0994b0e-c607-445c-b202-4d61b8c6cff0"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "50 Units Per Box", 
+        "is_deleted": false, 
+        "created": "2014-01-17T10:57:50.538Z", 
+        "modified_by": 1, 
+        "description": "supplies product presentation", 
+        "value": 50, 
+        "code": "50-Pcs-PB", 
+        "modified": "2014-01-17T10:57:50.586Z", 
+        "uom": "6240f4fb-1416-4d16-b124-f1641d541dcb"
+    }, 
+    "pk": "c8dac343-4f92-4974-af5c-0737bd8e68e9"
+},
+{
+    "model": "core.productpresentation", 
+    "fields": {
+        "created_by": 1, 
+        "name": "5 Doses per Vial", 
+        "is_deleted": false, 
+        "created": "2014-01-17T10:40:21.859Z", 
+        "modified_by": 1, 
+        "description": "vaccine product presentation ", 
+        "value": 5, 
+        "code": "5-DPV", 
+        "modified": "2014-01-17T10:40:21.897Z", 
+        "uom": "82cc6fac-d0f6-43da-b0c6-07dc58669431"
+    }, 
+    "pk": "f10d21be-6d62-42a8-b5f8-63984b1f4916"
+},
+{
+    "model": "core.modeofadministration", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Subcutaneous", 
+        "is_deleted": false, 
+        "created": "2014-01-16T21:10:52.878Z", 
+        "modified_by": 1, 
+        "description": "an injection under the skin", 
+        "code": "SC", 
+        "modified": "2014-01-16T21:10:52.910Z"
+    }, 
+    "pk": "ac55e51c-c9b0-4d52-8865-05f5c8e1df23"
+},
+{
+    "model": "core.modeofadministration", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Oral", 
+        "is_deleted": false, 
+        "created": "2014-01-16T21:13:15.543Z", 
+        "modified_by": 1, 
+        "description": "taken through the mouth", 
+        "code": "Oral", 
+        "modified": "2014-01-16T21:13:15.547Z"
+    }, 
+    "pk": "b439ec20-c3a2-4d5e-bd35-3979045e376a"
+},
+{
+    "model": "core.modeofadministration", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Intra-Dermal", 
+        "is_deleted": false, 
+        "created": "2014-01-16T21:34:11.310Z", 
+        "modified_by": 1, 
+        "description": "into the skin itself", 
+        "code": "ID", 
+        "modified": "2014-01-16T21:34:11.315Z"
+    }, 
+    "pk": "d4957c68-d977-4ff2-a5c2-3e8538d302cd"
+},
+{
+    "model": "core.modeofadministration", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Intra-Muscular", 
+        "is_deleted": false, 
+        "created": "2014-01-16T21:12:19.144Z", 
+        "modified_by": 1, 
+        "description": "An injection of a substance directly into a muscle.", 
+        "code": "IM", 
+        "modified": "2014-01-16T21:12:19.148Z"
+    }, 
+    "pk": "e63bb35d-9a49-4d1d-9be9-5fada6f6d81b"
+},
+{
+    "model": "core.modeofadministration", 
+    "fields": {
+        "created_by": 1, 
+        "name": "Nasal", 
+        "is_deleted": false, 
+        "created": "2014-01-16T21:33:26.953Z", 
+        "modified_by": 1, 
+        "description": "given through the nose.", 
+        "code": "Nasal", 
+        "modified": "2014-01-16T21:33:26.957Z"
+    }, 
+    "pk": "e8c57074-4e19-4483-87b5-5103956538fb"
+}
+]

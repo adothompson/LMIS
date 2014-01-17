@@ -9,7 +9,7 @@
 from django.contrib.auth.models import User, Permission
 
 #import external modules
-from rest_framework import viewsets
+from rest_framework import viewsets, status, views
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import filters
@@ -25,6 +25,9 @@ from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMe
                           RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
                           EmployeeSerializer, UserSerializer, PermissionSerializer, ProductPresentationSerializer,
                           ModeOfAdministrationSerializer, ProductItemSerializer)
+
+from facilities.api.serializers import FacilitySerializer
+from facilities.models import Facility
 
 
 class BaseModelViewSet(viewsets.ModelViewSet):
@@ -45,6 +48,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
 
             i did this here cause the model doesn't have access to request object
         """
+        print(Employee.get_user_facility_or_none(self.request.user))
         if Employee.get_user_or_none(self.request.user.id):
             if obj.uuid is None:
                 obj.created_by = self.request.user
@@ -102,7 +106,7 @@ class ProductCategoryViewSet(BaseModelViewSet):
     """
         API end point for product category
     """
-    queryset = ProductCategory.objects.filter()
+    queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
 
@@ -166,7 +170,7 @@ class AddressViewSet(BaseModelViewSet):
     """
         API end point for Address Model
     """
-    queryset = Address.objects.order_by('-tag')
+    queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
 
@@ -186,12 +190,30 @@ class EmployeeViewSet(BaseModelViewSet):
     serializer_class = EmployeeSerializer
 
 
+class UserFacilityView(views.APIView):
+    """
+        API end-point that returns logged in user facility if any
+    """
+    def get(self, request, format=None):
+        serializer = FacilitySerializer(Employee.get_user_facility_or_none(request.user))
+        return Response(serializer.data, status=status.HTTP_200_OK, template_name=None, headers=None, content_type=None)
+
+
 class UserViewSet(viewsets.ModelViewSet):
     """
         API end point User model, required by EmployeeViewSet
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(methods=['GET'])
+    def facility(self, request, pk):
+        """
+            This returns the facility the currently logged in employee belongs to. it uses the request user object
+            to pull the employee's facility.
+        """
+        serializer = FacilitySerializer(Employee.get_user_facility_or_none(self.request.user))
+        return Response(serializer.data, status=status.HTTP_200_OK, template_name=None, headers=None, content_type=None)
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
