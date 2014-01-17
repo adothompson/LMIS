@@ -9,7 +9,7 @@
 from django.contrib.auth.models import User, Permission
 
 #import external modules
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, views
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import filters
@@ -188,6 +188,15 @@ class EmployeeViewSet(BaseModelViewSet):
     """
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+
+class UserFacilityView(views.APIView):
+    """
+        API end-point that returns logged in user facility if any
+    """
+    def get(self, request, format=None):
+        serializer = FacilitySerializer(Employee.get_user_facility_or_none(request.user))
+        return Response(serializer.data, status=status.HTTP_200_OK, template_name=None, headers=None, content_type=None)
 
 
 class UserViewSet(viewsets.ModelViewSet):
