@@ -43,6 +43,7 @@ class VVMStage(BaseModel):
 
     class Meta:
         managed = False
+        abstract = True
 
 
 class UOMCategory(MPTTModel, BaseModel):
