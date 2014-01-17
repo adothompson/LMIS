@@ -9,7 +9,7 @@
 from django.contrib.auth.models import User, Permission
 
 #import external modules
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import filters
@@ -25,6 +25,9 @@ from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMe
                           RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
                           EmployeeSerializer, UserSerializer, PermissionSerializer, ProductPresentationSerializer,
                           ModeOfAdministrationSerializer, ProductItemSerializer)
+
+from facilities.api.serializers import FacilitySerializer
+from facilities.models import Facility
 
 
 class BaseModelViewSet(viewsets.ModelViewSet):
@@ -193,6 +196,15 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(methods=['GET'])
+    def facility(self, request, pk):
+        """
+            This returns the facility the currently logged in employee belongs to. it uses the request user object
+            to pull the employee's facility.
+        """
+        serializer = FacilitySerializer(Employee.get_user_facility_or_none(self.request.user))
+        return Response(serializer.data, status=status.HTTP_200_OK, template_name=None, headers=None, content_type=None)
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
