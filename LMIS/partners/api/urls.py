@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from rest_framework import routers
 
-from . import views
+from LMIS.partners.api import views
 
 
 router = routers.DefaultRouter()
