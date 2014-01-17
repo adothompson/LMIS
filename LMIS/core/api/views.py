@@ -45,6 +45,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
 
             i did this here cause the model doesn't have access to request object
         """
+        print(Employee.get_user_facility_or_none(self.request.user))
         if Employee.get_user_or_none(self.request.user.id):
             if obj.uuid is None:
                 obj.created_by = self.request.user
@@ -102,7 +103,7 @@ class ProductCategoryViewSet(BaseModelViewSet):
     """
         API end point for product category
     """
-    queryset = ProductCategory.objects.filter()
+    queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
 
@@ -166,7 +167,7 @@ class AddressViewSet(BaseModelViewSet):
     """
         API end point for Address Model
     """
-    queryset = Address.objects.order_by('-tag')
+    queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
 
