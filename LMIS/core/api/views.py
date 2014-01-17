@@ -40,6 +40,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('is_deleted',)
     permission_classes = (IsAuthenticated,)
+    lookup_field = 'uuid'
 
     def pre_save(self, obj):
         """
@@ -68,7 +69,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
         """
         return self.serializer_class.Meta.model
 
-    def destroy(self, request, pk):
+    def destroy(self, request, uuid):
         """
             This over-rides ModelViewSet.destroy() so that objects are not deleted (hard deleted) but it just turns the
             "is_deleted" flag on models to
@@ -80,7 +81,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
         return Response(data={'detail': 'not found'})
 
     @action(methods=['POST', 'DELETE'])
-    def recover(self, request, pk):
+    def recover(self, request, uuid):
         """
             This ad-hoc functions turns off is_deleted flag of object it is called on. this redo soft delete on the
             object. it can only be accessed via POST and DELETE methods
@@ -203,15 +204,6 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    @action(methods=['GET'])
-    def facility(self, request, pk):
-        """
-            This returns the facility the currently logged in employee belongs to. it uses the request user object
-            to pull the employee's facility.
-        """
-        serializer = FacilitySerializer(Employee.get_user_facility_or_none(self.request.user))
-        return Response(serializer.data, status=status.HTTP_200_OK, template_name=None, headers=None, content_type=None)
 
 
 class PermissionViewSet(viewsets.ModelViewSet):
