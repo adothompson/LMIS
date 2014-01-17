@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from .models import Program, ProgramProduct, ProgramProductAllocationInfo
+from partners.models import Program, ProgramProduct, ProgramProductAllocationInfo
 from core.api.serializers import BaseModelSerializer
 
 

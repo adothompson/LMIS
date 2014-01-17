@@ -1,5 +1,5 @@
-from .LMIS.partners.api.serializers import ProgramSerializer, ProgramProductSerializer, ProgramProductAllocationInfoSerializer
-from .models import Program, ProgramProduct, ProgramProductAllocationInfo
+from .serializers import ProgramSerializer, ProgramProductSerializer, ProgramProductAllocationInfoSerializer
+from partners.models import Program, ProgramProduct, ProgramProductAllocationInfo
 from core.api.views import BaseModelViewSet
 
 
