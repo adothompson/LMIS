@@ -138,7 +138,7 @@ class SupervisoryNode(MPTTModel, BaseModel):
     code = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=55, blank=True)
-    parent = TreeForeignKey('self', blank=True, null=True, related_name='parent_supervisory_node')
+    parent = TreeForeignKey('self', blank=True, null=True, related_name='supervised_nodes')
     facility = models.ForeignKey(Facility)
 
     class Meta:
@@ -160,7 +160,7 @@ class OrderGroup(BaseModel):
     name = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=55, blank=True)
     supervisory_node = models.ForeignKey('SupervisoryNode')
-    member_facilities = models.ManyToManyField(Facility, blank=True, null=True, verbose_name='member facilities')
+    member_facilities = models.ManyToManyField(Facility, blank=True, null=True, verbose_name='member_facilities')
 
     class Meta:
         app_label = 'facilities'
