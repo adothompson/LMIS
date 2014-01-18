@@ -391,6 +391,7 @@ class ProductItem(BaseModel):
     expiration_date = models.DateField()
     country_of_origin = models.CharField(max_length=55)
     mode_of_use = models.ForeignKey('ModeOfAdministration', blank=True, null=True)
+    formulation = models.ForeignKey('ProductFormulation', blank=True, null=True)
     description = models.CharField(max_length=100, blank=True)
     weight_per_unit = models.FloatField(max_length=21, blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True, related_name='product_item_weight_uom')
@@ -406,8 +407,16 @@ class ProductItem(BaseModel):
         return '{name}'.format(name=self.name)
 
 
-#register models to be tracked via Reversion
+class ProductFormulation(BaseModel):
+    """
+        This model is for specifying product form, for vaccines and Diluent it can be Liquid, Lyophilised and
+        Not Available for devices it is not applicable to.
+    """
+    name = models.CharField(max_length=55, unique=True)
+    description = models.CharField(max_length=100, blank=True)
 
+
+#register models to be tracked via Reversion
 reversion.register(UOMCategory)
 reversion.register(UnitOfMeasurement)
 reversion.register(Rate)
