@@ -53,6 +53,7 @@ class ProgramProduct(BaseModel):
     """
     program = models.ForeignKey(Program)
     product = models.ForeignKey(Product)
+    allocation_info = models.OneToOneField(ProgramProductAllocationInfo)
     unit_per_target = models.IntegerField()
     current_price_per_unit = models.DecimalField(max_digits=21, decimal_places=2, verbose_name='price per uom')
     price_currency = models.ForeignKey(Currency, blank=True, null=True)
