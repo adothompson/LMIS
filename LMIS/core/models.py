@@ -66,7 +66,7 @@ class UnitOfMeasurement(BaseModel):
     """
         This represents the standard of unit of measurement of things like temp, volume, dosage etc etc.
     """
-    name = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=35, unique=True)
     symbol = models.CharField(max_length=10)
     uom_category = models.ForeignKey(UOMCategory)
     rate = models.FloatField(null=True, blank=True)
