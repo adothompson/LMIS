@@ -18,13 +18,13 @@ from rest_framework.permissions import IsAuthenticated
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company, Rate,
                          Contact, Address, EmployeeCategory, Employee, ProductPresentation, ModeOfAdministration,
-                         ProductItem, Currency)
+                         ProductItem, Currency, ProductFormulation)
 
 from .serializers import (ProductSerializer, ProductCategorySerializer, UnitOfMeasurementSerializer,
                           UOMCategorySerializer, CompanyCategorySerializer, CompanySerializer, CurrencySerializer,
                           RateSerializer, ContactSerializer, AddressSerializer, EmployeeCategorySerializer,
                           EmployeeSerializer, UserSerializer, PermissionSerializer, ProductPresentationSerializer,
-                          ModeOfAdministrationSerializer, ProductItemSerializer)
+                          ModeOfAdministrationSerializer, ProductItemSerializer, ProductFormulationSerializer)
 
 from facilities.api.serializers import FacilitySerializer
 from facilities.models import Facility
@@ -236,3 +236,11 @@ class ProductItemViewSet(BaseModelViewSet):
     """
     queryset = ProductItem.objects.all()
     serializer_class = ProductItemSerializer
+
+
+class ProductFormulationViewSet(BaseModelViewSet):
+    """
+        API end point for Product Formulation
+    """
+    queryset = ProductFormulation.objects.all()
+    serializer_class = ProductFormulationSerializer

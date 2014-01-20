@@ -28,6 +28,7 @@ router.register(r'permission', views.PermissionViewSet)
 router.register(r'product-presentation', views.ProductPresentationViewSet)
 router.register(r'mode-of-administration', views.ModeOfAdministrationViewSet)
 router.register(r'product-item', views.ProductItemViewSet)
+router.register(r'product-formulation', views.ProductFormulationViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',
