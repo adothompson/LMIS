@@ -3,7 +3,7 @@
 """
 
 #import LMIS project module
-from core.api.serializers import BaseModelSerializer
+from core.api.serializers import BaseModelSerializer, ProductSerializer
 from facilities.models import (FacilityType, Facility, FacilitySupportedProgram, FacilitySupportedProgramProduct,
                                 SupervisoryNode, OrderGroup, WarehouseType, Warehouse,
                                  FacilityProgramProductParameter)
@@ -21,8 +21,11 @@ class FacilitySerializer(BaseModelSerializer):
     """
         REST API serializer for Facility model
     """
+    products = ProductSerializer(read_only=True)
+
     class Meta:
         model = Facility
+
 
 
 class FacilitySupportedProgramSerializer(BaseModelSerializer):
