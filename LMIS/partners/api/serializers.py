@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from partners.models import Program, ProgramProduct, ProgramProductAllocationInfo
+from partners.models import Program, ProgramProduct
 from core.api.serializers import BaseModelSerializer
 
 
@@ -13,8 +13,3 @@ class ProgramSerializer(BaseModelSerializer):
 class ProgramProductSerializer(BaseModelSerializer):
     class Meta:
         model = ProgramProduct
-
-
-class ProgramProductAllocationInfoSerializer(BaseModelSerializer):
-    class Meta:
-        model = ProgramProductAllocationInfo

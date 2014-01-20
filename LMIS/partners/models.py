@@ -1,6 +1,10 @@
+#import core Django modules
 from django.db import models
 
+#import third party modules
+import reversion
 
+#import LMIS modules
 from core.models import BaseModel, Company, Currency, Product
 
 
@@ -21,28 +25,6 @@ class Program(BaseModel):
         return '{name}'.format(name=self.name)
 
 
-class ProgramProductAllocationInfo(BaseModel):
-    """
-        This models information used to allocate a program product to a facility.
-    """
-    #World Health Ratio for the program
-    who_ratio = models.FloatField()
-    coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
-    wastage_rate = models.FloatField(verbose_name='wastage rate(%)')
-    buffer_percentage = models.FloatField()
-    target_population = models.IntegerField(verbose_name='target population(%)')
-    min_quantity = models.IntegerField()
-    max_quantity = models.IntegerField()
-    push = models.BooleanField()
-    lead_time = models.IntegerField(verbose_name='lead time(weeks)')
-    #supply_interval is specified in months
-    supply_interval = models.IntegerField(verbose_name='supply interval(months)')
-    adjustment_value = models.IntegerField()
-
-    class Meta:
-        app_label = 'partners'
-
-
 class ProgramProduct(BaseModel):
     """
         ProgramProduct models set of products that can be used in a Program.
@@ -53,7 +35,6 @@ class ProgramProduct(BaseModel):
     """
     program = models.ForeignKey(Program)
     product = models.ForeignKey(Product)
-    allocation_info = models.OneToOneField(ProgramProductAllocationInfo)
     unit_per_target = models.IntegerField()
     current_price_per_unit = models.DecimalField(max_digits=21, decimal_places=2, verbose_name='price per uom')
     price_currency = models.ForeignKey(Currency, blank=True, null=True)
@@ -65,3 +46,7 @@ class ProgramProduct(BaseModel):
 
     def __str__(self):
         return '{program}-{product}'.format(program=self.program.name, product=self.product.name)
+
+
+reversion.register(ProgramProduct)
+reversion.register(Program)

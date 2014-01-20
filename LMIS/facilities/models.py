@@ -13,7 +13,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 #import project app modules
 from locations.models import Location
 from core.models import BaseModel, Company
-from partners.models import ProgramProduct, Program, ProgramProductAllocationInfo
+from partners.models import ProgramProduct, Program
 
 
 class FacilityType(MPTTModel, BaseModel):
@@ -25,9 +25,6 @@ class FacilityType(MPTTModel, BaseModel):
     description = models.CharField(max_length=55, blank=True)
     parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_facility_types')
     active = models.BooleanField()
-
-    class Meta:
-        app_label = 'facilities'
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -57,9 +54,6 @@ class Facility(MPTTModel, Company):
     parent = TreeForeignKey('self', null=True, blank=True, related_name='child_facilities')
     virtual_facility = models.BooleanField(default=False, blank=True)
 
-    class Meta:
-        app_label = 'facilities'
-
     def __str__(self):
         return '{name}'.format(name=self.name)
 
@@ -71,9 +65,6 @@ class WarehouseType(BaseModel):
     """
     code = models.CharField(max_length=35, unique=True)
     description = models.CharField(max_length=100, blank=True)
-
-    class Meta:
-        app_label = 'facilities'
 
     def __str__(self):
         return '{code}'.format(code=self.code)
@@ -92,9 +83,6 @@ class Warehouse(BaseModel):
     ambient_storage_gross_capacity = models.FloatField(blank=True, null=True)
     ambient_storage_net_capacity = models.FloatField(blank=True, null=True)
 
-    class Meta:
-        app_label = 'facilities'
-
     def __str__(self):
         return '{name}'.format(name=self.name)
 
@@ -111,8 +99,23 @@ class FacilitySupportedProgram(BaseModel):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
 
-    class Meta:
-        app_label = 'facilities'
+
+class FacilityProgramProductParameter(BaseModel):
+    """
+        This models information used to allocate a program product to a facility.
+    """
+    #World Health Ratio for the program
+    who_ratio = models.FloatField()
+    coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
+    wastage_rate = models.FloatField(verbose_name='wastage rate(%)')
+    buffer_percentage = models.FloatField()
+    target_population = models.IntegerField(verbose_name='target population(%)')
+    min_quantity = models.IntegerField()
+    max_quantity = models.IntegerField()
+    push = models.BooleanField()
+    lead_time = models.IntegerField(verbose_name='lead time(weeks)')
+    #supply_interval is specified in months
+    supply_interval = models.IntegerField(verbose_name='supply interval(months)')
 
 
 class FacilitySupportedProgramProduct(BaseModel):
@@ -122,12 +125,9 @@ class FacilitySupportedProgramProduct(BaseModel):
     """
     facility = models.ForeignKey(Facility)
     program_product = models.ForeignKey(ProgramProduct)
-    allocation_info = models.OneToOneField(ProgramProductAllocationInfo)
+    allocation_info = models.OneToOneField(FacilityProgramProductParameter)
     active = models.BooleanField(default=True)
     order_group = models.ForeignKey('OrderGroup')
-
-    class Meta:
-        app_label = 'facilities'
 
 
 class SupervisoryNode(MPTTModel, BaseModel):
@@ -140,9 +140,6 @@ class SupervisoryNode(MPTTModel, BaseModel):
     description = models.CharField(max_length=55, blank=True)
     parent = TreeForeignKey('self', blank=True, null=True, related_name='supervised_nodes')
     facility = models.ForeignKey(Facility)
-
-    class Meta:
-        app_label = 'facilities'
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -162,9 +159,6 @@ class OrderGroup(BaseModel):
     supervisory_node = models.ForeignKey('SupervisoryNode')
     member_facilities = models.ManyToManyField(Facility, blank=True, null=True, verbose_name='member_facilities')
 
-    class Meta:
-        app_label = 'facilities'
-
     def __str__(self):
         return '{name}'.format(name=self.name)
 
@@ -173,8 +167,7 @@ reversion.register(FacilityType)
 reversion.register(Facility)
 reversion.register(WarehouseType)
 reversion.register(Warehouse)
-reversion.register(Program)
-reversion.register(ProgramProductAllocationInfo)
+reversion.register(FacilityProgramProductParameter)
 reversion.register(FacilitySupportedProgram)
 reversion.register(FacilitySupportedProgramProduct)
 reversion.register(SupervisoryNode)

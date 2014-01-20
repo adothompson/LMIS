@@ -216,7 +216,7 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['program_id', 'company_id'])
 
-        # Adding model 'ProgramProductAllocationInfo'
+        # Adding model 'FacilityProgramProductParameter'
         db.create_table('core_programproductallocationinfo', (
             ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
             ('modified', self.gf('model_utils.fields.AutoLastModifiedField')(default=datetime.datetime.now)),
@@ -236,7 +236,7 @@ class Migration(SchemaMigration):
             ('supply_interval', self.gf('django.db.models.fields.IntegerField')()),
             ('adjustment_value', self.gf('django.db.models.fields.IntegerField')()),
         ))
-        db.send_create_signal('core', ['ProgramProductAllocationInfo'])
+        db.send_create_signal('core', ['FacilityProgramProductParameter'])
 
         # Adding model 'ProgramProduct'
         db.create_table('core_programproduct', (
@@ -413,7 +413,7 @@ class Migration(SchemaMigration):
         # Removing M2M table for field partners on 'Program'
         db.delete_table(db.shorten_name('core_program_partners'))
 
-        # Deleting model 'ProgramProductAllocationInfo'
+        # Deleting model 'FacilityProgramProductParameter'
         db.delete_table('core_programproductallocationinfo')
 
         # Deleting model 'ProgramProduct'
@@ -717,7 +717,7 @@ class Migration(SchemaMigration):
             'uuid': ('django.db.models.fields.CharField', [], {'max_length': '36', 'primary_key': 'True'})
         },
         'core.programproductallocationinfo': {
-            'Meta': {'object_name': 'ProgramProductAllocationInfo'},
+            'Meta': {'object_name': 'FacilityProgramProductParameter'},
             'adjustment_value': ('django.db.models.fields.IntegerField', [], {}),
             'buffer_percentage': ('django.db.models.fields.FloatField', [], {}),
             'coverage_rate': ('django.db.models.fields.FloatField', [], {}),

@@ -39,7 +39,7 @@ class BaseModelViewSet(viewsets.ModelViewSet):
     """
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('is_deleted',)
-    permission_classes = (IsAuthenticated,)
+    #TODO: activate permission on APIView; permission_classes = (IsAuthenticated,)
     lookup_field = 'uuid'
 
     def pre_save(self, obj):

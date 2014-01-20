@@ -1,5 +1,5 @@
-from .serializers import ProgramSerializer, ProgramProductSerializer, ProgramProductAllocationInfoSerializer
-from partners.models import Program, ProgramProduct, ProgramProductAllocationInfo
+from .serializers import ProgramSerializer, ProgramProductSerializer
+from partners.models import Program, ProgramProduct
 from core.api.views import BaseModelViewSet
 
 
@@ -11,8 +11,3 @@ class ProgramViewSet(BaseModelViewSet):
 class ProgramProductViewSet(BaseModelViewSet):
     queryset = ProgramProduct.objects.all()
     serializer_class = ProgramProductSerializer
-
-
-class ProgramProductAllocationInfoViewSet(BaseModelViewSet):
-    queryset = ProgramProductAllocationInfo.objects.all()
-    serializer_class = ProgramProductAllocationInfoSerializer

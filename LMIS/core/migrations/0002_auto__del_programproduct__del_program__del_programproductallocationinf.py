@@ -20,7 +20,7 @@ class Migration(SchemaMigration):
         # Removing M2M table for field partners on 'Program'
         db.delete_table(db.shorten_name('core_program_partners'))
 
-        # Deleting model 'ProgramProductAllocationInfo'
+        # Deleting model 'FacilityProgramProductParameter'
         db.delete_table('core_programproductallocationinfo')
 
 
@@ -78,7 +78,7 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['program_id', 'company_id'])
 
-        # Adding model 'ProgramProductAllocationInfo'
+        # Adding model 'FacilityProgramProductParameter'
         db.create_table('core_programproductallocationinfo', (
             ('who_ratio', self.gf('django.db.models.fields.FloatField')()),
             ('max_quantity', self.gf('django.db.models.fields.IntegerField')()),
@@ -98,7 +98,7 @@ class Migration(SchemaMigration):
             ('created', self.gf('model_utils.fields.AutoCreatedField')(default=datetime.datetime.now)),
             ('created_by', self.gf('django.db.models.fields.related.ForeignKey')(related_name='core_programproductallocationinfo_created_by', to=orm['auth.User'], null=True, blank=True)),
         ))
-        db.send_create_signal('core', ['ProgramProductAllocationInfo'])
+        db.send_create_signal('core', ['FacilityProgramProductParameter'])
 
 
         # Changing field 'Address.country'

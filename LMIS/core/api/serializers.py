@@ -11,7 +11,7 @@ from rest_framework import serializers
 #import project modules
 from core.models import (Product, ProductCategory, UnitOfMeasurement, UOMCategory, CompanyCategory, Company,
                          Currency, Rate, Contact, Address, EmployeeCategory, Employee, ProductPresentation,
-                         ModeOfAdministration, ProductItem)
+                         ModeOfAdministration, ProductItem, ProductFormulation)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -157,4 +157,12 @@ class ProductItemSerializer(BaseModelSerializer):
     """
     class Meta:
         model = ProductItem
+
+
+class ProductFormulationSerializer(BaseModelSerializer):
+    """
+        REST API serializer for ProductFormulation model, it can be Lyophilized, Liquid or Not Applicable
+    """
+    class Meta:
+        model = ProductFormulation
 

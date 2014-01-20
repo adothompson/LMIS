@@ -66,7 +66,7 @@ ProgramProduct
     product and a product can belong to more than one program.
     -active: if a program product is not active it means it is no longer consider to be part of the program.
 
-ProgramProductAllocationInfo
+FacilityProgramProductParameter
     This holds program product allocation details and information, it is defined for each program product and facility
     link.
 

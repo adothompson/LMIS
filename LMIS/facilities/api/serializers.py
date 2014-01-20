@@ -5,7 +5,8 @@
 #import LMIS project module
 from core.api.serializers import BaseModelSerializer
 from facilities.models import (FacilityType, Facility, FacilitySupportedProgram, FacilitySupportedProgramProduct,
-                                SupervisoryNode, OrderGroup, WarehouseType, Warehouse)
+                                SupervisoryNode, OrderGroup, WarehouseType, Warehouse,
+                                 FacilityProgramProductParameter)
 
 
 class FacilityTypeSerializer(BaseModelSerializer):
@@ -70,3 +71,8 @@ class WarehouseSerializer(BaseModelSerializer):
     """
     class Meta:
         model = Warehouse
+
+
+class  FacilityProgramProductParameterSerializer(BaseModelSerializer):
+    class Meta:
+        model =  FacilityProgramProductParameter
