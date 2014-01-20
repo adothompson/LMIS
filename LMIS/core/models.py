@@ -433,4 +433,5 @@ reversion.register(Product)
 reversion.register(ProductPresentation)
 reversion.register(ModeOfAdministration)
 reversion.register(ProductItem)
+reversion.register(ProductFormulation)
 
