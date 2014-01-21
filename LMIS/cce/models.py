@@ -74,7 +74,7 @@ class StorageLocationProblemLog(BaseModel):
     fixed_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return '{storage_loc_name}-{description}'.format(storage_loc_code=self.storage_location.name,
+        return '{storage_loc_name}-{description}'.format(storage_loc_name=self.storage_location.name,
                                                          description=self.description)
 
 
