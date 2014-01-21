@@ -50,7 +50,7 @@ class Migration(SchemaMigration):
             'username': ('django.db.models.fields.CharField', [], {'max_length': '30', 'unique': 'True'})
         },
         'cce.coldchainequipment': {
-            'Meta': {'object_name': 'ColdChainEquipment'},
+            'Meta': {'object_name': 'StorageLocation'},
             'capacity_uom': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'blank': 'True', 'to': "orm['core.UnitOfMeasurement']"}),
             'code': ('django.db.models.fields.CharField', [], {'max_length': '35', 'unique': 'True'}),
             'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
@@ -63,11 +63,11 @@ class Migration(SchemaMigration):
             'net_capacity': ('django.db.models.fields.FloatField', [], {'null': 'True', 'blank': 'True'}),
             'status': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'storage_location': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'blank': 'True', 'to': "orm['facilities.Warehouse']"}),
-            'type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cce.ColdChainEquipmentType']"}),
+            'type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['cce.StorageLocationType']"}),
             'uuid': ('django.db.models.fields.CharField', [], {'primary_key': 'True', 'max_length': '36'})
         },
         'cce.coldchainequipmenttype': {
-            'Meta': {'object_name': 'ColdChainEquipmentType'},
+            'Meta': {'object_name': 'StorageLocationType'},
             'code': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True'}),
             'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'cce_coldchainequipmenttype_created_by'", 'null': 'True', 'blank': 'True', 'to': "orm['auth.User']"}),
@@ -488,7 +488,7 @@ class Migration(SchemaMigration):
         },
         'inventory.inventory': {
             'Meta': {'object_name': 'Inventory'},
-            'cce': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'blank': 'True', 'to': "orm['cce.ColdChainEquipment']"}),
+            'cce': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'blank': 'True', 'to': "orm['cce.StorageLocation']"}),
             'created': ('model_utils.fields.AutoCreatedField', [], {'default': 'datetime.datetime.now'}),
             'created_by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'inventory_inventory_created_by'", 'null': 'True', 'blank': 'True', 'to': "orm['auth.User']"}),
             'is_deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

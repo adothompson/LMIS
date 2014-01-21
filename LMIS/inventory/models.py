@@ -12,37 +12,31 @@ import reversion
 from model_utils import Choices
 
 #import project modules
-from cce.models import ColdChainEquipment
+from cce.models import StorageLocation
 from core.models import BaseModel, ProductItem, UnitOfMeasurement, Employee, VVMStage
 from orders.models import Voucher
-from facilities.models import Warehouse, Facility
+from facilities.models import Facility
 from partners.models import Program
 
 
 class Inventory(BaseModel):
     """
-        This is used to track the current quantity of each product at a warehouse. each facility warehouse
-        (storage location) has an inventory.
-
-        the cce link will enable us to keep track of inventory at CCE level.
+        This is used to track the current quantity of each product-item at a Storage Location. each facility
+        (Storage Location) has an inventory.
 
     """
-    warehouse = models.ForeignKey(Warehouse)
-    cce = models.ForeignKey(ColdChainEquipment, blank=True, null=True)
+    warehouse = models.ForeignKey(StorageLocation, related_name='locations')
+    cce = models.ForeignKey(StorageLocation, blank=True, null=True)
 
 
 class InventoryLine(BaseModel):
     """
-        This represents a single entry for a unique stocks in an inventory
-
-        The quantity unit of measurement is calculated from ProductItem->product->base_uom, likewise product code
-
-        active - is used to indicate if the inventory line should be considered when calculating current quantity of
-        a product at a facility etc.
+        This is used to record incoming supplies, incoming supplies for same program that are same product item and
+         are moved from same inventory line in supplying Facility are recorded together
     """
     product_item = models.ForeignKey(ProductItem)
     program = models.ForeignKey(Program)
-    inventory = models.ForeignKey(Inventory, related_name='inventory_lines')
+    quantity_uom = models.ForeignKey(UnitOfMeasurement, related_name='%(app_label)s_%(class)s_quantity_uom')
     quantity = models.IntegerField()
     weight = models.FloatField(blank=True, null=True)
     weight_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True,
@@ -156,7 +150,8 @@ class StockEntry(BaseModel):
                     (2, 'surplus', ('Surplus')), (3, 'return', ('Return')), (4, 'others', ('Other Sources')))
 
     class Meta:
-            managed = False
+        managed = False
+        abstract = True
 
 
 class IncomingShipment(BaseModel):
@@ -171,7 +166,7 @@ class IncomingShipment(BaseModel):
     """
     supplier = models.ForeignKey(Facility)
     stock_entry_type = models.IntegerField(choices=StockEntry.TYPES)
-    input_warehouse = models.ForeignKey(Warehouse)
+    input_warehouse = models.ForeignKey(StorageLocation)
     other = models.BooleanField(default=False)
     other_source = models.CharField(max_length=35, blank=True, help_text='Enter source of shipment if stock entry type '
                                                                         'is "Other".')
@@ -205,7 +200,7 @@ class OutgoingShipment(BaseModel):
                      (3, 'cancelled', ('Cancelled'))
                      )
     recipient = models.ForeignKey(Facility)
-    output_warehouse = models.ForeignKey(Warehouse)
+    output_warehouse = models.ForeignKey(StorageLocation)
     status = models.IntegerField(choices=STATUS)
 
 
@@ -243,6 +238,7 @@ class AdjustmentType(BaseModel):
 
     class Meta:
         managed = False
+        abstract = True
 
 
 class Adjustment(BaseModel):

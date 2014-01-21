@@ -12,8 +12,9 @@ from model_utils import Choices
 
 #import project modules
 from core.models import BaseModel, Product, UnitOfMeasurement, ProductItem, Currency, Employee, VVMStage
-from facilities.models import Facility, Warehouse
+from facilities.models import Facility
 from partners.models import Program
+from cce.models import StorageLocation
 
 
 class PurchaseOrder(BaseModel):
@@ -107,7 +108,7 @@ class VoucherLine(BaseModel):
     """
     program = models.ForeignKey(Program)
     product_item = models.ForeignKey(ProductItem)
-    input_warehouse = models.ForeignKey(Warehouse, blank=True, null=True)
+    input_warehouse = models.ForeignKey(StorageLocation, blank=True, null=True)
     quantity_supplied = models.IntegerField()
     quantity_uom = models.ForeignKey(UnitOfMeasurement)
     vvm_stage = models.IntegerField(choices=VVMStage.STAGES, blank=True, null=True)
@@ -115,7 +116,6 @@ class VoucherLine(BaseModel):
 
 
 #register models to be tracked by Reversion.
-
 reversion.register(PurchaseOrder)
 reversion.register(PurchaseOrderLine)
 reversion.register(SalesOrder)

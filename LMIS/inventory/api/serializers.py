@@ -23,7 +23,6 @@ class InventorySerializer(BaseModelSerializer):
     """
     class Meta:
         model = Inventory
-        fields = ('warehouse', 'cce', 'inventory_lines', 'is_deleted',)
 
 
 class ConsumptionRecordSerializer(BaseModelSerializer):
