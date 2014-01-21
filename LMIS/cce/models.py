@@ -16,15 +16,13 @@ from core.models import BaseModel, UnitOfMeasurement
 from facilities.models import Facility
 
 
-class StorageLocationType(BaseModel):
+class StorageLocationType(MPTTModel, BaseModel):
     """
        StorageLocationType is used to group storage locations both cold and dry storage location
     """
     name = models.CharField(max_length=20, unique=True)
     description = models.CharField(max_length=100, blank=True)
-    # minimum_temperature = models.FloatField(blank=True, null=True, verbose_name='min temp.')
-    # maximum_temperature = models.FloatField(blank=True, null=True, verbose_name='max temp.')
-    # temperature_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_types')
 
     def __str__(self):
         return '{name}'.format(name=self.name)
@@ -47,20 +45,10 @@ class StorageLocation(MPTTModel, BaseModel):
     minimum_temperature = models.FloatField(blank=True, null=True, verbose_name='min_temp.')
     maximum_temperature = models.FloatField(blank=True, null=True, verbose_name='max_temp.')
     temperature_uom = models.ForeignKey(UnitOfMeasurement, related_name='temp_uom', blank=True, null=True)
-    status = models.CharField(max_length=20, choices=STATUS)
+    status = models.IntegerField(choices=STATUS)
 
     def __str__(self):
         return '{code}-{name}'.format(code=self.code, name=self.name)
-
-
-    # code = models.CharField(max_length=35, unique=True)
-    # gross_capacity = models.FloatField(blank=True, null=True)
-    # net_capacity = models.FloatField(blank=True, null=True)
-    # capacity_uom = models.ForeignKey(UnitOfMeasurement, null=True, blank=True)
-    # type = models.ForeignKey(StorageLocationType)
-    # status = models.CharField(max_length=20, choices=STATUS)
-    #
-    # storage_location = models.ForeignKey(Warehouse, blank=True, null=True)
 
 
 class StorageLocationTempLog(BaseModel):
