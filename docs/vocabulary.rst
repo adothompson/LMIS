@@ -66,15 +66,6 @@ ProgramProduct
     product and a product can belong to more than one program.
     -active: if a program product is not active it means it is no longer consider to be part of the program.
 
-FacilityProgramProductParameter
-    This holds program product allocation details and information, it is defined for each program product and facility
-    link.
-
-
-ProgramProductPriceHistory
-    This is used to keep track of changes in program product price and partners that support the program product. it is
-    updated anytime program product price per unit changes or funding source(partners) changes.
-
 
 FacilitySupportedProgram
     This is used to keep track of programs a facility supports, the program start and end date at the facility and
@@ -113,6 +104,9 @@ ModeOfAdministration
 ProductItem
     It is used to uniquely identify collection of a given product that has same value for a given set of attributes that
     can vary from one collection of same product to another.
+
+ProductFormulation
+    This is used to define the form of products for vaccines it can be "Liquid" or "Lyophilized", it is optional.
 
 PurchaseOrder
     PurchaseOrder: is used to place a formal request for supply of products listed in the purchase order lines by
