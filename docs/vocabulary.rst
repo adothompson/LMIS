@@ -57,8 +57,9 @@ StorageLocation
     location is a storage location at.
 
 Program
-    Program represent is used to group products that has same use and objective. it can be 'Routine Immunization', 'HIV'
-    , 'Kick Polio Out' etc
+    Program represent is used to group products that has same use and objective. it can be 'Routine Immunization',
+    Supplementary Immunization Activity which has sub-types such as 'Outbreak', 'NIPDS', 'Camps'; 'Kick Polio Out' etc.
+    hence, program has tree structure.
 
 ProgramProduct
     Program Product is used to link program and products that belongs to the program. A program can have more than one
