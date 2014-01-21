@@ -11,12 +11,9 @@ router = routers.DefaultRouter()
 router.register(r'facility-supported-program-product', views.FacilitySupportedProgramProductViewSet)
 router.register(r'supervisory-node', views.SupervisoryNodeViewSet)
 router.register(r'order-group', views.OrderGroupViewSet)
-router.register(r'warehouse-type', views.WarehouseTypeViewSet)
-router.register(r'warehouse', views.WarehouseViewSet)
 router.register(r'facility-supported-program', views.FacilitySupportedProgramViewSet)
 router.register(r'facility-type', views.FacilityTypeViewSet)
 router.register(r'facility', views.FacilityViewSet)
-router.register(r'facility-program-product-info', views.FacilityProgramProductInfoViewSet)
 
 # Wire up our API using automatic URL routing.
 urlpatterns = patterns('',

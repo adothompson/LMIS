@@ -8,12 +8,11 @@
 #import LMIS project modules
 from core.api.views import BaseModelViewSet
 from facilities.models import (Facility, FacilityType, FacilitySupportedProgram, FacilitySupportedProgramProduct,
-                     SupervisoryNode, OrderGroup, Warehouse, WarehouseType,  FacilityProgramProductParameter)
+                     SupervisoryNode, OrderGroup)
 
-from facilities.api.serializers import (FacilitySerializer, FacilityTypeSerializer, WarehouseSerializer,
+from facilities.api.serializers import (FacilitySerializer, FacilityTypeSerializer,
                                         FacilitySupportedProgramProductSerializer, SupervisoryNodeSerializer,
-                                        OrderGroupSerializer, FacilitySupportedProgramSerializer,
-                                        WarehouseTypeSerializer,  FacilityProgramProductParameterSerializer)
+                                        OrderGroupSerializer, FacilitySupportedProgramSerializer)
 
 
 class FacilityTypeViewSet(BaseModelViewSet):
@@ -64,22 +63,6 @@ class FacilitySupportedProgramViewSet(BaseModelViewSet):
     serializer_class = FacilitySupportedProgramSerializer
 
 
-class WarehouseTypeViewSet(BaseModelViewSet):
-    """
-        API end-point for WarehouseType model
-    """
-    queryset = WarehouseType.objects.all()
-    serializer_class = WarehouseTypeSerializer
-
-
-class WarehouseViewSet(BaseModelViewSet):
-    """
-        API end-point for Warehouse model
-    """
-    queryset = Warehouse.objects.all()
-    serializer_class = WarehouseSerializer
-
-
-class FacilityProgramProductInfoViewSet(BaseModelViewSet):
-    queryset =  FacilityProgramProductParameter.objects.all()
-    serializer_class =  FacilityProgramProductParameterSerializer
+# class FacilityProgramProductInfoViewSet(BaseModelViewSet):
+#     queryset =  FacilityProgramProductParameter.objects.all()
+#     serializer_class =  FacilityProgramProductParameterSerializer

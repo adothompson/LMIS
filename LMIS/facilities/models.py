@@ -57,35 +57,6 @@ class Facility(MPTTModel, Company):
         return '{name}'.format(name=self.name)
 
 
-class WarehouseType(BaseModel):
-    """
-        This is used to model different types of Warehouse or Storage Location. it can be a Physical Warehouse,
-        In-Transit Warehouse(like products being transported)
-    """
-    name = models.CharField(max_length=35, unique=True)
-    description = models.CharField(max_length=100, blank=True)
-
-    def __str__(self):
-        return '{code}'.format(code=self.code)
-
-
-class Warehouse(BaseModel):
-    """
-        This defines the storage locations at each Facility. a facility can have more than one warehouse i.e storage -
-        location.
-    """
-    code = models.CharField(max_length=55, unique=True)
-    facility = models.ForeignKey(Facility)
-    is_refrigerated = models.BooleanField(default=False, verbose_name='is cold storage warehouse')
-    cold_storage_gross_capacity = models.FloatField(blank=True, null=True)
-    cold_storage_net_capacity = models.FloatField(blank=True, null=True)
-    ambient_storage_gross_capacity = models.FloatField(blank=True, null=True)
-    ambient_storage_net_capacity = models.FloatField(blank=True, null=True)
-
-    def __str__(self):
-        return '{name}'.format(name=self.name)
-
-
 class FacilitySupportedProgram(BaseModel):
     """
         This is used to model programs that a facility supports. its is entered for each program a facility supports.
@@ -99,24 +70,6 @@ class FacilitySupportedProgram(BaseModel):
     end_date = models.DateField(blank=True, null=True)
 
 
-class FacilityProgramProductParameter(BaseModel):
-    """
-        This models information used to allocate a program product to a facility.
-    """
-    #World Health Ratio for the program
-    who_ratio = models.FloatField()
-    coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
-    wastage_rate = models.FloatField(verbose_name='wastage rate(%)')
-    buffer_percentage = models.FloatField()
-    target_population = models.IntegerField(verbose_name='target population(%)')
-    min_quantity = models.IntegerField()
-    max_quantity = models.IntegerField()
-    push = models.BooleanField()
-    lead_time = models.IntegerField(verbose_name='lead time(weeks)')
-    #supply_interval is specified in months
-    supply_interval = models.IntegerField(verbose_name='supply interval(months)')
-
-
 class FacilitySupportedProgramProduct(BaseModel):
     """
         This is used to keep track of program-products a facility support, how the product is allocated to the facility
@@ -124,7 +77,16 @@ class FacilitySupportedProgramProduct(BaseModel):
     """
     facility = models.ForeignKey(Facility)
     program_product = models.ForeignKey(ProgramProduct)
-    allocation_info = models.OneToOneField(FacilityProgramProductParameter)
+    who_ratio = models.FloatField()
+    coverage_rate = models.FloatField(verbose_name='coverage rate(%)')
+    wastage_rate = models.FloatField(verbose_name='wastage rate(%)')
+    buffer_percentage = models.FloatField()
+    target_population = models.IntegerField(verbose_name='target population')
+    min_quantity = models.IntegerField()
+    max_quantity = models.IntegerField()
+    push = models.BooleanField()
+    lead_time = models.IntegerField(verbose_name='lead time(weeks)')
+    supply_interval = models.IntegerField(verbose_name='supply interval(months)')
     active = models.BooleanField(default=True)
     order_group = models.ForeignKey('OrderGroup')
 
@@ -164,9 +126,6 @@ class OrderGroup(BaseModel):
 
 reversion.register(FacilityType)
 reversion.register(Facility)
-reversion.register(WarehouseType)
-reversion.register(Warehouse)
-reversion.register(FacilityProgramProductParameter)
 reversion.register(FacilitySupportedProgram)
 reversion.register(FacilitySupportedProgramProduct)
 reversion.register(SupervisoryNode)
