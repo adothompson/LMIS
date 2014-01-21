@@ -13,7 +13,7 @@ from model_utils import Choices
 
 #import project app modules
 from core.models import BaseModel, UnitOfMeasurement
-from facilities.models import Facility, Warehouse
+from facilities.models import Facility
 
 
 class StorageLocationType(BaseModel):
