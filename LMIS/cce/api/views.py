@@ -7,40 +7,42 @@
 
 #import project modules
 from core.api.views import BaseModelViewSet
-from cce.models import ColdChainEquipment, ColdChainEquipmentType, CCETemperatureLog, CCEProblemLog
-from .serializers import CCESerializer, CCETypeSerializer, CCETemperatureLogSerializer, CCEProblemLogSerializer
+from cce.models import StorageLocation, StorageLocationType, StorageLocationTempLog, StorageLocationProblemLog
+from .serializers import (StorageLocationSerializer, StorageLocationTypeSerializer, StorageLocationTempLogSerializer,
+                          StorageLocationProblemLogSerializer)
 
 
-class CCEViewSet(BaseModelViewSet):
+class StorageLocationViewSet(BaseModelViewSet):
     """
-        REST API end-point for CCE that allows CRUD operations etc to be performed on CCE models via REST url
+        REST API end-point for CCE that allows CRUD operations etc to be performed on StorageLocation models via
+        REST url
     """
-    queryset = ColdChainEquipment.objects.all()
-    serializer_class = CCESerializer
+    queryset = StorageLocation.objects.all()
+    serializer_class = StorageLocationSerializer
 
 
-class CCETypeViewSet(BaseModelViewSet):
+class StorageLocationTypeViewSet(BaseModelViewSet):
     """
-        REST API end-point for CCEType that allows CRUD operations etc to be performed on CCEType models via REST API
-        URL
+        REST API end-point for StorageLocationType that allows CRUD operations etc to be performed on
+        StorageLocationType models via REST API URL
     """
-    queryset = ColdChainEquipmentType.objects.all()
-    serializer_class = CCETypeSerializer
+    queryset = StorageLocationType.objects.all()
+    serializer_class = StorageLocationTypeSerializer
 
 
-class CCETemperatureLogViewSet(BaseModelViewSet):
+class StorageLocationTempLogViewSet(BaseModelViewSet):
     """
-        REST API end-point for CCETemperatureLog that allows CRUD operations etc to be performed on CCETemperatureLog
-        models via REST API URL
+        REST API end-point for StorageLocationTempLog that allows CRUD operations etc to be performed on
+        StorageLocationTempLog models via REST API URL
     """
-    queryset = CCETemperatureLog.objects.all()
-    serializer_class = CCETemperatureLogSerializer
+    queryset = StorageLocationTempLog.objects.all()
+    serializer_class = StorageLocationTempLogSerializer
 
 
-class CCEProblemLogViewSet(BaseModelViewSet):
+class StorageLocationProblemLogViewSet(BaseModelViewSet):
     """
-        REST API end-point for CCEProblemLog that allows CRUD operations etc to be performed on CCEProblemLog
-        models via REST API URL
+        REST API end-point for StorageLocationProblemLog that allows CRUD operations etc to be performed on
+        StorageLocationProblemLog models via REST API URL
     """
-    queryset = CCEProblemLog.objects.all()
-    serializer_class = CCEProblemLogSerializer
+    queryset = StorageLocationProblemLog.objects.all()
+    serializer_class = StorageLocationProblemLogSerializer

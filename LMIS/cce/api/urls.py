@@ -9,10 +9,10 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'cce', views.CCEViewSet)
-router.register(r'cce-type', views.CCETypeViewSet)
-router.register(r'cce-temp-log', views.CCETemperatureLogViewSet)
-router.register(r'cce-problem-log', views.CCEProblemLogViewSet)
+router.register(r'storage-location', views.StorageLocationViewSet)
+router.register(r'storage-location-type', views.StorageLocationTypeViewSet)
+router.register(r'storage-location-temp-log', views.StorageLocationTempLogViewSet)
+router.register(r'storage-location-problem-log', views.StorageLocationProblemLogViewSet)
 
 
 # Wire up our API using automatic URL routing.

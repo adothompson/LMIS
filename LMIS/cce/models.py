@@ -8,6 +8,7 @@ from django.db import models
 
 #import external modules
 import reversion
+from mptt.models import MPTTModel, TreeForeignKey
 from model_utils import Choices
 
 #import project app modules
@@ -15,70 +16,82 @@ from core.models import BaseModel, UnitOfMeasurement
 from facilities.models import Facility, Warehouse
 
 
-class ColdChainEquipmentType(BaseModel):
+class StorageLocationType(BaseModel):
     """
-        This class is used to classify different types of ColdChainEquipment such as Freezers and Fridge, Dry Storage
-        etc Fridge has minimum of +2 degree celsius to +8 degree celsius.
+       StorageLocationType is used to group storage locations both cold and dry storage location
     """
-    code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=20, unique=True)
-    minimum_temperature = models.FloatField(blank=True, null=True, verbose_name='min temp.')
-    maximum_temperature = models.FloatField(blank=True, null=True, verbose_name='max temp.')
-    temperature_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
+    description = models.CharField(max_length=100, blank=True)
+    # minimum_temperature = models.FloatField(blank=True, null=True, verbose_name='min temp.')
+    # maximum_temperature = models.FloatField(blank=True, null=True, verbose_name='max temp.')
+    # temperature_uom = models.ForeignKey(UnitOfMeasurement, blank=True, null=True)
 
     def __str__(self):
         return '{name}'.format(name=self.name)
 
 
-class ColdChainEquipment(BaseModel):
+class StorageLocation(MPTTModel, BaseModel):
     """
-        Cold Chain Equipment is used to store vaccines in order to avoid cold chain breach, could be freezer, fridge,
-        insulated coolers etc.
+        StorageLocation is used to model physical or virtual places where products are stored
     """
-    STATUS = Choices('Working', 'Not Working', 'In Repair')
-    code = models.CharField(max_length=35, unique=True)
+    STATUS = Choices((0, 'working', ('Working')), (1, 'not_working', ('Not Working')), (2, 'in_repair', ('In Repair')),)
+    code = models.CharField(max_length=55, unique=True)
+    name = models.CharField(max_length=55, unique=True)
+    facility = models.ForeignKey(Facility)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children_storage_location')
     gross_capacity = models.FloatField(blank=True, null=True)
     net_capacity = models.FloatField(blank=True, null=True)
-    capacity_uom = models.ForeignKey(UnitOfMeasurement, null=True, blank=True)
-    type = models.ForeignKey(ColdChainEquipmentType)
+    capacity_uom = models.ForeignKey(UnitOfMeasurement, related_name='capacity_uom', null=True, blank=True)
+    type = models.ForeignKey(StorageLocationType)
+    is_cold_store = models.BooleanField()
+    minimum_temperature = models.FloatField(blank=True, null=True, verbose_name='min_temp.')
+    maximum_temperature = models.FloatField(blank=True, null=True, verbose_name='max_temp.')
+    temperature_uom = models.ForeignKey(UnitOfMeasurement, related_name='temp_uom', blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS)
-    facility = models.ForeignKey(Facility)
-    storage_location = models.ForeignKey(Warehouse, blank=True, null=True)
 
     def __str__(self):
-        return '{code}'.format(code=self.code)
+        return '{code}-{name}'.format(code=self.code, name=self.name)
 
 
-class CCETemperatureLog(BaseModel):
+    # code = models.CharField(max_length=35, unique=True)
+    # gross_capacity = models.FloatField(blank=True, null=True)
+    # net_capacity = models.FloatField(blank=True, null=True)
+    # capacity_uom = models.ForeignKey(UnitOfMeasurement, null=True, blank=True)
+    # type = models.ForeignKey(StorageLocationType)
+    # status = models.CharField(max_length=20, choices=STATUS)
+    #
+    # storage_location = models.ForeignKey(Warehouse, blank=True, null=True)
+
+
+class StorageLocationTempLog(BaseModel):
     """
-        Used to keep log or CCE temperature readings
+        Used to keep storage locations' Temp. Log especially cold chain types
     """
     temperature = models.FloatField()
     temperature_uom = models.ForeignKey(UnitOfMeasurement)
-    cce = models.ForeignKey(ColdChainEquipment)
+    storage_location = models.ForeignKey(StorageLocation)
     date_time_logged = models.DateTimeField()
 
     def __str__(self):
-        return '{temp}'.format(temp=self.temperature)
+        return '{storage_loc_code}-{temp}'.format(storage_loc_code=self.storage_location.code, temp=self.temperature)
 
 
-class CCEProblemLog(BaseModel):
+class StorageLocationProblemLog(BaseModel):
     """
-        This models the problem log for CCEs
+        This model is used to keep problem log for storage locations
     """
-    name = models.CharField(max_length=35)
-    cce = models.ForeignKey(ColdChainEquipment)
-    description = models.CharField(max_length=100, blank=True)
+    storage_location = models.ForeignKey(StorageLocation)
+    description = models.CharField(max_length=200, blank=True)
     start_date = models.DateField()
-    end_date = models.DateField(blank=True, null=True)
+    fixed_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return '{name}'.format(name=self.name)
+        return '{storage_loc_name}-{description}'.format(storage_loc_code=self.storage_location.name,
+                                                         description=self.description)
 
 
 #Register models that will be tracked with reversion
-
-reversion.register(ColdChainEquipmentType)
-reversion.register(ColdChainEquipment)
-reversion.register(CCETemperatureLog)
-reversion.register(CCEProblemLog)
+reversion.register(StorageLocationType)
+reversion.register(StorageLocation)
+reversion.register(StorageLocationTempLog)
+reversion.register(StorageLocationProblemLog)
