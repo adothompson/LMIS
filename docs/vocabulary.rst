@@ -41,21 +41,20 @@ FacilityType
     Facility Type is used to represent different types of facilities available in a country.
     it is modelled hierarchically. it can be a Health Facility or Store.
 
-FacilityTypeApprovedProgramProduct
-    This is used to model products approved for each facility type.
-
-
 Facility
     This is used to model stores, health facilities, Satellite store or any organisation that receives supplies and/or
     supplies other facilities.
 
-Warehouse Type
-    This is used to represent different types of warehouse(storage locations), it can be 'Physical Warehouse' or
+StorageLocationType
+    This is used to represent different types of storage locations, it can be 'Physical Warehouse' or
     'In-transit Warehouse'(used to model warehouse for items been transported from one facility to another e.g during
-    delivery)
+    delivery) or Walk In Cold Room, Walk In Freezer Room which are sub types of Cold Chain Equipment
 
-Warehouse
-    Warehouse is used to define storage locations at a facility, a facility can have more than one warehouse.
+StorageLocation
+    StorageLocation is used to define physical or virtual storage locations at a facility, a facility can have more
+    than one storage location. A storage location can be a cold chain equipment, Storage locations are represented in
+    a tree structure to enable us to have fine grain detail about what is at each storage location and which storage
+    location is a storage location at.
 
 Program
     Program represent is used to group products that has same use and objective. it can be 'Routine Immunization', 'HIV'
