@@ -3,17 +3,24 @@ from django.db import models
 
 #import third party modules
 import reversion
+from mptt.models import MPTTModel, TreeForeignKey
 
 #import LMIS modules
 from core.models import BaseModel, Company, Currency, Product
 
 
-class Program(BaseModel):
+class Program(MPTTModel, BaseModel):
     """
-        Program is used to represent different types of health programs that facilities runs. ARV, HIV, KIck Polio
+        Program is used to represent different types of health programs that facilities runs.
+
+        It can be
+            - Supplementary Routine Immunization known as SIAs
+            - Routine Immunization Activities known as RIAs
+
     """
     code = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=35, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='sub_programs')
     description = models.CharField(max_length=55, blank=True)
     active = models.BooleanField()
     partners = models.ManyToManyField(Company)
