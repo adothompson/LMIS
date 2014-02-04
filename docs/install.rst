@@ -13,5 +13,5 @@ To get this running on your local machine:
 
     export DATABASE_URL=postgis://<username>:<password>@<hostname>/<database name>
 
-    **warning**: We make use of GeoDjango so a spatial database is required. PostgreSQL (with PostGIS), MySQL (mostly with MyISAM engine),
+    **Warning**: We make use of GeoDjango so a spatial database is required. PostgreSQL (with PostGIS), MySQL (mostly with MyISAM engine),
     Oracle, and SQLite (with SpatiaLite) are the spatial databases currently supported.
