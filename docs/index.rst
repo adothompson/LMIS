@@ -3,23 +3,30 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to eHealth Africa LMIS's documentation!
-================================================
+=====
+LOMIS
+=====
 
-Contents:
+
+Design Manifest
+===============
+
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-  install
-  deploy
-  vocabulary
+   manifest/introduction
+   manifest/structure
+   manifest/dictionary
+   manifest/workflows
+   manifest/forms
+   manifest/user_interfaces
 
 
-Indices and tables
-==================
+Installation
+============
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   :maxdepth: 1
 
+   install
