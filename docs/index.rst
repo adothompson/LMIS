@@ -23,10 +23,11 @@ Design Manifest
    manifest/user_interfaces
 
 
-Installation
-============
+Misc
+====
 
 .. toctree::
    :maxdepth: 1
 
    install
+   vocabulary
