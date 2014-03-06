@@ -2,7 +2,7 @@
 Workflows
 =========
 
-.. image:: workflows_order_form_diagram.png
+.. image:: img/workflows_order_form_diagram.png
 
 Initiate Order
 --------------
