@@ -27,15 +27,15 @@ Party
 EmployeeCategory
     EmployeeCategory is used to model different categories of employees, it can be Driver, CCO, Store Manager.
     it is modelled hierarchically, it has properties such as:
-        -name : name of the category, this is unique and required.
-        -parent: parent category of this category. this is optional.
+    name : name of the category, this is unique and required.
+    parent: parent category of this category. this is optional.
 
 Employee
     Employee extends Party and an employee can also be an LMIS user if its linked to Django User object.
     Employee has the following attributes:
-    - current company: The company field defines the current company of the user
-    - main company: This defines which current company a user can choose: either the main company itself
-            or one of the children companies.
+    current company: The company field defines the current company of the user
+    main company: This defines which current company a user can choose: either the main company itself
+    or one of the children companies.
 
 FacilityType
     Facility Type is used to represent different types of facilities available in a country.
